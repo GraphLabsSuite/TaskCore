@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:GraphLabs.Tasks.Components.Helpers.Converters"
+                    xmlns:visualization="clr-namespace:GraphLabs.Tasks.Components.Visualization">
+
+    <!-- Vertex -->
+    <converters:DoubleToCornerRadiusConverter x:Key="CornerRadiusToDoubleConverter" />
+    <Style TargetType="visualization:Vertex">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualization:Vertex">
+                    <Border Name ="PART_BORDER"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{Binding Radius, 
+                                                   Converter={StaticResource CornerRadiusToDoubleConverter}, 
+                                                   RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Vertex}}">
+                        <sdk:Label Name="PART_LABEL"
+                                   Content="{TemplateBinding Name}" 
+                                   VerticalAlignment="Center" 
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Edge -->
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <Style TargetType="visualization:Edge">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualization:Edge">
+                    <Canvas Name="LAYOUT_ROOT" Background="Transparent">
+                        <Line Name="PART_LINE"
+                              X1="{TemplateBinding X1}"
+                              Y1="{TemplateBinding Y1}"
+                              X2="{TemplateBinding X2}"
+                              Y2="{TemplateBinding Y2}" 
+                              Stroke="{TemplateBinding Stroke}" 
+                              StrokeThickness="{TemplateBinding StrokeThickness}"/>
+                        
+                        <Polygon Name="PART_TRIANGLE" 
+                                 Visibility="{Binding Directed, 
+                                                      Converter={StaticResource BooleanToVisibilityConverter}, 
+                                                      RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Edge}}"
+                                 Stroke="{TemplateBinding Stroke}" 
+                                 StrokeThickness="{TemplateBinding StrokeThickness}" 
+                                 Fill="{TemplateBinding Stroke}"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

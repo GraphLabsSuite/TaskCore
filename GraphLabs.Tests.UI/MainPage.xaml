@@ -1,0 +1,82 @@
+﻿<UserControl xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  x:Class="GraphLabs.Tests.UI.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="clr-namespace:GraphLabs.Tasks.Components.Visualization;assembly=GraphLabs.Tasks.Components"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="600">
+
+    <sdk:TabControl>
+        <sdk:TabItem Header="Vertex and Edge tests">
+            <sdk:TabItem.Content>
+                <Grid x:Name="LayoutRoot" 
+                      Background="Gray">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Canvas Name="Layout"
+                            Grid.Column="0"
+                            Grid.Row="0" 
+                            Grid.RowSpan="10"
+                            Background="White">
+
+                        <Controls:Vertex Background="LightCyan" 
+                                  Radius="100" 
+                                  Name="VertexA"
+                                  BorderBrush="Black"
+                                  BorderThickness="2"/>
+                        <Controls:Vertex Background="Green" 
+                                      Radius="50" 
+                                      Name="B"
+                                      BorderBrush="Black"
+                                      BorderThickness="2" 
+                                      X="200"
+                                      Y="200"/>
+                    </Canvas>
+
+                    <Button Content="Resize &amp; Move" 
+                            Click="MoveVertexClick"
+                            VerticalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Margin="5"
+                            Name="ResizeAndMoveBtn"/>
+                    <Button Content="Add Edge" 
+                            Click="AddEdgeClick"
+                            VerticalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            Margin="5"
+                            Name="AddEdgeBtn"/>
+                    <CheckBox Name="IsDirectedCheckBox" 
+                      Content="IsDirected" 
+                      VerticalAlignment="Center"
+                      Grid.Column="1"
+                      Grid.Row="2"
+                      Margin="5"
+                      Visibility="Collapsed"/>
+                </Grid>
+            </sdk:TabItem.Content>
+        </sdk:TabItem>
+        <sdk:TabItem Header="Visualizer tests">
+            <sdk:TabItem.Content>
+                <Grid>
+                    <Controls:GraphVisualizer Name="Visualizer" Margin="0,0,0,0" VisualizationAlgorithm="ChargesAndSprings"/>
+                    <Button Width="100" Height="30" Content="Run" Click="RunClick" 
+                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                </Grid>
+            </sdk:TabItem.Content>
+        </sdk:TabItem>
+
+
+    </sdk:TabControl>
+</UserControl>
