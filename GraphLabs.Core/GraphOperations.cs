@@ -2,10 +2,9 @@
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Collections.Generic;
-using GraphLabs.Tasks.Core.Helpers;
+using GraphLabs.Core.Helpers;
 
-
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Статичный класс, реализующий операции над графами. </summary>
     public static class GraphOperations

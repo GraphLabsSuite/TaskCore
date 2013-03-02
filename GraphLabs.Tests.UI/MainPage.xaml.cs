@@ -1,12 +1,12 @@
-﻿using GraphLabs.Tasks.Core;
+﻿using GraphLabs.Core;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using Vertex = GraphLabs.Tasks.Components.Visualization.Vertex;
-using Edge = GraphLabs.Tasks.Components.Visualization.Edge;
+using Vertex = GraphLabs.Components.Visualization.Vertex;
+using Edge = GraphLabs.Components.Visualization.Edge;
 
 namespace GraphLabs.Tests.UI
 {

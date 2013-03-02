@@ -8,8 +8,8 @@
     <ProjectGuid>{F24FC8F0-F88D-4E51-8E6C-6DE2727B1162}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphLabs.Tasks.Core</RootNamespace>
-    <AssemblyName>GraphLabs.Tasks.Core</AssemblyName>
+    <RootNamespace>GraphLabs.Core</RootNamespace>
+    <AssemblyName>GraphLabs.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -57,7 +57,7 @@
     <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <WarningsAsErrors>1591</WarningsAsErrors>
-    <DocumentationFile>bin\Debug\GraphLabs.Tasks.Core.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\GraphLabs.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

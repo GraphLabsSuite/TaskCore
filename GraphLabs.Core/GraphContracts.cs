@@ -1,10 +1,10 @@
-﻿using GraphLabs.Tasks.Core.Helpers;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Класс контрактов для интерфейса IGaph </summary>
     [ContractClassFor(typeof(IGraph))]

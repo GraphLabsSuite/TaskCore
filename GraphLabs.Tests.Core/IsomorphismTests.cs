@@ -1,4 +1,4 @@
-﻿using GraphLabs.Tasks.Core;
+﻿using GraphLabs.Core;
 using NUnit.Framework;
 
 namespace GraphLabs.Tests.Tasks.Core

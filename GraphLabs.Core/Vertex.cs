@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Вершина графа. </summary>
     public class Vertex : IVertex

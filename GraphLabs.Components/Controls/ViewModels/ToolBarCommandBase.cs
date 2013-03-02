@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace GraphLabs.Tasks.Components.Controls.ViewModels
+namespace GraphLabs.Components.Controls.ViewModels
 {
     /// <summary> Команда тулбара </summary>
     public abstract class ToolBarCommandBase : DependencyObject

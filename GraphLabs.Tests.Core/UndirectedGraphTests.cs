@@ -1,8 +1,8 @@
-﻿using GraphLabs.Tasks.Core;
+﻿using GraphLabs.Core;
+using GraphLabs.Core.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;
-using GraphLabs.Tasks.Core.Helpers;
 
 namespace GraphLabs.Tests.Tasks.Core
 {

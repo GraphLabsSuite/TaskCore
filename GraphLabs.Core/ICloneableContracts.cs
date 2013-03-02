@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Класс контрактов для ICloneable </summary>
     [ContractClassFor(typeof(ICloneable))]

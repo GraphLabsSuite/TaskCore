@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GraphLabs.Tasks.Core.Helpers
+namespace GraphLabs.Core.Helpers
 {
     /// <summary> Вспомогательный класс с расширениями для коллекций </summary>
     public static class Extensions

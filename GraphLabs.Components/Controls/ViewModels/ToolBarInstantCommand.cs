@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Components.Controls.ViewModels
+namespace GraphLabs.Components.Controls.ViewModels
 {
     /// <summary> Мгновенная команда </summary>
     public class ToolBarInstantCommand : ToolBarCommandBase

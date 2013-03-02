@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Граф </summary>
     [ContractClass(typeof(GraphContracts))]

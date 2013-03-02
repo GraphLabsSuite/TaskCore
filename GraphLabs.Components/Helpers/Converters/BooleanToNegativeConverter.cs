@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace GraphLabs.Tasks.Components.Helpers.Converters
+namespace GraphLabs.Components.Helpers.Converters
 {
     /// <summary> Конвертер из Boolean в !Boolean </summary>
     public class BooleanToNegativeConverter : IValueConverter

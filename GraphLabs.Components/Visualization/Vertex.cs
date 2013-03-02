@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using GraphLabs.Tasks.Core;
 using System.Windows;
 using System.Windows.Controls;
+using GraphLabs.Core;
 
-namespace GraphLabs.Tasks.Components.Visualization
+namespace GraphLabs.Components.Visualization
 {
     /// <summary> Контрол-вершина </summary>
     public sealed class Vertex : Control, IVertex

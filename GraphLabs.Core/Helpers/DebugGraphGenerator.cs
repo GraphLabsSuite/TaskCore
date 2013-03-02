@@ -1,10 +1,7 @@
 ﻿#if DEBUG
-using System.IO;
-using System.Runtime.Serialization;
-using GraphLabs.Tasks.Core.DataTransferObjects;
-using GraphLabs.Tasks.Core.DataTransferObjects.Converters;
+using GraphLabs.Core.DataTransferObjects.Converters;
 
-namespace GraphLabs.Tasks.Core.Helpers
+namespace GraphLabs.Core.Helpers
 {
     /// <summary> Для использования в дебаге из веб-сервисов </summary>
     public static class DebugGraphGenerator

@@ -1,4 +1,4 @@
-﻿namespace GraphLabs.Tasks.Core.Helpers
+﻿namespace GraphLabs.Core.Helpers
 {
     /// <summary> Методы расширения для IEdge </summary>
     public static class EdgeExtensions

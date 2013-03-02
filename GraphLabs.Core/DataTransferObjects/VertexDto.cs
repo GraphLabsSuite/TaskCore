@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace GraphLabs.Tasks.Core.DataTransferObjects
+namespace GraphLabs.Core.DataTransferObjects
 {
     /// <summary> Класс для пересылки вершин </summary>
     [DataContract]

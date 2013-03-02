@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using GraphLabs.Tasks.Core.Helpers;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Core.DataTransferObjects.Converters
+namespace GraphLabs.Core.DataTransferObjects.Converters
 {
     /// <summary> Конвертер из графа в соответствующую ДТО и обратно </summary>
     internal static class GraphToDtoConverter

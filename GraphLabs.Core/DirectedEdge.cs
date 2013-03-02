@@ -1,6 +1,6 @@
 ﻿
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Ориентированное ребро </summary>
     public class DirectedEdge : Edge

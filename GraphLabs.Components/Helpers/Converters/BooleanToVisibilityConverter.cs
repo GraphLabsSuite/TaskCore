@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace GraphLabs.Tasks.Components.Helpers.Converters
+namespace GraphLabs.Components.Helpers.Converters
 {
     /// <summary> Конвертер из Boolean в Visibility </summary>
     public class BooleanToVisibilityConverter : IValueConverter

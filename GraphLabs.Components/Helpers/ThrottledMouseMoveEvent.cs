@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace GraphLabs.Tasks.Components.Helpers
+namespace GraphLabs.Components.Helpers
 {
     /// <summary> Альтернатива обычному MouseMove для ускорения быстродействия UI</summary>
     /// <remarks> http://www.scottlogic.co.uk/blog/colin/2010/06/throttling-silverlight-mouse-events-to-keep-the-ui-responsive/ </remarks>

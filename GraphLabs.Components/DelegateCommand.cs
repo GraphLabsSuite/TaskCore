@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace GraphLabs.Tasks.Components
+namespace GraphLabs.Components
 {
     /// <summary> Простая команда, которая инвочит делегат </summary>
     public class DelegateCommand : ICommand

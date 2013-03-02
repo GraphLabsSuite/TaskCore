@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization;
 
-namespace GraphLabs.Tasks.Core.DataTransferObjects.Converters
+namespace GraphLabs.Core.DataTransferObjects.Converters
 {
     /// <summary> Вспомагательный класс для сериализации/десериализации графов </summary>
     public static class GraphSerializer
@@ -23,7 +23,7 @@ namespace GraphLabs.Tasks.Core.DataTransferObjects.Converters
         /// <summary> Десериализует граф </summary>
         /// <param name="graph">Массив байтов</param>
         /// <returns>
-        /// <see cref="GraphLabs.Tasks.Core.DirectedGraph"/> или <see cref="GraphLabs.Tasks.Core.UndirectedGraph"/>
+        /// <see cref="DirectedGraph"/> или <see cref="UndirectedGraph"/>
         /// </returns>
         public static Graph Deserialize(byte[] graph)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace GraphLabs.Tasks.Core.DataTransferObjects.Converters
+namespace GraphLabs.Core.DataTransferObjects.Converters
 {
     /// <summary> Конвертер из ребра в соответствующую ДТО и обратно </summary>
     internal static class EdgeToDtoConverter

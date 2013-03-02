@@ -1,4 +1,4 @@
-﻿namespace GraphLabs.Tasks.Core
+﻿namespace GraphLabs.Core
 {
     /// <summary> Вершина графа </summary>
     public interface IVertex

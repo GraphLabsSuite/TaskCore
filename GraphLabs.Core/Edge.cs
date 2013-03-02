@@ -1,8 +1,7 @@
-﻿
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Ребро / дуга графа </summary>
     public abstract class Edge : IEdge

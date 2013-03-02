@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core.Helpers
+namespace GraphLabs.Core.Helpers
 {
     /// <summary> Компаратор для рёбер </summary>
     public class EdgesComparer : IEqualityComparer<IEdge>

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Поддержка создания глубокой копии </summary>
     [ContractClass(typeof(CloneableContracts))]

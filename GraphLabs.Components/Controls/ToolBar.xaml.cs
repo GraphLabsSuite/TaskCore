@@ -1,7 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Windows.Media;
-using GraphLabs.Tasks.Components.Controls.ViewModels;
-using GraphLabs.Tasks.Core.Helpers;
+using GraphLabs.Components.Controls.ViewModels;
+using GraphLabs.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
-namespace GraphLabs.Tasks.Components.Controls
+namespace GraphLabs.Components.Controls
 {
     /// <summary> Панель инструментов </summary>
     public partial class ToolBar : UserControl

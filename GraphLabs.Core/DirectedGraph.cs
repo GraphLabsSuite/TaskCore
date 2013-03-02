@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Linq;
-using GraphLabs.Tasks.Core.Helpers;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Ориентированный граф </summary>
     public class DirectedGraph : Graph

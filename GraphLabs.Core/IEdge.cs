@@ -1,4 +1,4 @@
-﻿namespace GraphLabs.Tasks.Core
+﻿namespace GraphLabs.Core
 {
     /// <summary> Ребро или дуга графа </summary>
     public interface IEdge

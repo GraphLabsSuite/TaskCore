@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-namespace GraphLabs.Tasks.Components.Helpers
+namespace GraphLabs.Components.Helpers
 {
     /// <summary> Вспомагательные методы </summary>
     public static class SilverlightHelper

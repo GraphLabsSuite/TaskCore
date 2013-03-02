@@ -1,5 +1,5 @@
-﻿using GraphLabs.Tasks.Core;
-using GraphLabs.Tasks.Core.Helpers;
+﻿using GraphLabs.Core;
+using GraphLabs.Core.Helpers;
 using NUnit.Framework;
 using System;
 using System.Linq;

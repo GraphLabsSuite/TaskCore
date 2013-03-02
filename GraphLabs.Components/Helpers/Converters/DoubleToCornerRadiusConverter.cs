@@ -3,7 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Windows;
 using System.Windows.Data;
 
-namespace GraphLabs.Tasks.Components.Helpers.Converters
+namespace GraphLabs.Components.Helpers.Converters
 {
     /// <summary> Конвертер из CornerRadius в double и обратно </summary>
     public class DoubleToCornerRadiusConverter : IValueConverter

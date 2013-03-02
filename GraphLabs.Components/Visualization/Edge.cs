@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.Contracts;
-using GraphLabs.Tasks.Core;
-using GraphLabs.Tasks.Core.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -8,9 +6,10 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Vertex = GraphLabs.Tasks.Components.Visualization.Vertex;
+using GraphLabs.Core;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Components.Visualization
+namespace GraphLabs.Components.Visualization
 {
     /// <summary> Контрол-ребро </summary>
     public sealed class Edge : Control, IEdge

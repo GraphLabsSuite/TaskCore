@@ -1,10 +1,10 @@
 ﻿using System;
-using GraphLabs.Tasks.Core.Helpers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Абстрактный граф </summary>
     public abstract class Graph : IObservableGraph, ICloneable

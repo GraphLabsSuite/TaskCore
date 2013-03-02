@@ -1,4 +1,4 @@
-﻿namespace GraphLabs.Tasks.Components.Visualization
+﻿namespace GraphLabs.Components.Visualization
 {
     /// <summary> Алгоритм визуализации </summary>
     public enum VisualizationAlgorithm

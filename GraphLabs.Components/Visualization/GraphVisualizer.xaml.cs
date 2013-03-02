@@ -8,12 +8,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using GraphLabs.Tasks.Components.Helpers;
-using GraphLabs.Tasks.Core;
-using GraphLabs.Tasks.Core.Helpers;
-using Vertex = GraphLabs.Tasks.Components.Visualization.Vertex;
+using GraphLabs.Components.Helpers;
+using GraphLabs.Core;
+using GraphLabs.Core.Helpers;
 
-namespace GraphLabs.Tasks.Components.Visualization
+namespace GraphLabs.Components.Visualization
 {
     /// <summary> Контрол для визуализации графов </summary>
     public sealed partial class GraphVisualizer : UserControl, IGraph

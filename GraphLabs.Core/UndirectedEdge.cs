@@ -1,5 +1,5 @@
 ﻿
-namespace GraphLabs.Tasks.Core
+namespace GraphLabs.Core
 {
     /// <summary> Ребро графа </summary>
     public class UndirectedEdge : Edge
