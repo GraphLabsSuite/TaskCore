@@ -6,8 +6,8 @@
     <ProjectGuid>{4A2A7051-E562-487A-AA67-14C7F277B828}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GraphLabs.Tests.Tasks.Core</RootNamespace>
-    <AssemblyName>GraphLabs.Tests.Tasks.Core</AssemblyName>
+    <RootNamespace>GraphLabs.Tests.Core</RootNamespace>
+    <AssemblyName>GraphLabs.Tests.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -26,7 +26,7 @@
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\GraphLabs.Tests.Tasks.Core.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\GraphLabs.Tests.Core.xml</DocumentationFile>
     <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
     <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
     <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
