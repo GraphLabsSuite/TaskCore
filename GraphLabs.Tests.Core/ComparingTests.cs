@@ -3,7 +3,7 @@ using GraphLabs.Core;
 using GraphLabs.Core.Helpers;
 using NUnit.Framework;
 
-namespace GraphLabs.Tests.Tasks.Core
+namespace GraphLabs.Tests.Core
 {
     /// <summary> Тесты сравнения рёбер и вершин </summary>
     /// <remarks> Тут тестируем не только сами компараторы, но и обычное сравнение при помощи operator== </remarks>

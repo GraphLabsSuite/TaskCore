@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GraphLabs.Tests.Tasks.Core
+namespace GraphLabs.Tests.Core
 {
     /// <summary> Тривиальные тесты неориентированного графа </summary>
     [TestFixture]
