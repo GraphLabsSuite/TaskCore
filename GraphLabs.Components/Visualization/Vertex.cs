@@ -87,6 +87,28 @@ namespace GraphLabs.Components.Visualization
 
         #region Coords
 
+        /// <summary> Коэффициент масштабирования </summary>
+        public static readonly DependencyProperty ScaleFactorProperty =
+            DependencyProperty.Register(
+                "ScaleFactor",
+                typeof(double),
+                typeof(Vertex), 
+                new PropertyMetadata((double)1, UpdatePosition));
+
+        private static void UpdatePosition(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var v = (Vertex)d;
+            v.X = v.X / (double)e.NewValue;
+            v.Y = v.Y / (double)e.NewValue;
+        }
+
+        /// <summary> Коэффициент масштабирования </summary>
+        public double ScaleFactor
+        {
+            get { return (double)GetValue(ScaleFactorProperty); }
+            set { SetValue(ScaleFactorProperty, value); }
+        }
+
         /// <summary> Координата X центра вершины </summary>
         public static DependencyProperty XProperty =
             DependencyProperty.Register("X", typeof(double), typeof(Vertex), null);
@@ -98,14 +120,14 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Координата X центра вершины </summary>
         public double X
         {
-            get { return (double)GetValue(XProperty); }
+            get { return (double)GetValue(XProperty) * ScaleFactor; }
             set { SetValue(XProperty, value); }
         }
 
         /// <summary> Координата Y центра вершины </summary>
         public double Y
         {
-            get { return (double)GetValue(YProperty); }
+            get { return (double)GetValue(YProperty) * ScaleFactor; }
             set { SetValue(YProperty, value); }
         }
 

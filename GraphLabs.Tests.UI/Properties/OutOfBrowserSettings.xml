@@ -1,4 +1,4 @@
-<OutOfBrowserSettings ShortName="GraphLabs.Tests.UI Application" EnableGPUAcceleration="False" ShowInstallMenuItem="True">
+<OutOfBrowserSettings ShortName="GraphLabs.Tests.UI Application" EnableGPUAcceleration="True" ShowInstallMenuItem="False">
   <OutOfBrowserSettings.Blurb>GraphLabs.Tests.UI Application on your desktop; at home, at work or on the go.</OutOfBrowserSettings.Blurb>
   <OutOfBrowserSettings.WindowSettings>
     <WindowSettings Title="GraphLabs.Tests.UI Application" />
