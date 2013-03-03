@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="clr-namespace:GraphLabs.Components.Visualization;assembly=GraphLabs.Components"
+    xmlns:Controls="clr-namespace:GraphLabs.Components.Visualization;assembly=GraphLabs.Components"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">
 
@@ -29,12 +29,12 @@
                             Grid.RowSpan="10"
                             Background="White">
 
-                        <controls:Vertex Background="LightCyan" 
+                        <Controls:Vertex Background="LightCyan" 
                                   Radius="100" 
                                   Name="VertexA"
                                   BorderBrush="Black"
                                   BorderThickness="2"/>
-                        <controls:Vertex Background="Green" 
+                        <Controls:Vertex Background="Green" 
                                       Radius="50" 
                                       Name="B"
                                       BorderBrush="Black"
@@ -70,7 +70,7 @@
         <sdk:TabItem Header="Visualizer tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <controls:GraphVisualizer Name="Visualizer" Margin="0,0,0,0" VisualizationAlgorithm="ChargesAndSprings"/>
+                    <Controls:GraphVisualizer Name="Visualizer" Margin="0,0,0,0" VisualizationAlgorithm="ChargesAndSprings"/>
                     <Button Width="100" Height="30" Content="Run" Click="RunClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>

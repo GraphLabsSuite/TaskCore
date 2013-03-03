@@ -1,7 +1,7 @@
 ﻿using GraphLabs.Core;
 using NUnit.Framework;
 
-namespace GraphLabs.Tests.Core
+namespace GraphLabs.Tests.Tasks.Core
 
 {
     /// <summary> Тестирование метода проверки изоморфизма. </summary>

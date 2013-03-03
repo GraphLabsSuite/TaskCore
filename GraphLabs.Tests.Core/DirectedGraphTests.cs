@@ -4,7 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 
-namespace GraphLabs.Tests.Core
+namespace GraphLabs.Tests.Tasks.Core
 {
     /// <summary> Тривиальные тесты неориентированного графа </summary>
     class DirectedGraphTests
