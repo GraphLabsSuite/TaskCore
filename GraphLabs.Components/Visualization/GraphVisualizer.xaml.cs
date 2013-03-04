@@ -367,16 +367,23 @@ namespace GraphLabs.Components.Visualization
         #region Вычисление коориднат вершин
 
         private DispatcherTimer _animationTimer;
+        private const double MODEL_SIZE = 1000;
+
+        private double GetScaleFactor()
+        {
+            var maxD = _vertices.Max(v => v.Radius) * 2;
+
+            var width = _vertices.Max(v => v.ModelX) - _vertices.Min(v => v.ModelX) + maxD;
+            var height = _vertices.Max(v => v.ModelY) - _vertices.Min(v => v.ModelY) + maxD;
+
+            var scaleFactor = Math.Min(LayoutRoot.ActualWidth / width, LayoutRoot.ActualHeight / height);
+
+            return scaleFactor;
+        }
 
         /// <summary> Устанавливает начальное рандомное положение вершин </summary>
         private void SetStartLocations()
         {
-            //TODO: Заменить эту тупую проверку на нормальное масштабирование
-            if (LayoutRoot.ActualHeight == 0 || LayoutRoot.ActualWidth == 0)
-            {
-                throw new InvalidOperationException("Размер визуализатора равен нулю!!!");
-            }
-
             if (!_vertices.Any())
                 return;
 
@@ -385,8 +392,9 @@ namespace GraphLabs.Components.Visualization
             for (var i = 0; i < _vertices.Count; ++i)
             {
                 var vertex = _vertices[i];
-                vertex.X = rnd.NextDouble() * LayoutRoot.ActualWidth;
-                vertex.Y = rnd.NextDouble() * LayoutRoot.ActualHeight;
+                vertex.ModelX = rnd.NextDouble() * MODEL_SIZE;
+                vertex.ModelY = rnd.NextDouble() * MODEL_SIZE;
+                vertex.ScaleFactor = 1;
 
                 var j = 0;
                 for (; j < i; j++)
@@ -398,28 +406,28 @@ namespace GraphLabs.Components.Visualization
                     --i;
             }
             
-            var minX = _vertices.Min(v => v.X);
-            var minY = _vertices.Min(v => v.Y);
-            var maxX = _vertices.Max(v => v.X);
-            var maxY = _vertices.Max(v => v.Y);
+            var minX = _vertices.Min(v => v.ModelX);
+            var minY = _vertices.Min(v => v.ModelY);
+            var maxX = _vertices.Max(v => v.ModelX);
+            var maxY = _vertices.Max(v => v.ModelY);
 
             var graphCenter = new Point((maxX + minX) / 2, (maxY + minY) / 2);
-            var layoutCenter = new Point(LayoutRoot.ActualWidth / 2, LayoutRoot.ActualHeight / 2);
+            var layoutCenter = new Point(MODEL_SIZE / 2, MODEL_SIZE / 2);
 
             var deltaX = layoutCenter.X - graphCenter.X;
             var deltaY = layoutCenter.Y - graphCenter.Y;
 
             foreach (Vertex vertex in _vertices)
             {
-                vertex.X += deltaX;
-                vertex.Y += deltaY;
+                vertex.ModelX += deltaX;
+                vertex.ModelY += deltaY;
             }
         }
 
         /// <summary> Рассотяние между v1 и v2 </summary>
         private static double Distance(Vertex v1, Vertex v2)
         {
-            return Math.Sqrt(Math.Pow(v1.X - v2.X, 2) + Math.Pow(v1.Y - v2.Y, 2));
+            return Math.Sqrt(Math.Pow(v1.ModelX - v2.ModelX, 2) + Math.Pow(v1.ModelY - v2.ModelY, 2));
         }
 
         /// <summary> Оперделяет, пересекаются ли вершины </summary>
@@ -461,8 +469,8 @@ namespace GraphLabs.Components.Visualization
 
                         var distanceIj = Distance(vi, vj);
 
-                        var ex = (vi.X - vj.X)/distanceIj;
-                        var ey = (vi.Y - vj.Y)/distanceIj;
+                        var ex = (vi.ModelX - vj.ModelX)/distanceIj;
+                        var ey = (vi.ModelY - vj.ModelY)/distanceIj;
                         fx += G*ex/Math.Pow(distanceIj, 2);
                         fy += G*ey/Math.Pow(distanceIj, 2);
 
@@ -483,19 +491,22 @@ namespace GraphLabs.Components.Visualization
                     coordsDeltas[i] = deltaI;
                 }
 
-                // Подравниваем, чтобы картинка оставалась в центре
                 var newPositions = new Point[_vertices.Count];
                 for (var i = 0; i < _vertices.Count; ++i)
                 {
                     var vi = _vertices[i];
                     var deltaI = coordsDeltas[i];
-                    newPositions[i].X = vi.X + deltaI.X;
-                    newPositions[i].Y = vi.Y + deltaI.Y;
+                    newPositions[i].X = vi.ModelX + deltaI.X;
+                    newPositions[i].Y = vi.ModelY + deltaI.Y;
                 }
-                var minX = newPositions.Min(p => p.X);
-                var minY = newPositions.Min(p => p.Y);
-                var maxX = newPositions.Max(p => p.X);
-                var maxY = newPositions.Max(p => p.Y);
+
+                var scaleFactor = GetScaleFactor();
+
+                // Подравниваем, чтобы картинка оставалась в центре
+                var minX = newPositions.Min(p => p.X) * scaleFactor;
+                var minY = newPositions.Min(p => p.Y) * scaleFactor;
+                var maxX = newPositions.Max(p => p.X) * scaleFactor;
+                var maxY = newPositions.Max(p => p.Y) * scaleFactor;
 
                 var graphCenter = new Point((maxX + minX)/2, (maxY + minY)/2);
                 var layoutCenter = new Point(LayoutRoot.ActualWidth/2, LayoutRoot.ActualHeight/2);
@@ -505,8 +516,8 @@ namespace GraphLabs.Components.Visualization
 
                 for (var i = 0; i < newPositions.Length; ++i)
                 {
-                    newPositions[i].X += deltaX;
-                    newPositions[i].Y += deltaY;
+                    newPositions[i].X += deltaX / scaleFactor;
+                    newPositions[i].Y += deltaY / scaleFactor;
                 }
 
                 // Запускаем анимацию
@@ -520,12 +531,15 @@ namespace GraphLabs.Components.Visualization
                     var targetPositionI = newPositions[i];
 
                     var xiAnimation = SilverlightHelper
-                        .GetStoryboard(vi, "X", targetPositionI.X, ANIMATION_INTERVAL, null);
+                        .GetStoryboard(vi, "ModelX", targetPositionI.X, ANIMATION_INTERVAL, null);
                     var yiAnimation = SilverlightHelper
-                        .GetStoryboard(vi, "Y", targetPositionI.Y, ANIMATION_INTERVAL, null);
+                        .GetStoryboard(vi, "ModelY", targetPositionI.Y, ANIMATION_INTERVAL, null);
+                    var scaleAnimation = SilverlightHelper
+                        .GetStoryboard(vi, "ScaleFactor", scaleFactor, ANIMATION_INTERVAL, null);
 
                     xiAnimation.Begin();
                     yiAnimation.Begin();
+                    scaleAnimation.Begin();
                 }
             }
             _animationTimer.Start();
@@ -819,15 +833,15 @@ namespace GraphLabs.Components.Visualization
             // Когда добавляется вершина, с уже установленными координатами, нужно пнуть байдинги, чтобы они
             // сработали, когда мы добавим вершину на новый канвас. Сами они почему-то как-то криво работают.
             // Чтобы пнуть, просто меняем координаты на нулевые и после добавления возвращаем обратно.
-            var x = vertex.X;
-            var y = vertex.Y;
-            vertex.X = 0;
-            vertex.Y = 0;
+            var x = vertex.ModelX;
+            var y = vertex.ModelY;
+            vertex.ModelX = 0;
+            vertex.ModelY = 0;
             _vertices.Add(vertex);
             vertex.MouseLeftButtonDown += CaptureVertex;
             LayoutRoot.Children.Add(vertex);
-            vertex.X = x;
-            vertex.Y = y;
+            vertex.ModelX = x;
+            vertex.ModelY = y;
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>

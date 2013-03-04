@@ -120,15 +120,37 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Координата X центра вершины </summary>
         public double X
         {
-            get { return (double)GetValue(XProperty) * ScaleFactor; }
+            get { return (double)GetValue(XProperty); }
             set { SetValue(XProperty, value); }
         }
 
         /// <summary> Координата Y центра вершины </summary>
         public double Y
         {
-            get { return (double)GetValue(YProperty) * ScaleFactor; }
+            get { return (double)GetValue(YProperty); }
             set { SetValue(YProperty, value); }
+        }
+
+        /// <summary> Модельная координата X центра вершины </summary>
+        public static readonly DependencyProperty ModelXProperty =
+            DependencyProperty.Register("ModelX", typeof(double), typeof(Vertex), null);
+
+        /// <summary> Модельная координата X центра вершины </summary>
+        public double ModelX
+        {
+            get { return (double)GetValue(ModelXProperty); }
+            set { SetValue(ModelXProperty, value); }
+        }
+
+        /// <summary> Модельная координата Y центра вершины </summary>
+        public static readonly DependencyProperty ModelYProperty =
+            DependencyProperty.Register("ModelY", typeof(double), typeof(Vertex), null);
+        
+        /// <summary> Модельная координата Y центра вершины </summary>
+        public double ModelY
+        {
+            get { return (double)GetValue(ModelYProperty); }
+            set { SetValue(ModelYProperty, value); }
         }
 
         #endregion // Coords
@@ -171,6 +193,22 @@ namespace GraphLabs.Components.Visualization
                 Source = this,
                 Mode = BindingMode.TwoWay,
                 Converter = coordsConverter,
+            });
+
+            var modelCoordsConverter = new ModelCoordsConverter(() => ScaleFactor);
+            SetBinding(XProperty, new Binding
+            {
+                Path = new PropertyPath("ModelX"),
+                Source = this,
+                Mode = BindingMode.TwoWay,
+                Converter = modelCoordsConverter,
+            });
+            SetBinding(YProperty, new Binding
+            {
+                Path = new PropertyPath("ModelY"),
+                Source = this,
+                Mode = BindingMode.TwoWay,
+                Converter = modelCoordsConverter,
             });
         }
 
@@ -246,6 +284,33 @@ namespace GraphLabs.Components.Visualization
             public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             {
                 var result = (double)value + _radiusAccessor();
+                return !double.IsNaN(result) ? result : 0.0;
+            }
+        }
+
+        /// <summary> Из модельных координат в реальные </summary>
+        public class ModelCoordsConverter : IValueConverter
+        {
+            private readonly Func<double> _scaleAccessor;
+
+            /// <summary> Ctor. </summary>
+            /// <param name="scaleAccessor"> Функция, возвращающая радиус вершины </param>
+            public ModelCoordsConverter(Func<double> scaleAccessor)
+            {
+                _scaleAccessor = scaleAccessor;
+            }
+
+            /// <summary> Из модельных в реальные </summary>
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var result = (double)value * _scaleAccessor();
+                return !double.IsNaN(result) ? result : 0.0;
+            }
+
+            /// <summary> Из реальных в модельные </summary>
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                var result = (double)value / _scaleAccessor();
                 return !double.IsNaN(result) ? result : 0.0;
             }
         }
