@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -93,6 +94,26 @@ namespace GraphLabs.Components.Helpers
             }
 
             return parent;
+        }
+
+        /// <summary> Размер строки </summary>
+        public static Size GetTextSize(string text, 
+            FontFamily fontFamily = null,
+            int? fontSize = null,
+            FontStyle? fontStyle = null)
+        {
+            var txtMeasure = new TextBlock();
+
+            if (fontSize.HasValue)
+                txtMeasure.FontSize = fontSize.Value;
+            if (fontFamily != null)
+                txtMeasure.FontFamily = fontFamily;
+            if (fontStyle.HasValue)
+                txtMeasure.FontStyle = fontStyle.Value;
+            txtMeasure.Text = text;
+
+            var size = new Size(txtMeasure.ActualWidth, txtMeasure.ActualHeight);
+            return size;
         }
     }
 }

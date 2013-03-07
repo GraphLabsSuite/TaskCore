@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Controls;
+using GraphLabs.Components.Helpers;
 using GraphLabs.Core;
 
 namespace GraphLabs.Components.Visualization
@@ -69,17 +71,15 @@ namespace GraphLabs.Components.Visualization
         }
 
         private UIElement _label;
-        private const double DESIRED_DELTA = 5.0;
-        /// <summary> Предпочитаемый радиус вершины </summary>
-        public Double DesiredRadius
+
+        /// <summary> Возвращает предпочитаемый радиус вершины </summary>
+        public double GetDesiredRadius()
         {
-            get
-            {
-                if (_label == null)
-                    return Radius + DESIRED_DELTA;
-                var labelDesiredSize = _label.DesiredSize;
-                return Math.Max(labelDesiredSize.Height, labelDesiredSize.Width) / 2 + DESIRED_DELTA;
-            }
+            const double DESIRED_DELTA = 5.0;
+            var nameSize = SilverlightHelper.GetTextSize(Name);
+            var desiredRadius = Math.Max(nameSize.Width, nameSize.Height)/2 + DESIRED_DELTA;
+
+            return desiredRadius;
         }
 
         #endregion // Size

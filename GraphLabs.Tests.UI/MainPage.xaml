@@ -20,6 +20,7 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
@@ -41,6 +42,13 @@
                                       BorderThickness="2" 
                                       X="200"
                                       Y="200"/>
+                        <Controls:Vertex Background="YellowGreen" 
+                                      Radius="20" 
+                                      Name="LargeVertexNameHere"
+                                      BorderBrush="Black"
+                                      BorderThickness="2" 
+                                      X="400"
+                                      Y="150"/>
                     </Canvas>
 
                     <Button Content="Resize &amp; Move" 
@@ -57,6 +65,13 @@
                             Grid.Row="1"
                             Margin="5"
                             Name="AddEdgeBtn"/>
+                    <Button Content="Autofit" 
+                            VerticalAlignment="Center"
+                            Grid.Column="1"
+                            Grid.Row="3"
+                            Margin="5"
+                            Name="FitAutosize" 
+                            Click="FitAutosizeClick"/>
                     <CheckBox Name="IsDirectedCheckBox" 
                       Content="IsDirected" 
                       VerticalAlignment="Center"

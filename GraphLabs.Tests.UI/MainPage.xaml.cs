@@ -139,6 +139,12 @@ namespace GraphLabs.Tests.UI
             ((Vertex)Visualizer.Vertices[1]).Radius = 30;
         }
 
+
+        private void FitAutosizeClick(object sender, RoutedEventArgs e)
+        {
+            LargeVertexNameHere.Radius = LargeVertexNameHere.GetDesiredRadius();
+        }
+
         #endregion // buttonsClicks
     }
 }
