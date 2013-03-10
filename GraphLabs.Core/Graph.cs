@@ -40,6 +40,13 @@ namespace GraphLabs.Core
         public virtual void AddEdge(IEdge edge)
         {
             EdgesList.Add(edge);
+            OnGraphChanged(this,
+                new GraphChangedEventArgs(
+                    null,
+                    null,
+                    new[] { edge },
+                    null)
+                    );
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
