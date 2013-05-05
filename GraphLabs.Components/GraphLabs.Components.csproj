@@ -132,9 +132,13 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Matrix.xaml.cs">
+      <DependentUpon>Matrix.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToolBar.xaml.cs">
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
     <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />
@@ -154,7 +158,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\Matrix.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\AdjMatrixCellStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

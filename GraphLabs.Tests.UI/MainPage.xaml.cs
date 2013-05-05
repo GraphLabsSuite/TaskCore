@@ -1,4 +1,7 @@
-﻿using GraphLabs.Core;
+﻿using System.Collections.ObjectModel;
+using System.Globalization;
+using GraphLabs.Components.Controls.ViewModels;
+using GraphLabs.Core;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -145,6 +148,26 @@ namespace GraphLabs.Tests.UI
             LargeVertexNameHere.Radius = LargeVertexNameHere.GetDesiredRadius();
         }
 
+        private void RunMatrixClick(object sender, RoutedEventArgs e)
+        {
+            var source = new ObservableCollection<MatrixRowViewModel<string>>();
+
+            const int UPPER = 10;
+            var rnd = new Random(UPPER);
+            for (var i = 0; i < UPPER; ++i)
+            {
+                var row = new ObservableCollection<string> { i.ToString(CultureInfo.InvariantCulture) };
+                for (var j = 0; j < UPPER; ++j)
+                {
+                    row.Add(rnd.Next(UPPER).ToString(CultureInfo.InvariantCulture));
+                }
+                source.Add(new MatrixRowViewModel<string>(row));
+            }
+
+            Grid.DataSource = source;
+        }
+
         #endregion // buttonsClicks
+
     }
 }

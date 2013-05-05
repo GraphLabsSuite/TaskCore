@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Controls="clr-namespace:GraphLabs.Components.Visualization;assembly=GraphLabs.Components"
+    xmlns:visualization="clr-namespace:GraphLabs.Components.Visualization;assembly=GraphLabs.Components"
+    xmlns:controls="clr-namespace:GraphLabs.Components.Controls;assembly=GraphLabs.Components"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">
 
@@ -30,19 +31,19 @@
                             Grid.RowSpan="10"
                             Background="White">
 
-                        <Controls:Vertex Background="LightCyan" 
+                        <visualization:Vertex Background="LightCyan" 
                                   Radius="100" 
                                   Name="VertexA"
                                   BorderBrush="Black"
                                   BorderThickness="2"/>
-                        <Controls:Vertex Background="Green" 
+                        <visualization:Vertex Background="Green" 
                                       Radius="50" 
                                       Name="B"
                                       BorderBrush="Black"
                                       BorderThickness="2" 
                                       X="200"
                                       Y="200"/>
-                        <Controls:Vertex Background="YellowGreen" 
+                        <visualization:Vertex Background="YellowGreen" 
                                       Radius="20" 
                                       Name="LargeVertexNameHere"
                                       BorderBrush="Black"
@@ -85,13 +86,21 @@
         <sdk:TabItem Header="Visualizer tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <Controls:GraphVisualizer Name="Visualizer" Margin="0,0,0,0" VisualizationAlgorithm="ChargesAndSprings"/>
+                    <visualization:GraphVisualizer Name="Visualizer" Margin="0,0,0,0" VisualizationAlgorithm="ChargesAndSprings"/>
                     <Button Width="100" Height="30" Content="Run" Click="RunClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
-
+        <sdk:TabItem Header="Matrix tests">
+            <sdk:TabItem.Content>
+                <Grid>
+                    <controls:Matrix Name="Grid" Margin="0,0,0,0" />
+                    <Button Width="100" Height="30" Content="Run" Click="RunMatrixClick" 
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                </Grid>
+            </sdk:TabItem.Content>
+        </sdk:TabItem>
 
     </sdk:TabControl>
 </UserControl>
