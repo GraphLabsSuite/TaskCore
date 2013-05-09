@@ -58,9 +58,18 @@ namespace GraphLabs.Components.Controls
                 Width = new DataGridLength(25),
                 CellStyle = (Style)Resources["GridRowHeaderStyle"]
             };
+
+            if (headerColumn.CellStyle == null)
+                ThrowOnStyleNotFound();
+
             MatrixGrid.RowHeight = 25;
             MatrixGrid.ColumnHeaderHeight = 25;
             MatrixGrid.Columns.Add(headerColumn);
+
+            var cellStyle = (Style)Resources["CellStyle"];
+            if (cellStyle == null)
+                ThrowOnStyleNotFound();
+
             for (var i = 0; i < dataSource.Count; ++i)
             {
                 var dataColumn = new DataGridTextColumn
@@ -68,12 +77,17 @@ namespace GraphLabs.Components.Controls
                     Header = dataSource[i][0],
                     Binding = new Binding(string.Format("[{0}]", i + 1)),
                     Width = new DataGridLength(MatrixGrid.RowHeight),
-                    CellStyle = (Style)Resources["CellStyle"],
+                    CellStyle = cellStyle,
                 };
                 MatrixGrid.Columns.Add(dataColumn);
             }
 
             MatrixGrid.ItemsSource = dataSource;
+        }
+
+        private void ThrowOnStyleNotFound()
+        {
+            throw new InvalidOperationException("Не удалось найти один или несколько стилей, используемых матрицей. Вероятно, это вызвано тем, что вы используете собственный ResourceDictionaty в классе-наследнике.");
         }
 
 

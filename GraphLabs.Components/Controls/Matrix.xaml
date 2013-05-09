@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GraphLabs.Components;component/Themes/AdjMatrixCellStyles.xaml" />
+                <ResourceDictionary Source="/GraphLabs.Components;component/Themes/MatrixCellStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
