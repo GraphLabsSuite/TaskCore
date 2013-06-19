@@ -136,10 +136,11 @@ namespace GraphLabs.Tests.UI
             graph.AddEdge(new DirectedEdge(graph.Vertices[6], graph.Vertices[7]));
             graph.AddEdge(new DirectedEdge(graph.Vertices[7], graph.Vertices[8]));
             Visualizer.Graph = graph;
-            Visualizer.DefaultVertexRadius = 12.0;
+            Visualizer.DefaultVertexRadius = 10.0;
             Visualizer.DefaultVertexBackground = new SolidColorBrush(Colors.LightGray);
-            ((Vertex)Visualizer.Vertices[3]).Background = new SolidColorBrush(Colors.Magenta);
-            ((Vertex)Visualizer.Vertices[1]).Radius = 30;
+            //((Vertex)Visualizer.Vertices[3]).Background = new SolidColorBrush(Colors.Magenta);
+            //((Vertex)Visualizer.Vertices[1]).Radius = 30;
+            ((Button)sender).Visibility = Visibility.Collapsed;
         }
 
 
@@ -168,6 +169,5 @@ namespace GraphLabs.Tests.UI
         }
 
         #endregion // buttonsClicks
-
     }
 }

@@ -382,7 +382,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Устанавливает начальное рандомное положение вершин </summary>
-        private void SetStartLocations()
+        private void SetRandomStartLocations()
         {
             if (!_vertices.Any())
                 return;
@@ -392,8 +392,8 @@ namespace GraphLabs.Components.Visualization
             for (var i = 0; i < _vertices.Count; ++i)
             {
                 var vertex = _vertices[i];
-                vertex.ModelX = rnd.NextDouble() * MODEL_SIZE;
-                vertex.ModelY = rnd.NextDouble() * MODEL_SIZE;
+                vertex.ModelX = rnd.NextDouble() * ActualWidth + DefaultVertexRadius;
+                vertex.ModelY = rnd.NextDouble() * ActualHeight + DefaultVertexRadius;
                 vertex.ScaleFactor = 1;
 
                 var j = 0;
@@ -405,23 +405,26 @@ namespace GraphLabs.Components.Visualization
                 if (j < i)
                     --i;
             }
-            
-            var minX = _vertices.Min(v => v.ModelX);
-            var minY = _vertices.Min(v => v.ModelY);
-            var maxX = _vertices.Max(v => v.ModelX);
-            var maxY = _vertices.Max(v => v.ModelY);
+        }
 
-            var graphCenter = new Point((maxX + minX) / 2, (maxY + minY) / 2);
-            var layoutCenter = new Point(MODEL_SIZE / 2, MODEL_SIZE / 2);
+        /// <summary> Устанавливает начальные положения вершин по окружности </summary>
+        private void SetCircleLocations()
+        {
+            if (!_vertices.Any())
+                return;
 
-            var deltaX = layoutCenter.X - graphCenter.X;
-            var deltaY = layoutCenter.Y - graphCenter.Y;
-
-            foreach (Vertex vertex in _vertices)
+            var r = Math.Min(ActualHeight, ActualWidth)/2;
+            var phi = 0.0;
+            var deltaPhi = 2*Math.PI/_vertices.Count;
+            foreach (var vertex in _vertices)
             {
-                vertex.ModelX += deltaX;
-                vertex.ModelY += deltaY;
+                vertex.ModelX = r * Math.Cos(phi) + r + DefaultVertexRadius;
+                vertex.ModelY = r * Math.Sin(phi) + r + DefaultVertexRadius;
+                vertex.ScaleFactor = 1;
+
+                phi += deltaPhi;
             }
+
         }
 
         /// <summary> Рассотяние между v1 и v2 </summary>
@@ -551,21 +554,23 @@ namespace GraphLabs.Components.Visualization
             switch (_visualizationAlgorithm)
             {
                 case VisualizationAlgorithm.ChargesAndSprings:
-                    SetStartLocations();
+                    SetRandomStartLocations();
                     _animationTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(ANIMATION_INTERVAL) };
                     _animationTimer.Tick += (s, e) => MoveVertices();
                     _animationTimer.Start();
                     break;
                 case VisualizationAlgorithm.RandomPositions:
-                    SetStartLocations();
+                    SetRandomStartLocations();
                     break;
                 case VisualizationAlgorithm.Circle:
-                    throw new NotImplementedException();
+                    SetCircleLocations();
+                    break;
                 default:
                     throw new NotSupportedException(
                         string.Format("Указан неизвестный алгоритм визуализации {0}", _visualizationAlgorithm));
             }
         }
+
 
         #endregion // Вычисление коориднат вершин
 
