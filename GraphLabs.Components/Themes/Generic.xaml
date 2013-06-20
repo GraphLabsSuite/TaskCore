@@ -49,6 +49,25 @@
                                  Stroke="{TemplateBinding Stroke}" 
                                  StrokeThickness="{TemplateBinding StrokeThickness}" 
                                  Fill="{TemplateBinding Stroke}"/>
+
+                        <Border Name ="PART_BORDER"
+                            Background="White"
+                            CornerRadius="7" Width="14" Height="14"
+                            Margin="-4,0,0,0"
+                            BorderBrush="Black"
+                            BorderThickness="0"
+                            Canvas.Left="{TemplateBinding WeightX}"
+                            Canvas.Top="{TemplateBinding WeightY}"
+                            Visibility="{Binding IsWeighted, 
+                                                 Converter={StaticResource BooleanToVisibilityConverter}, 
+                                                 RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Edge}}"/>
+                        <sdk:Label Name="PART_WEIGHT"
+                                   Canvas.Left="{TemplateBinding WeightX}"
+                                   Canvas.Top="{TemplateBinding WeightY}"
+                                   Visibility="{Binding IsWeighted, 
+                                                        Converter={StaticResource BooleanToVisibilityConverter}, 
+                                                        RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Edge}}"
+                                   Content="{TemplateBinding Weight}" Foreground="Black"/>
                     </Canvas>
                 </ControlTemplate>
             </Setter.Value>

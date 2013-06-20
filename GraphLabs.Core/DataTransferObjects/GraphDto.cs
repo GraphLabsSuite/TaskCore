@@ -18,6 +18,10 @@ namespace GraphLabs.Core.DataTransferObjects
         [DataMember]
         public bool Directed { get; set; }
 
+        /// <summary> Граф взвешенный? </summary>
+        [DataMember]
+        public bool IsWeighted { get; set; }
+
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
         [DataMember]
         public bool AllowMultipleEdges { get; set; }

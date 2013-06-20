@@ -778,8 +778,13 @@ namespace GraphLabs.Components.Visualization
                 Vertex2 = _vertices.Single(v => VerticesComparer.Comparer.Equals(v, edge.Vertex2)),
                 Directed = edge.Directed,
                 Stroke = DefaultEdgeStroke,
-                StrokeThickness = DefaultEdgeStrokeThickness
+                StrokeThickness = DefaultEdgeStrokeThickness,
+                IsWeighted = edge is IWeightedEdge,
             };
+            if (newEdge.IsWeighted)
+            {
+                newEdge.Weight = ((IWeightedEdge)edge).Weight;
+            }
             _edges.Add(newEdge);
             LayoutRoot.Children.Add(newEdge);
         }

@@ -17,5 +17,9 @@ namespace GraphLabs.Core.DataTransferObjects
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
         [DataMember]
         public bool Directed { get; set; }
+
+        /// <summary> Вес </summary>
+        [DataMember]
+        public int? Weight { get; set; }
     }
 }

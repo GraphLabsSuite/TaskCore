@@ -76,7 +76,7 @@ namespace GraphLabs.Components.Visualization
             });
 
             edge.UpdateZIndex();
-            edge.UpdateTrianglePosition();
+            edge.UpdateComponentsPosition();
         }
 
         /// <summary> Callback на изменение вершины 2 </summary>
@@ -95,13 +95,35 @@ namespace GraphLabs.Components.Visualization
             });
 
             edge.UpdateZIndex();
-            edge.UpdateTrianglePosition();
+            edge.UpdateComponentsPosition();
         }
 
         #endregion // Вершины
 
 
-        #region Ориентированность
+        #region Всякие свойства
+
+        /// <summary> Ребро взвешенное? </summary>
+        public static readonly DependencyProperty IsWeightedProperty =
+            DependencyProperty.Register("IsWeighted", typeof(bool), typeof(Edge), new PropertyMetadata(default(bool)));
+
+        /// <summary> Ребро взвешенное? </summary>
+        public bool IsWeighted
+        {
+            get { return (bool)GetValue(IsWeightedProperty); }
+            set { SetValue(IsWeightedProperty, value); }
+        }
+
+        /// <summary> Вес </summary>
+        public static readonly DependencyProperty WeightProperty =
+            DependencyProperty.Register("Weight", typeof(int), typeof(Edge), new PropertyMetadata(default(int)));
+
+        /// <summary> Вес </summary>
+        public int Weight
+        {
+            get { return (int)GetValue(WeightProperty); }
+            set { SetValue(WeightProperty, value); }
+        }
 
         /// <summary> Ребро ориентированное? </summary>
         public static DependencyProperty DirectedProperty = DependencyProperty.Register(
@@ -113,7 +135,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Callback на изменение свойства направленности </summary>
         private static void DirectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((Edge)d).UpdateTrianglePosition();
+            ((Edge)d).UpdateComponentsPosition();
         }
 
         /// <summary> Ребро ориентированное? </summary>
@@ -141,7 +163,7 @@ namespace GraphLabs.Components.Visualization
                 typeof(double), 
                 typeof(Edge), 
                 new PropertyMetadata(
-                    (d, e) => ((Edge)d).UpdateTrianglePosition()
+                    (d, e) => ((Edge)d).UpdateComponentsPosition()
                 ));
 
 
@@ -152,7 +174,7 @@ namespace GraphLabs.Components.Visualization
                 typeof(double), 
                 typeof(Edge), 
                 new PropertyMetadata(
-                    (d, e) => ((Edge)d).UpdateTrianglePosition()
+                    (d, e) => ((Edge)d).UpdateComponentsPosition()
                 ));
 
         /// <summary> Координата X вершины-стока </summary>
@@ -162,7 +184,7 @@ namespace GraphLabs.Components.Visualization
                 typeof(double), 
                 typeof(Edge), 
                 new PropertyMetadata(
-                    (d, e) => ((Edge)d).UpdateTrianglePosition()
+                    (d, e) => ((Edge)d).UpdateComponentsPosition()
                 ));
 
         /// <summary> Координата Y вершины-стока </summary>
@@ -172,8 +194,30 @@ namespace GraphLabs.Components.Visualization
                 typeof(double), 
                 typeof(Edge), 
                 new PropertyMetadata(
-                    (d, e) => ((Edge)d).UpdateTrianglePosition()
+                    (d, e) => ((Edge)d).UpdateComponentsPosition()
                 ));
+
+        /// <summary> X-кооридната метки веса </summary>
+        public static readonly DependencyProperty WeightXProperty =
+            DependencyProperty.Register("WeightX", typeof(double), typeof(Edge), new PropertyMetadata(default(double)));
+
+        /// <summary> Y-кооридната метки веса </summary>
+        public static readonly DependencyProperty WeightYProperty =
+            DependencyProperty.Register("WeightY", typeof(double), typeof(Edge), new PropertyMetadata(default(double)));
+
+        /// <summary> X-кооридната метки веса </summary>
+        public double WeightX
+        {
+            get { return (double)GetValue(WeightXProperty); }
+            set { SetValue(WeightXProperty, value); }
+        }
+
+        /// <summary> Y-кооридната метки веса </summary>
+        public double WeightY
+        {
+            get { return (double)GetValue(WeightYProperty); }
+            set { SetValue(WeightYProperty, value); }
+        }
 
         /// <summary> Координата X вершины-истока </summary>    
         public double X1
@@ -257,7 +301,7 @@ namespace GraphLabs.Components.Visualization
 
             _triangle = GetTemplateChild("PART_TRIANGLE") as Polygon;
 
-            UpdateTrianglePosition();
+            UpdateComponentsPosition();
         }
 
         [Obsolete("У ребра бэкграунда не должно быть.")]
@@ -395,15 +439,24 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Обновляет положение треугольника-стрелки </summary>
-        private void UpdateTrianglePosition()
+        private void UpdateComponentsPosition()
         {
-            if (!Directed || _triangle == null || Vertex1 == null || Vertex2 == null)
+            if (!Directed && !IsWeighted || _triangle == null || Vertex1 == null || Vertex2 == null)
             {
                 return;
             }
 
-            _triangle.Points.Clear();
-            CalculateArrowCoords().ForEach(p => _triangle.Points.Add(p));
+            if (Directed)
+            {
+                _triangle.Points.Clear();
+                CalculateArrowCoords().ForEach(p => _triangle.Points.Add(p));
+            }
+
+            if (IsWeighted)
+            {
+                WeightX = (X1 + X2)/2;
+                WeightY = (Y1 + Y2)/2;
+            }
         }
 
         #endregion // Вспомагательные методы

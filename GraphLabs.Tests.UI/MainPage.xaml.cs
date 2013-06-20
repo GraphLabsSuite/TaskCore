@@ -126,18 +126,18 @@ namespace GraphLabs.Tests.UI
 
         private void RunClick(object sender, RoutedEventArgs e)
         {
-            var graph = UndirectedGraph.CreateEmpty(7);
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[0], graph.Vertices[1]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[0], graph.Vertices[4]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[1], graph.Vertices[2]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[1], graph.Vertices[5]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[2], graph.Vertices[3]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[2], graph.Vertices[4]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[2], graph.Vertices[6]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[3], graph.Vertices[4]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[3], graph.Vertices[5]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[4], graph.Vertices[5]));
-            graph.AddEdge(new UndirectedEdge(graph.Vertices[5], graph.Vertices[6]));
+            var graph = DirectedWeightedGraph.CreateEmpty(8);
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[0], graph.Vertices[1], 2));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[0], graph.Vertices[6], 6));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[1], graph.Vertices[2], 7));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[1], graph.Vertices[4], 2));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[2], graph.Vertices[3], 3));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[4], graph.Vertices[5], 2));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[4], graph.Vertices[6], 1));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[5], graph.Vertices[2], 1));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[5], graph.Vertices[7], 2));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[6], graph.Vertices[7], 4));
+            graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[7], graph.Vertices[3], 1));
             Visualizer.Graph = graph;
             Visualizer.DefaultVertexRadius = 10.0;
             Visualizer.DefaultVertexBackground = new SolidColorBrush(Colors.LightGray);

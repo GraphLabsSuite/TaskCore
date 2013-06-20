@@ -17,7 +17,8 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
                 {
                     Vertex1 = VertexToDtoConverter.Convert(value.Vertex1),
                     Vertex2 = VertexToDtoConverter.Convert(value.Vertex2),
-                    Directed = value.Directed
+                    Directed = value.Directed,
+                    Weight = (value is IWeightedEdge) ? ((IWeightedEdge)value).Weight : (int?)null
                 };
         }
 
@@ -29,7 +30,11 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
             var vertex1 = vertices.Single(v => v.Name == value.Vertex1.Name);
             var vertex2 = vertices.Single(v => v.Name == value.Vertex2.Name);
             return value.Directed
-                       ? (Edge)new DirectedEdge(vertex1, vertex2)
+                       ? (
+                            !value.Weight.HasValue
+                                ? (Edge)new DirectedEdge(vertex1, vertex2)
+                                : (Edge)new DirectedWeightedEdge(vertex1, vertex2, value.Weight.Value)
+                         )
                        : (Edge)new UndirectedEdge(vertex1, vertex2);
         }
     }

@@ -87,7 +87,7 @@
         <sdk:TabItem Header="Visualizer tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <visualization:GraphVisualizer Name="Visualizer" Margin="5" VisualizationAlgorithm="RandomPositions"/>
+                    <visualization:GraphVisualizer Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"/>
                     <Button Width="100" Height="30" Content="Run" Click="RunClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>

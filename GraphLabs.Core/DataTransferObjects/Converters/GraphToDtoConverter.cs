@@ -15,6 +15,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
                     Vertices = value.Vertices.Select(VertexToDtoConverter.Convert).ToArray(),
                     Edges = value.Edges.Select(EdgeToDtoConverter.Convert).ToArray(),
                     Directed = value.Directed,
+                    IsWeighted = (value is DirectedWeightedGraph),
                     AllowMultipleEdges = value.AllowMultipleEdges
                 };
         }
@@ -27,7 +28,11 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
                 throw new InvalidOperationException("Данный тип графов не поддерживается.");
             }
             var graph = value.Directed
-                            ? (Graph)new DirectedGraph()
+                            ? (
+                                  !value.IsWeighted 
+                                      ? (Graph)new DirectedGraph()
+                                      : (Graph)new DirectedWeightedGraph()
+                              )
                             : (Graph)new UndirectedGraph();
             value.Vertices.ForEach(v => graph.AddVertex(VertexToDtoConverter.ConvertBack(v)));
             value.Edges.ForEach(e => graph.AddEdge(EdgeToDtoConverter.ConvertBack(e, graph.Vertices)));
