@@ -7,7 +7,7 @@ namespace GraphLabs.Core
     public class Vertex : IVertex
     {
         /// <summary> Возвращает имя вершины. </summary>
-        public string Name { get; private set; }
+        public string Name { get; set; }
 
         /// <summary> Создаёт новую вершину с именем Name. </summary>
         public Vertex(string name)
