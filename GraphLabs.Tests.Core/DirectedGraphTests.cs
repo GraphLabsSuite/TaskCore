@@ -134,19 +134,19 @@ namespace GraphLabs.Tests.Core
             graph.AddEdge(newEdge1);
             graph.AddEdge(newEdge2);
 
-            var clonedGraph = graph.Clone() as IGraph;
+            var clonedGraph = graph.Clone() as IGraphBase;
             Assert.IsTrue(clonedGraph is DirectedGraph);
             Assert.AreEqual(graph.VerticesCount, clonedGraph.VerticesCount);
             foreach (var vertex in graph.Vertices)
             {
-                var clonedVertex = clonedGraph.Vertices.Single(v => VerticesComparer.Comparer.Equals(v, vertex));
+                var clonedVertex = clonedGraph.Vertices.Single(v => v.Equals(vertex));
                 Assert.AreNotSame(clonedVertex, vertex);
             }
             Assert.AreEqual(graph.EdgesCount, clonedGraph.EdgesCount);
             foreach (var clonedEdge in clonedGraph.Edges)
             {
                 Assert.IsTrue(clonedEdge is DirectedEdge);
-                var edge = graph.Edges.Single(e => EdgesComparer.Comparer.Equals(e, clonedEdge));
+                var edge = graph.Edges.Single(e => e.Equals(clonedEdge));
                 Assert.AreNotSame(edge, clonedEdge);
             }
         }

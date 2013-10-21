@@ -15,7 +15,7 @@ using GraphLabs.Core.Helpers;
 namespace GraphLabs.Components.Visualization
 {
     /// <summary> Контрол для визуализации графов </summary>
-    public sealed partial class GraphVisualizer : UserControl, IGraph
+    public sealed partial class GraphVisualizer : UserControl, IGraph<Vertex, Edge>
     {
         #region Внешность
 
@@ -255,7 +255,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldEdges.ForEach(e =>
                     {
-                        var toRemove = _edges.Single(p => EdgesComparer.Comparer.Equals(p, e));
+                        var toRemove = _edges.Single(p => p == e);
                         RemoveEdge(toRemove);
                     });
             }
@@ -263,7 +263,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldVertices.ForEach(e =>
                 {
-                    var toRemove = _vertices.Single(p => VerticesComparer.Comparer.Equals(p, e));
+                    var toRemove = _vertices.Single(p => p == e);
                     RemoveVertex(toRemove);
                 });
             }
@@ -699,11 +699,11 @@ namespace GraphLabs.Components.Visualization
             {
                 args.NewItems.Cast<Edge>().ForEach(e =>
                         {
-                            var vertex1 = Graph.Vertices.Single(v => VerticesComparer.Comparer.Equals(v, e.Vertex1));
-                            var vertex2 = Graph.Vertices.Single(v => VerticesComparer.Comparer.Equals(v, e.Vertex2));
+                            var vertex1 = Graph.Vertices.Single(v => v == e.Vertex1);
+                            var vertex2 = Graph.Vertices.Single(v => v == e.Vertex2);
                             var newEdge = Directed
-                                              ? (IEdge)new DirectedEdge(vertex1, vertex2)
-                                              : (IEdge)new UndirectedEdge(vertex1, vertex2);
+                                              ? (IEdgeBase)new DirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2)
+                                              : (IEdgeBase)new UndirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2);
 
                             Graph.AddEdge(newEdge);
                         });
@@ -712,7 +712,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldItems.Cast<Edge>().ForEach(e =>
                     {
-                        var edge = Graph.Edges.Single(p => EdgesComparer.Comparer.Equals(p, e));
+                        var edge = Graph.Edges.Single(p => p == e);
                         Graph.RemoveEdge(edge);
                     });
             }
@@ -738,7 +738,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldItems.Cast<Vertex>().ForEach(v =>
                     {
-                        var vertex = Graph.Vertices.Single(p => VerticesComparer.Comparer.Equals(p, v));
+                        var vertex = Graph.Vertices.Single(p => p == v);
                         Graph.RemoveVertex(vertex);
                     });
             }
@@ -764,18 +764,24 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        public ReadOnlyCollection<IEdge> Edges
+        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges
         {
-            get { return new ReadOnlyCollection<IEdge>(_edges.Cast<IEdge>().ToList()); }
+            get { return new ReadOnlyCollection<IEdgeBase>(_edges.Cast<IEdgeBase>().ToArray()); }
+        }
+
+        /// <summary> Доступная только для чтения коллекция рёбер </summary>
+        public ReadOnlyCollection<Edge> Edges
+        {
+            get { return new ReadOnlyCollection<Edge>(_edges); }
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(IEdge edge)
+        public void AddEdge(IEdgeBase edge)
         {
             var newEdge = new Edge
             {
-                Vertex1 = _vertices.Single(v => VerticesComparer.Comparer.Equals(v, edge.Vertex1)),
-                Vertex2 = _vertices.Single(v => VerticesComparer.Comparer.Equals(v, edge.Vertex2)),
+                Vertex1 = _vertices.Single(v => v == edge.Vertex1),
+                Vertex2 = _vertices.Single(v => v == edge.Vertex2),
                 Directed = edge.Directed,
                 Stroke = DefaultEdgeStroke,
                 StrokeThickness = DefaultEdgeStrokeThickness,
@@ -790,7 +796,25 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(IEdge edge)
+        public void RemoveEdge(IEdgeBase edge)
+        {
+            RemoveEdge((Edge)edge);
+        }
+
+        /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
+        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        {
+            get { return this[(Vertex)v1, (Vertex)v2]; }
+        }
+
+        /// <summary> Добавляет ребро newEdge к графу </summary>
+        public void AddEdge(Edge edge)
+        {
+            AddEdge((IEdgeBase)edge);
+        }
+
+        /// <summary> Удаляет ребро edge из графа </summary>
+        public void RemoveEdge(Edge edge)
         {
             var toRemove = (Edge)edge;
             _edges.Remove(toRemove);
@@ -798,12 +822,21 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        public IEdge this[IVertex v1, IVertex v2]
+        public Edge this[Vertex v1, Vertex v2]
         {
             get
             {
                 var toFind = new Edge { Vertex1 = v1, Vertex2 = v2, Directed = this.Directed };
-                return _edges.FirstOrDefault(e => EdgesComparer.Comparer.Equals(e, toFind));
+                return _edges.FirstOrDefault(e => e == toFind);
+            }
+        }
+
+        /// <summary> Доступная только для чтения коллекция вершин </summary>
+        public ReadOnlyCollection<Vertex> Vertices
+        {
+            get
+            {
+                return new ReadOnlyCollection<Vertex>(_vertices);
             }
         }
 
@@ -814,7 +847,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        public ReadOnlyCollection<IVertex> Vertices
+        ReadOnlyCollection<IVertex> IGraphBase.Vertices
         {
             get { return new ReadOnlyCollection<IVertex>(_vertices.Cast<IVertex>().ToList()); }
         }
@@ -837,6 +870,12 @@ namespace GraphLabs.Components.Visualization
             LayoutRoot.Children.Add(newVertex);           
         }
 
+        /// <summary> Удалёет вершину vertex из графа </summary>
+        public void RemoveVertex(IVertex vertex)
+        {
+            RemoveVertex((Vertex)vertex);
+        }
+
         /// <summary> Добавляет вершину vertex в граф </summary>
         public void AddVertex(Vertex vertex)
         {
@@ -855,7 +894,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
-        public void RemoveVertex(IVertex vertex)
+        public void RemoveVertex(Vertex vertex)
         {
             _edges.Where(e => e.IsIncidentTo(vertex)).ForEach(RemoveEdge);
             var toRemove = (Vertex)vertex;

@@ -17,10 +17,16 @@ namespace GraphLabs.Core
             return string.Format("{0}--{1}", Vertex1, Vertex2);
         }
 
+        /// <summary> Создаёт глубокую копию данного объекта </summary>
+        public override object Clone()
+        {
+            return new UndirectedEdge((Vertex)Vertex1.Clone(), (Vertex)Vertex2.Clone());
+        }
+
         /// <summary> Создаёт новое ребро по указанным параметрам </summary>
         /// <param name="vertex1">Вершина 1</param>
         /// <param name="vertex2">Вершина 2</param>
-        public UndirectedEdge(IVertex vertex1, IVertex vertex2) :
+        public UndirectedEdge(Vertex vertex1, Vertex vertex2) :
             base(vertex1, vertex2)
         {
         }

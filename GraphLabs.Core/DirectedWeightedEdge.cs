@@ -18,7 +18,7 @@ namespace GraphLabs.Core
         /// <param name="vertex1">Вершина 1</param>
         /// <param name="vertex2">Вершина 2</param>
         /// <param name="weight">Вес</param>
-        public DirectedWeightedEdge(IVertex vertex1, IVertex vertex2, int weight) :
+        public DirectedWeightedEdge(Vertex vertex1, Vertex vertex2, int weight) :
             base(vertex1, vertex2)
         {
             Weight = weight;

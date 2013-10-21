@@ -8,7 +8,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
     internal static class GraphToDtoConverter
     {
         /// <summary> Из графа в ДТО </summary>
-        public static GraphDto Convert(IGraph value)
+        public static GraphDto Convert(IGraphBase value)
         {
             return new GraphDto
                 {
@@ -21,7 +21,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
         }
 
         /// <summary> Из ДТО в граф </summary>
-        public static Graph ConvertBack(GraphDto value)
+        public static IGraphBase ConvertBack(GraphDto value)
         {
             if (value.AllowMultipleEdges)
             {
@@ -29,11 +29,11 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
             }
             var graph = value.Directed
                             ? (
-                                  !value.IsWeighted 
-                                      ? (Graph)new DirectedGraph()
-                                      : (Graph)new DirectedWeightedGraph()
+                                  !value.IsWeighted
+                                      ? (IGraphBase)new DirectedGraph()
+                                      : (IGraphBase)new DirectedWeightedGraph()
                               )
-                            : (Graph)new UndirectedGraph();
+                            : (IGraphBase)new UndirectedGraph();
             value.Vertices.ForEach(v => graph.AddVertex(VertexToDtoConverter.ConvertBack(v)));
             value.Edges.ForEach(e => graph.AddEdge(EdgeToDtoConverter.ConvertBack(e, graph.Vertices)));
 

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Contracts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,50 +11,58 @@ using GraphLabs.Core.Helpers;
 namespace GraphLabs.Components.Visualization
 {
     /// <summary> Контрол-ребро </summary>
-    public sealed class Edge : Control, IEdge
+    public sealed class Edge : Control, IEdge<Vertex>
     {
         #region Вершины
 
         /// <summary> Вершина 1 (исток) </summary>
         public static DependencyProperty Vertex1Property = DependencyProperty.Register(
             "Vertex1",
-            typeof(IVertex),
+            typeof(Vertex),
             typeof(Edge),
             new PropertyMetadata(Vertex1Changed));
 
         /// <summary> Вершина 2 (сток) </summary>
         public static DependencyProperty Vertex2Property = DependencyProperty.Register(
             "Vertex2",
-            typeof(IVertex),
+            typeof(Vertex),
             typeof(Edge),
             new PropertyMetadata(Vertex2Changed));
 
         /// <summary> Вершина 1 (исток) </summary>
-        public IVertex Vertex1
+        public Vertex Vertex1
         {
             get
             {
-                return (IVertex)GetValue(Vertex1Property);
+                return (Vertex)GetValue(Vertex1Property);
             }
             set
             {
-                Contract.Assert(value is Control, "Поддерживаются только вершины-контролы");
-
                 SetValue(Vertex1Property, value);
             }
         }
 
+        /// <summary> Индекс вершины 2 (вершины-стока) </summary>
+        IVertex IEdgeBase.Vertex2 
+        {
+            get { return Vertex2; }
+        }
+
+        /// <summary> Индекс вершины 1 (вершины-истока) </summary>
+        IVertex IEdgeBase.Vertex1 
+        {
+            get { return Vertex1; }
+        }
+
         /// <summary> Вершина 2 (сток) </summary>
-        public IVertex Vertex2
+        public Vertex Vertex2
         {
             get
             {
-                return (IVertex)GetValue(Vertex2Property);
+                return (Vertex)GetValue(Vertex2Property);
             }
             set
             {
-                Contract.Assert(value is Control, "Поддерживаются только вершины-контролы");
-
                 SetValue(Vertex2Property, value);
             }
         }
@@ -466,6 +473,40 @@ namespace GraphLabs.Components.Visualization
         public Edge()
         {
             DefaultStyleKey = typeof(Edge);
+        }
+
+        /// <summary> Returns a string that represents the current object. </summary>
+        /// <returns> A string that represents the current object. </returns>
+        public override string ToString()
+        {
+            return string.Format(Directed ? "{0}->{1}" : "{0}--{1}", Vertex1, Vertex2);
+
+        }
+
+        /// <summary> Сравнение рёбер </summary>
+        public bool Equals(IEdgeBase other)
+        {
+            return other.Vertex1.Equals(Vertex1) && other.Vertex2.Equals(Vertex2) && other.Directed == Directed;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public override bool Equals(object obj)
+        {
+            var e = obj as IEdgeBase;
+            return e != null && Equals(e);
+        }
+
+        /// <summary> GetHashCode </summary>
+        public override int GetHashCode()
+        {
+            return Vertex1.GetHashCode() ^ Vertex2.GetHashCode() ^ Directed.GetHashCode();
+        }
+
+        /// <summary> Создаёт глубокую копию данного объекта </summary>
+        /// <remarks> Не в этот раз, детка </remarks>
+        public object Clone()
+        {
+            throw new NotSupportedException();
         }
     }
 }

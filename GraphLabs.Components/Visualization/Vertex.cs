@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -221,6 +220,7 @@ namespace GraphLabs.Components.Visualization
 
         #endregion // Constructors
 
+
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
@@ -316,5 +316,66 @@ namespace GraphLabs.Components.Visualization
         }
 
         #endregion
+
+        /// <summary> Переименовать </summary>
+        public Vertex Rename(string newName)
+        {
+            return (Vertex)((IVertex)this).Rename(newName);
+        }
+
+        /// <summary> Переименовать вершину </summary>
+        IVertex IVertex.Rename(string newName)
+        {
+            Name = newName;
+            return this;
+        }
+
+        /// <summary> Сравнение вершин </summary>
+        public bool Equals(IVertex other)
+        {
+            return Name == other.Name;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public override bool Equals(object obj)
+        {
+            var v = obj as Vertex;
+            if (v != null)
+            {
+                return Equals(v);
+            }
+
+            return false;
+        }
+
+        /// <summary> GetHashCode </summary>
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator ==(Vertex v1, IVertex v2)
+        {
+            if (v1 == null || v2 == null)
+            {
+                return false;
+            }
+
+            return v1.Equals(v2);
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator !=(Vertex v1, IVertex v2)
+        {
+            return !(v1 == v2);
+        }
+
+        /// <summary> Создаёт глубокую копию данного объекта </summary>
+        /// <remarks> Не в этой жизни </remarks>
+        public object Clone()
+        {
+            throw new NotSupportedException();
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
         /// <summary> Сериализует граф </summary>
         /// <param name="graph"> Граф </param>
         /// <returns>Массив байтов</returns>
-        public static byte[] Serialize(IGraph graph)
+        public static byte[] Serialize(IGraphBase graph)
         {
             using (var stream = new MemoryStream())
             {
@@ -25,7 +25,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
         /// <returns>
         /// <see cref="DirectedGraph"/> или <see cref="UndirectedGraph"/>
         /// </returns>
-        public static Graph Deserialize(byte[] graph)
+        public static IGraphBase Deserialize(byte[] graph)
         {
             using (var stream = new MemoryStream(graph))
             {

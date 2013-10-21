@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
 using GraphLabs.Core.Helpers;
@@ -31,7 +32,9 @@ namespace GraphLabs.Core
             return vertex1.Name == _bijection[vertex2.Name];
         }
 
-        private static bool DirectCompare(IGraph graph1, IGraph graph2)
+        private static bool DirectCompare<TVertex, TEdge>(IGraph<TVertex, TEdge> graph1, IGraph<TVertex, TEdge> graph2)
+            where TVertex : IVertex
+            where TEdge : IEdge<TVertex>
         {
             int equals = 0;
             int count = graph1.EdgesCount;
@@ -48,7 +51,8 @@ namespace GraphLabs.Core
             return equals == count;
         }
 
-        private static void UpdateBijection(IEnumerable<IVertex> verticesList1, IEnumerable<IVertex> verticesList2)
+        private static void UpdateBijection<TVertex>(IEnumerable<TVertex> verticesList1, IEnumerable<TVertex> verticesList2)
+            where TVertex : IVertex
         {
             _bijection = new Dictionary<string, string>();
             foreach (string[] i in verticesList1.Zip(verticesList2, (a, b) => new string[] { a.Name, b.Name }))
@@ -56,11 +60,13 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Проверка двух графов на изоморфизм. </summary>
-        public static bool CheckIsomorphism(IGraph graph1, IGraph graph2)
+        public static bool CheckIsomorphism<TVertex, TEdge>(IGraph<TVertex, TEdge> graph1, IGraph<TVertex, TEdge> graph2)
+            where TVertex : IVertex
+            where TEdge : IEdge<TVertex>
         {
             if (graph1.VerticesCount != graph2.VerticesCount || graph1.EdgesCount != graph2.EdgesCount)
                 return false;
-            foreach (IVertex[] perm in Permute(graph1.Vertices.ToArray()))
+            foreach (TVertex[] perm in Permute(graph1.Vertices.ToArray()))
             {
                 UpdateBijection(perm, graph2.Vertices.ToArray());
                 if (DirectCompare(graph1, graph2))
@@ -74,82 +80,42 @@ namespace GraphLabs.Core
 
         #region Операции над графами
 
-        /// <summary> Объединение двух графов. </summary>
-        public static Graph Union(Graph g1, Graph g2)
+        /// <summary> Объединение графов </summary>
+        public static Graph<TVertex, TEdge> Union<TVertex, TEdge>(params Graph<TVertex, TEdge>[] graphs)
+            where TVertex : IVertex
+            where TEdge : IEdge<TVertex>
         {
-            int g1length = g1.VerticesCount;
-            int g2length = g2.VerticesCount;
+            Contract.Requires(graphs != null && graphs.Any());
 
-            Graph g = g1;
-
-
-            for (int i = 0; i <= g1length; i++)
+            var copies = graphs.Select(g => (Graph<TVertex, TEdge>)g.Clone()).ToArray();
+            for (var i = 1; i <= copies.Length; ++i)
             {
-                int newVertexNum = -1;
-                for (int j = 0; j <= g2length; j++)
-                {
-                    if (g.Vertices.ToArray()[i].Equals(g2.Vertices.ToArray()[j]))
-                    {
-                        newVertexNum = j;
-                    };
-                }
-                if (newVertexNum != -1)
-                {
-                    g.AddVertex(g2.Vertices.ToArray()[newVertexNum]);
-                }
+                copies[i - 1].Vertices.ForEach(v => v.Rename(string.Format("{0}-{1}", i.ToString(CultureInfo.InvariantCulture), v.Name)));
             }
 
-            for (int i = 0; i <= g2length; i++)
+            var result = copies.First();
+            for (var i = 1; i < copies.Length; ++i)
             {
-                for (int j = 0; j <= g2length; j++)
-                {
-                    if (!g.Edges.ToArray()[i].Equals(g2.Edges.ToArray()[j]))
-                    {
-                        g.AddEdge(g2.Edges.ToArray()[j]);
-                    };
-                }
+                copies[i].Vertices.ForEach(result.AddVertex);
+                copies[i].Edges.ForEach(result.AddEdge);
             }
-            return g;
+
+            return result;
         }
 
         /// <summary> Пересечение двух графов. </summary>
-        public static Graph Intersection(Graph g1, Graph g2)
+        public static Graph<TVertex, TEdge> Intersection<TVertex, TEdge>(Graph<TVertex, TEdge> g1, Graph<TVertex, TEdge> g2)
+            where TVertex : IVertex
+            where TEdge : IEdge<TVertex>
         {
-            int g1length = g1.VerticesCount;
-            int g2length = g2.VerticesCount;
+            var resultVertices = g1.Vertices.Where(g => g2.Vertices.Contains(g)).Select(e => (TVertex)e.Clone()).ToArray();
+            var resultEdges = g1.Edges.Where(g => g2.Edges.Contains(g)).Select(e => (TEdge)e.Clone()).ToArray();
 
-            Graph g = g1;
-            foreach (IEdge e in  g.Edges.ToArray()){ 
-                g.RemoveEdge(e);
-            }
+            var result = (Graph<TVertex, TEdge>)g1.Clone();
+            resultEdges.ForEach(result.RemoveEdge);
+            resultVertices.ForEach(result.RemoveVertex);
 
-            for (int i = 0; i <= g1length; i++)
-            {
-                int newVertexNum = -1;
-                for (int j = 0; j <= g2length; j++)
-                {
-                    if (g.Vertices.ToArray()[i].Equals(g2.Vertices.ToArray()[j]))
-                    {
-                        newVertexNum = j;
-                    };
-                }
-                if (newVertexNum != -1)
-                {
-                    g.AddVertex(g2.Vertices.ToArray()[newVertexNum]);
-                }
-            }
-
-            for (int i = 0; i <= g2length; i++)
-            {
-                for (int j = 0; j <= g2length; j++)
-                {
-                    if (g.Edges.ToArray()[i].Equals(g2.Edges.ToArray()[j]))
-                    {
-                        g.AddEdge(g2.Edges.ToArray()[j]);
-                    };
-                }
-            }
-            return g;
+            return result;
         }
 
         #endregion 
@@ -162,16 +128,16 @@ namespace GraphLabs.Core
         private class SccBuilder
         {
             /// <summary> Ищет компоненты связности для заданного графа </summary>
-            public static ICollection<IGraph> FindComponents(IGraph graph)
+            public static ICollection<IGraphBase> FindComponents(IGraphBase graph)
             {
                 return (new SccBuilder(graph)).BuildComponents();
             }
 
             private readonly int[,] _accessibilityMatrix;
-            private readonly IGraph _graph;
+            private readonly IGraphBase _graph;
             private readonly IList<IVertex> _vertices;
 
-            private SccBuilder(IGraph graph)
+            private SccBuilder(IGraphBase graph)
             {
                 _graph = graph;
                 _vertices = _graph.Vertices;
@@ -198,7 +164,7 @@ namespace GraphLabs.Core
 
             
             //todo: кажется, тут местами можно немного проще сделать
-            private ICollection<IGraph> BuildComponents()
+            private ICollection<IGraphBase> BuildComponents()
             {
                 for (var i = 0; i < _graph.VerticesCount; ++i)
                 {
@@ -222,14 +188,14 @@ namespace GraphLabs.Core
                     added[i] = false;
                 }
 
-                var components = new List<IGraph>();
+                var components = new List<IGraphBase>();
                 for (var i = 0; i < _graph.VerticesCount; ++i)
                 {
                     if (added[i])
                         continue;
                     var scc = _graph.Directed
-                                     ? (IGraph)new DirectedGraph()
-                                     : (IGraph)new UndirectedGraph();
+                                     ? (IGraphBase)new DirectedGraph()
+                                     : (IGraphBase)new UndirectedGraph();
 
                     added[i] = true;
                     scc.AddVertex(_vertices[i]);
@@ -257,7 +223,7 @@ namespace GraphLabs.Core
         /// <requires>graph != null</requires>
         /// <requires>!graph.AllowMultipleEdges</requires>
         /// <requires>graph.Directed</requires>
-        public static ICollection<IGraph> FindStronglyConnectedComponents(IGraph graph)
+        public static ICollection<IGraphBase> FindStronglyConnectedComponents(IGraphBase graph)
         {
             Contract.Requires<ArgumentNullException>(graph != null);
             // надо понять, что даст алгоритм в случае с MultipleEdges, поэтому пока запретим их

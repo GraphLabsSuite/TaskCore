@@ -9,7 +9,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
     internal static class EdgeToDtoConverter
     {
         /// <summary> Из ребра в ДТО </summary>
-        public static EdgeDto Convert(IEdge value)
+        public static EdgeDto Convert(IEdgeBase value)
         {
             Contract.Requires<ArgumentNullException>(value != null);
 
@@ -23,7 +23,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
         }
 
         /// <summary> Из ДТО в ребра </summary>
-        public static Edge ConvertBack(EdgeDto value, IEnumerable<IVertex> vertices)
+        public static Edge ConvertBack(EdgeDto value, ICollection<IVertex> vertices)
         {
             Contract.Requires<ArgumentNullException>(value != null);
 
@@ -32,10 +32,10 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
             return value.Directed
                        ? (
                             !value.Weight.HasValue
-                                ? (Edge)new DirectedEdge(vertex1, vertex2)
-                                : (Edge)new DirectedWeightedEdge(vertex1, vertex2, value.Weight.Value)
+                                ? (Edge)new DirectedEdge((Vertex)vertex1, (Vertex)vertex2)
+                                : (Edge)new DirectedWeightedEdge((Vertex)vertex1, (Vertex)vertex2, value.Weight.Value)
                          )
-                       : (Edge)new UndirectedEdge(vertex1, vertex2);
+                       : (Edge)new UndirectedEdge((Vertex)vertex1, (Vertex)vertex2);
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using GraphLabs.Core.Helpers;
 
 namespace GraphLabs.Core
 {
     /// <summary> Класс контрактов для интерфейса IGaph </summary>
-    [ContractClassFor(typeof(IGraph))]
-    public abstract class GraphContracts : IGraph
+    [ContractClassFor(typeof(IGraph<,>))]
+    public abstract class GraphContracts<TVertex, TEdge> : IGraph<TVertex, TEdge>
+        where TVertex : IVertex
+        where TEdge : IEdge<TVertex>
     {
 
         #region Implementation of IGraph
@@ -29,20 +29,60 @@ namespace GraphLabs.Core
             }
         }
 
-        /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        public ReadOnlyCollection<IEdge> Edges { get; private set; }
+        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges 
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ReadOnlyCollection<IEdgeBase>>() != null);
+                return default(ReadOnlyCollection<IEdgeBase>);
+            } 
+        }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(IEdge newEdge)
+        public void AddEdge(IEdgeBase edge)
+        {
+            Contract.Requires(edge is TEdge);
+        }
+
+        /// <summary> Удаляет ребро edge из графа </summary>
+        public void RemoveEdge(IEdgeBase edge)
+        {
+            Contract.Requires(edge is TEdge);
+        }
+
+        /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
+        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        {
+            get
+            {
+                Contract.Requires(v1 is TVertex);
+                Contract.Requires(v2 is TVertex);
+
+                return default(IEdgeBase);
+            }
+        }
+
+        /// <summary> Доступная только для чтения коллекция рёбер </summary>
+        public ReadOnlyCollection<TEdge> Edges
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ReadOnlyCollection<TEdge>>() != null);
+                return default(ReadOnlyCollection<TEdge>);
+            }
+        }
+
+        /// <summary> Добавляет ребро newEdge к графу </summary>
+        public void AddEdge(TEdge newEdge)
         {
             Contract.Requires<ArgumentNullException>(newEdge != null);
             Contract.Requires<ArgumentException>(newEdge.Directed == Directed);
             // При добавлении нужно убедиться, что нет _какого-либо_ ребра между вершинами - поэтому компаратор (см bug82)
-            Contract.Requires<InvalidOperationException>(AllowMultipleEdges || !Edges.Contains(newEdge, EdgesComparer.Comparer));
+            Contract.Requires<InvalidOperationException>(AllowMultipleEdges || !Edges.Contains(newEdge));
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(IEdge edge)
+        public void RemoveEdge(TEdge edge)
         {
             Contract.Requires<ArgumentNullException>(edge != null);
             // Удаляем конкретное ребро (см bug82)
@@ -59,19 +99,40 @@ namespace GraphLabs.Core
             }
         }
 
-        /// <summary> Доступная только для чтения коллекция вершин </summary>
-        public ReadOnlyCollection<IVertex> Vertices { get; private set; }
+        ReadOnlyCollection<TVertex> IGraph<TVertex, TEdge>.Vertices
+        {
+            get
+            {
+                Contract.Ensures(Contract.Result<ReadOnlyCollection<TVertex>>() != null);
+                return default(ReadOnlyCollection<TVertex>); 
+            }
+        }
 
         /// <summary> Добавляет вершину vertex в граф </summary>
         public void AddVertex(IVertex vertex)
         {
-            Contract.Requires<ArgumentNullException>(vertex != null);
-            // Используем компаратор, т.к. требуется, чтобы не было вершин с одинаковыми именами (см bug82)
-            Contract.Requires<InvalidOperationException>(!Vertices.Contains(vertex, VerticesComparer.Comparer));
+            Contract.Requires(vertex is TVertex);
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
         public void RemoveVertex(IVertex vertex)
+        {
+            Contract.Requires(vertex is TVertex);
+        }
+
+        /// <summary> Доступная только для чтения коллекция вершин </summary>
+        public ReadOnlyCollection<IVertex> Vertices { get; private set; }
+
+        /// <summary> Добавляет вершину vertex в граф </summary>
+        public void AddVertex(TVertex vertex)
+        {
+            Contract.Requires<ArgumentNullException>(vertex != null);
+            // Используем компаратор, т.к. требуется, чтобы не было вершин с одинаковыми именами (см bug82)
+            Contract.Requires<InvalidOperationException>(!Vertices.Contains(vertex));
+        }
+
+        /// <summary> Удалёет вершину vertex из графа </summary>
+        public void RemoveVertex(TVertex vertex)
         {
             Contract.Requires<ArgumentNullException>(vertex != null);
             // Удалить можно только конкретную вершину - поэтому ищем только её (см bug82)
@@ -79,14 +140,14 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        public IEdge this[IVertex v1, IVertex v2]
+        public TEdge this[TVertex v1, TVertex v2]
         {
             get
             {
                 Contract.Requires(v1 != null);
                 Contract.Requires(v2 != null);
 
-                return default(IEdge);
+                return default(TEdge);
             }
         }
 

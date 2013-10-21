@@ -7,13 +7,15 @@ using GraphLabs.Core.Helpers;
 namespace GraphLabs.Core
 {
     /// <summary> Абстрактный граф </summary>
-    public abstract class Graph : IObservableGraph, ICloneable
+    public abstract class Graph<TVertex, TEdge> : IGraph<TVertex, TEdge>, IObservableGraph, ICloneable
+        where TVertex : IVertex
+        where TEdge : IEdge<TVertex>
     {
         /// <summary> Коллекция рёбрышек </summary>
-        protected IList<IEdge> EdgesList { get; set; }
+        protected IList<TEdge> EdgesList { get; set; }
 
         /// <summary> Коллекция вершинок </summary>
-        protected IList<IVertex> VerticesList { get; set; }
+        protected IList<TVertex> VerticesList { get; set; }
 
 
         #region Implementation of IGraph
@@ -31,26 +33,50 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        public ReadOnlyCollection<IEdge> Edges
+        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges
         {
-            get { return new ReadOnlyCollection<IEdge>(EdgesList); } 
+            get { return new ReadOnlyCollection<IEdgeBase>(EdgesList.Cast<IEdgeBase>().ToArray()); }
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public virtual void AddEdge(IEdge edge)
+        public void AddEdge(IEdgeBase edge)
+        {
+            AddEdge((TEdge)edge);
+        }
+
+        /// <summary> Удаляет ребро edge из графа </summary>
+        public void RemoveEdge(IEdgeBase edge)
+        {
+            RemoveEdge((TEdge)edge);
+        }
+
+        /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
+        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        {
+            get { return this[(TVertex)v1, (TVertex)v2]; }
+        }
+
+        /// <summary> Доступная только для чтения коллекция рёбер </summary>
+        public ReadOnlyCollection<TEdge> Edges
+        {
+            get { return new ReadOnlyCollection<TEdge>(EdgesList); } 
+        }
+
+        /// <summary> Добавляет ребро newEdge к графу </summary>
+        public virtual void AddEdge(TEdge edge)
         {
             EdgesList.Add(edge);
             OnGraphChanged(this,
                 new GraphChangedEventArgs(
                     null,
                     null,
-                    new[] { edge },
+                    new[] { (IEdgeBase)edge },
                     null)
                     );
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public virtual void RemoveEdge(IEdge edge)
+        public virtual void RemoveEdge(TEdge edge)
         {
             EdgesList.Remove(edge);
             OnGraphChanged(this,
@@ -58,7 +84,7 @@ namespace GraphLabs.Core
                     null,
                     null,
                     null,
-                    new[] { edge })
+                    new[] { (IEdgeBase)edge })
                     );
         }
 
@@ -68,19 +94,36 @@ namespace GraphLabs.Core
             get { return VerticesList.Count; }
         }
 
-        /// <summary> Доступная только для чтения коллекция вершин </summary>
-        public ReadOnlyCollection<IVertex> Vertices
+        ReadOnlyCollection<IVertex> IGraphBase.Vertices
         {
-            get { return new ReadOnlyCollection<IVertex>(VerticesList); }
+            get { return new ReadOnlyCollection<IVertex>(Vertices.Cast<IVertex>().ToList());}
         }
 
         /// <summary> Добавляет вершину vertex в граф </summary>
-        public virtual void AddVertex(IVertex vertex)
+        public void AddVertex(IVertex vertex)
+        {
+            AddVertex((TVertex)vertex);
+        }
+
+        /// <summary> Удалёет вершину vertex из графа </summary>
+        public void RemoveVertex(IVertex vertex)
+        {
+            RemoveVertex((TVertex)vertex);
+        }
+
+        /// <summary> Доступная только для чтения коллекция вершин </summary>
+        public ReadOnlyCollection<TVertex> Vertices
+        {
+            get { return new ReadOnlyCollection<TVertex>(VerticesList); }
+        }
+
+        /// <summary> Добавляет вершину vertex в граф </summary>
+        public virtual void AddVertex(TVertex vertex)
         {
             VerticesList.Add(vertex);
             OnGraphChanged(this,
                 new GraphChangedEventArgs(
-                    new[] { vertex },
+                    new[] { (IVertex)vertex },
                     null,
                     null,
                     null)
@@ -88,22 +131,22 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
-        public virtual void RemoveVertex(IVertex vertex)
+        public virtual void RemoveVertex(TVertex vertex)
         {
             var edgesToRemove = EdgesList.Where(e => e.IsIncidentTo(vertex)).ToArray();
             edgesToRemove.ForEach(e => EdgesList.Remove(e));
             VerticesList.Remove(vertex);
             OnGraphChanged(this, 
                 new GraphChangedEventArgs(
-                    null, 
-                    new [] { vertex }, 
-                    null, 
-                    edgesToRemove.AsEnumerable())
+                    null,
+                    new[] { (IVertex)vertex }, 
+                    null,
+                    edgesToRemove.Cast<IEdgeBase>())
                     );
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        public abstract IEdge this[IVertex v1, IVertex v2] { get; }
+        public abstract TEdge this[TVertex v1, TVertex v2] { get; }
 
         #endregion // Implementation of IGraph
 
@@ -113,8 +156,8 @@ namespace GraphLabs.Core
         /// <summary> Создаёт новый совсем пустой граф. </summary>
         protected Graph()
         {
-            VerticesList = new List<IVertex>();
-            EdgesList = new List<IEdge>();
+            VerticesList = new List<TVertex>();
+            EdgesList = new List<TEdge>();
         }
 
         #endregion // Constructors
