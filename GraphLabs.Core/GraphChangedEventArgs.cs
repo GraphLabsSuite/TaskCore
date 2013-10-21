@@ -7,10 +7,10 @@ namespace GraphLabs.Core
     public sealed class GraphChangedEventArgs : EventArgs
     {
         /// <summary> Новые рёбра </summary>
-        public IEnumerable<IEdgeBase> NewEdges { get; private set; }
+        public IEnumerable<IEdge> NewEdges { get; private set; }
 
         /// <summary> Удалённые или замещённые рёбра </summary>
-        public IEnumerable<IEdgeBase> OldEdges { get; private set; }
+        public IEnumerable<IEdge> OldEdges { get; private set; }
 
         /// <summary> Новые вершины </summary>
         public IEnumerable<IVertex> NewVertices { get; private set; }
@@ -26,7 +26,7 @@ namespace GraphLabs.Core
         /// <param name="newEdges"> Добавленные рёбра </param>
         /// <param name="oldEdges"> Удалённые или замещённые рёбра </param>
         public GraphChangedEventArgs(IEnumerable<IVertex> newVertices, IEnumerable<IVertex> oldVertices,
-            IEnumerable<IEdgeBase> newEdges, IEnumerable<IEdgeBase> oldEdges)
+            IEnumerable<IEdge> newEdges, IEnumerable<IEdge> oldEdges)
         {
             NewEdges = newEdges;
             OldEdges = oldEdges;

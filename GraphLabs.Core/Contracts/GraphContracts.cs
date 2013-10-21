@@ -31,40 +31,40 @@ namespace GraphLabs.Core.Contracts
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges
+        ReadOnlyCollection<IEdge> IGraph.Edges
         {
             get
             {
-                Contract.Ensures(Contract.Result<ReadOnlyCollection<IEdgeBase>>() != null);
-                Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<IEdgeBase>>(), e => e is TEdge));
+                Contract.Ensures(Contract.Result<ReadOnlyCollection<IEdge>>() != null);
+                Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<IEdge>>(), e => e is TEdge));
 
-                return default(ReadOnlyCollection<IEdgeBase>);
+                return default(ReadOnlyCollection<IEdge>);
             }
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        void IGraphBase.AddEdge(IEdgeBase edge)
+        void IGraph.AddEdge(IEdge edge)
         {
             Contract.Requires<ArgumentException>(edge is TEdge);
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        void IGraphBase.RemoveEdge(IEdgeBase edge)
+        void IGraph.RemoveEdge(IEdge edge)
         {
             Contract.Requires<ArgumentException>(edge is TEdge);
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        IEdge IGraph.this[IVertex v1, IVertex v2]
         {
             get
             {
                 Contract.Requires<ArgumentException>(v1 is TVertex);
                 Contract.Requires<ArgumentException>(v2 is TVertex);
 
-                Contract.Ensures(Contract.Result<IEdgeBase>() is TEdge);
+                Contract.Ensures(Contract.Result<IEdge>() is TEdge);
 
-                return default(IEdgeBase);
+                return default(IEdge);
             }
         }
 
@@ -79,7 +79,7 @@ namespace GraphLabs.Core.Contracts
         }
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        ReadOnlyCollection<IVertex> IGraphBase.Vertices
+        ReadOnlyCollection<IVertex> IGraph.Vertices
         {
             get
             {
@@ -91,13 +91,13 @@ namespace GraphLabs.Core.Contracts
         }
 
         /// <summary> Добавляет вершину vertex в граф </summary>
-        void IGraphBase.AddVertex(IVertex vertex)
+        void IGraph.AddVertex(IVertex vertex)
         {
             Contract.Requires<ArgumentException>(vertex is TVertex);
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
-        void IGraphBase.RemoveVertex(IVertex vertex)
+        void IGraph.RemoveVertex(IVertex vertex)
         {
             Contract.Requires<ArgumentException>(vertex is TVertex);
         }

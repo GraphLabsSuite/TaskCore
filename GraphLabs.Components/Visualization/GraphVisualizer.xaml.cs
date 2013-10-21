@@ -702,8 +702,8 @@ namespace GraphLabs.Components.Visualization
                             var vertex1 = Graph.Vertices.Single(v => v == e.Vertex1);
                             var vertex2 = Graph.Vertices.Single(v => v == e.Vertex2);
                             var newEdge = Directed
-                                              ? (IEdgeBase)new DirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2)
-                                              : (IEdgeBase)new UndirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2);
+                                              ? (IEdge)new DirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2)
+                                              : (IEdge)new UndirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2);
 
                             Graph.AddEdge(newEdge);
                         });
@@ -764,9 +764,9 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges
+        ReadOnlyCollection<IEdge> IGraph.Edges
         {
-            get { return new ReadOnlyCollection<IEdgeBase>(_edges.Cast<IEdgeBase>().ToArray()); }
+            get { return new ReadOnlyCollection<IEdge>(_edges.Cast<IEdge>().ToArray()); }
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
@@ -776,7 +776,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(IEdgeBase edge)
+        public void AddEdge(IEdge edge)
         {
             var newEdge = new Edge
             {
@@ -796,13 +796,13 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(IEdgeBase edge)
+        public void RemoveEdge(IEdge edge)
         {
             RemoveEdge((Edge)edge);
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        IEdge IGraph.this[IVertex v1, IVertex v2]
         {
             get { return this[(Vertex)v1, (Vertex)v2]; }
         }
@@ -810,7 +810,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Добавляет ребро newEdge к графу </summary>
         public void AddEdge(Edge edge)
         {
-            AddEdge((IEdgeBase)edge);
+            AddEdge((IEdge)edge);
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
@@ -847,7 +847,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        ReadOnlyCollection<IVertex> IGraphBase.Vertices
+        ReadOnlyCollection<IVertex> IGraph.Vertices
         {
             get { return new ReadOnlyCollection<IVertex>(_vertices.Cast<IVertex>().ToList()); }
         }

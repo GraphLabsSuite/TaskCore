@@ -135,7 +135,7 @@ namespace GraphLabs.Tests.Core
             graph.AddEdge(newEdge1);
             graph.AddEdge(newEdge2);
 
-            var clonedGraph = graph.Clone() as IGraphBase;
+            var clonedGraph = graph.Clone() as IGraph;
             Assert.IsTrue(clonedGraph is UndirectedGraph);
             Assert.AreEqual(graph.VerticesCount, clonedGraph.VerticesCount);
             foreach (var vertex in graph.Vertices)

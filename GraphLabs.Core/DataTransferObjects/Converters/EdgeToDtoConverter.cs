@@ -9,7 +9,7 @@ namespace GraphLabs.Core.DataTransferObjects.Converters
     internal static class EdgeToDtoConverter
     {
         /// <summary> Из ребра в ДТО </summary>
-        public static EdgeDto Convert(IEdgeBase value)
+        public static EdgeDto Convert(IEdge value)
         {
             Contract.Requires<ArgumentNullException>(value != null);
 

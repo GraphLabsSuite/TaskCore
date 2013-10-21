@@ -33,25 +33,25 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdgeBase> IGraphBase.Edges
+        ReadOnlyCollection<IEdge> IGraph.Edges
         {
-            get { return new ReadOnlyCollection<IEdgeBase>(EdgesList.Cast<IEdgeBase>().ToArray()); }
+            get { return new ReadOnlyCollection<IEdge>(EdgesList.Cast<IEdge>().ToArray()); }
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(IEdgeBase edge)
+        public void AddEdge(IEdge edge)
         {
             AddEdge((TEdge)edge);
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(IEdgeBase edge)
+        public void RemoveEdge(IEdge edge)
         {
             RemoveEdge((TEdge)edge);
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        IEdgeBase IGraphBase.this[IVertex v1, IVertex v2]
+        IEdge IGraph.this[IVertex v1, IVertex v2]
         {
             get { return this[(TVertex)v1, (TVertex)v2]; }
         }
@@ -70,7 +70,7 @@ namespace GraphLabs.Core
                 new GraphChangedEventArgs(
                     null,
                     null,
-                    new[] { (IEdgeBase)edge },
+                    new[] { (IEdge)edge },
                     null)
                     );
         }
@@ -84,7 +84,7 @@ namespace GraphLabs.Core
                     null,
                     null,
                     null,
-                    new[] { (IEdgeBase)edge })
+                    new[] { (IEdge)edge })
                     );
         }
 
@@ -94,7 +94,7 @@ namespace GraphLabs.Core
             get { return VerticesList.Count; }
         }
 
-        ReadOnlyCollection<IVertex> IGraphBase.Vertices
+        ReadOnlyCollection<IVertex> IGraph.Vertices
         {
             get { return new ReadOnlyCollection<IVertex>(Vertices.Cast<IVertex>().ToList());}
         }
@@ -141,7 +141,7 @@ namespace GraphLabs.Core
                     null,
                     new[] { (IVertex)vertex }, 
                     null,
-                    edgesToRemove.Cast<IEdgeBase>())
+                    edgesToRemove.Cast<IEdge>())
                     );
         }
 

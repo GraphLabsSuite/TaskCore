@@ -128,16 +128,16 @@ namespace GraphLabs.Core
         private class SccBuilder
         {
             /// <summary> Ищет компоненты связности для заданного графа </summary>
-            public static ICollection<IGraphBase> FindComponents(IGraphBase graph)
+            public static ICollection<IGraph> FindComponents(IGraph graph)
             {
                 return (new SccBuilder(graph)).BuildComponents();
             }
 
             private readonly int[,] _accessibilityMatrix;
-            private readonly IGraphBase _graph;
+            private readonly IGraph _graph;
             private readonly IList<IVertex> _vertices;
 
-            private SccBuilder(IGraphBase graph)
+            private SccBuilder(IGraph graph)
             {
                 _graph = graph;
                 _vertices = _graph.Vertices;
@@ -164,7 +164,7 @@ namespace GraphLabs.Core
 
             
             //todo: кажется, тут местами можно немного проще сделать
-            private ICollection<IGraphBase> BuildComponents()
+            private ICollection<IGraph> BuildComponents()
             {
                 for (var i = 0; i < _graph.VerticesCount; ++i)
                 {
@@ -188,14 +188,14 @@ namespace GraphLabs.Core
                     added[i] = false;
                 }
 
-                var components = new List<IGraphBase>();
+                var components = new List<IGraph>();
                 for (var i = 0; i < _graph.VerticesCount; ++i)
                 {
                     if (added[i])
                         continue;
                     var scc = _graph.Directed
-                                     ? (IGraphBase)new DirectedGraph()
-                                     : (IGraphBase)new UndirectedGraph();
+                                     ? (IGraph)new DirectedGraph()
+                                     : (IGraph)new UndirectedGraph();
 
                     added[i] = true;
                     scc.AddVertex(_vertices[i]);
@@ -223,7 +223,7 @@ namespace GraphLabs.Core
         /// <requires>graph != null</requires>
         /// <requires>!graph.AllowMultipleEdges</requires>
         /// <requires>graph.Directed</requires>
-        public static ICollection<IGraphBase> FindStronglyConnectedComponents(IGraphBase graph)
+        public static ICollection<IGraph> FindStronglyConnectedComponents(IGraph graph)
         {
             Contract.Requires<ArgumentNullException>(graph != null);
             // надо понять, что даст алгоритм в случае с MultipleEdges, поэтому пока запретим их

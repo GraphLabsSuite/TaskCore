@@ -6,7 +6,7 @@ using System.Text;
 namespace GraphLabs.Core
 {
     /// <summary> Взвешенное ребро </summary>
-    public interface IWeightedEdge : IEdgeBase
+    public interface IWeightedEdge : IEdge
     {
         /// <summary> Вес ребра </summary>
         int Weight { get; }

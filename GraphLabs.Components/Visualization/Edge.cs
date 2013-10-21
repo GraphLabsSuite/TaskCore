@@ -43,13 +43,13 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Индекс вершины 2 (вершины-стока) </summary>
-        IVertex IEdgeBase.Vertex2 
+        IVertex IEdge.Vertex2 
         {
             get { return Vertex2; }
         }
 
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>
-        IVertex IEdgeBase.Vertex1 
+        IVertex IEdge.Vertex1 
         {
             get { return Vertex1; }
         }
@@ -484,7 +484,7 @@ namespace GraphLabs.Components.Visualization
         }
 
         /// <summary> Сравнение рёбер </summary>
-        public bool Equals(IEdgeBase other)
+        public bool Equals(IEdge other)
         {
             return other.Vertex1.Equals(Vertex1) && other.Vertex2.Equals(Vertex2) && other.Directed == Directed;
         }
@@ -492,7 +492,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравниваем </summary>
         public override bool Equals(object obj)
         {
-            var e = obj as IEdgeBase;
+            var e = obj as IEdge;
             return e != null && Equals(e);
         }
 

@@ -1,13 +1,17 @@
-﻿namespace GraphLabs.Core
+﻿using System;
+
+namespace GraphLabs.Core
 {
-    /// <summary> Ребро или дуга графа </summary>
-    public interface IEdge<TVertex> : IEdgeBase
-        where TVertex : IVertex
+    /// <summary> Non-generic IEdge </summary>
+    public interface IEdge : IEquatable<IEdge>, ICloneable
     {
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>
-        new TVertex Vertex1 { get; }
+        IVertex Vertex1 { get; }
 
         /// <summary> Индекс вершины 2 (вершины-стока) </summary>
-        new TVertex Vertex2 { get; }
+        IVertex Vertex2 { get; }
+
+        /// <summary> Ребро ориентированное? (является дугой?) </summary>
+        bool Directed { get; }
     }
 }

@@ -15,13 +15,13 @@ namespace GraphLabs.Core
         public Vertex Vertex2 { get; private set; }
 
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>
-        IVertex IEdgeBase.Vertex1
+        IVertex IEdge.Vertex1
         {
             get { return Vertex1; }
         }
 
         /// <summary> Индекс вершины 2 (вершины-стока) </summary>
-        IVertex IEdgeBase.Vertex2
+        IVertex IEdge.Vertex2
         {
             get { return Vertex2; }
         }
@@ -50,7 +50,7 @@ namespace GraphLabs.Core
         public abstract object Clone();
 
         /// <summary> Сравнение рёбер </summary>
-        public bool Equals(IEdgeBase other)
+        public bool Equals(IEdge other)
         {
             return Directed == other.Directed &&
                 (other.Vertex1.Equals(Vertex1) && other.Vertex2.Equals(Vertex2)
@@ -60,7 +60,7 @@ namespace GraphLabs.Core
         /// <summary> Сравниваем </summary>
         public override bool Equals(object obj)
         {
-            var e = obj as IEdgeBase;
+            var e = obj as IEdge;
             return e != null && Equals(e);
         }
 
