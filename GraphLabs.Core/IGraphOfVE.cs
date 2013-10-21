@@ -13,7 +13,7 @@ namespace GraphLabs.Core
         #region Edges
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<TEdge> Edges { get; }
+        new ReadOnlyCollection<TEdge> Edges { get; }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
         void AddEdge(TEdge edge);
