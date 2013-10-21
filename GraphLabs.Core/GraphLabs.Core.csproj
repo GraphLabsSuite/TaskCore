@@ -107,6 +107,7 @@
     <None Include="Properties\AssemblyInfo.cs.template" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\CollectionAdapter.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="DataTransferObjects\Converters\EdgeToDtoConverter.cs" />
     <Compile Include="DataTransferObjects\Converters\GraphToDtoConverter.cs" />

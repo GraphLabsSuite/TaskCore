@@ -36,7 +36,7 @@ namespace GraphLabs.Core
         /// <param name="vertex2">Вершина 2</param>
         protected Edge(Vertex vertex1, Vertex vertex2)
         {
-            Contract.Requires<NullReferenceException>(vertex1 != null && vertex2 != null);
+            Contract.Requires<ArgumentNullException>(vertex1 != null && vertex2 != null);
 
             Vertex1 = vertex1;
             Vertex2 = vertex2;

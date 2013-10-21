@@ -12,10 +12,10 @@ namespace GraphLabs.Core
         where TEdge : IEdge<TVertex>
     {
         /// <summary> Коллекция рёбрышек </summary>
-        protected IList<TEdge> EdgesList { get; set; }
+        protected readonly IList<TEdge> EdgesList;
 
         /// <summary> Коллекция вершинок </summary>
-        protected IList<TVertex> VerticesList { get; set; }
+        protected readonly IList<TVertex> VerticesList;
 
 
         #region Implementation of IGraph
@@ -35,17 +35,18 @@ namespace GraphLabs.Core
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
         ReadOnlyCollection<IEdge> IGraph.Edges
         {
-            get { return new ReadOnlyCollection<IEdge>(EdgesList.Cast<IEdge>().ToArray()); }
+            get { return _readOnlyIEdges ?? (_readOnlyIEdges = new ReadOnlyCollection<IEdge>(new ListAdapter<TEdge, IEdge>(EdgesList))); }
         }
+        private ReadOnlyCollection<IEdge> _readOnlyIEdges;
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(IEdge edge)
+        void IGraph.AddEdge(IEdge edge)
         {
             AddEdge((TEdge)edge);
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(IEdge edge)
+        void IGraph.RemoveEdge(IEdge edge)
         {
             RemoveEdge((TEdge)edge);
         }
@@ -56,14 +57,44 @@ namespace GraphLabs.Core
             get { return this[(TVertex)v1, (TVertex)v2]; }
         }
 
+        /// <summary> Числов вершин </summary>
+        public int VerticesCount
+        {
+            get { return VerticesList.Count; }
+        }
+
+        ReadOnlyCollection<IVertex> IGraph.Vertices
+        {
+            get { return _readOnlyIVertices ?? (_readOnlyIVertices = new ReadOnlyCollection<IVertex>(new ListAdapter<TVertex, IVertex>(Vertices))); }
+        }
+        private ReadOnlyCollection<IVertex> _readOnlyIVertices;
+
+        /// <summary> Добавляет вершину vertex в граф </summary>
+        void IGraph.AddVertex(IVertex vertex)
+        {
+            AddVertex((TVertex)vertex);
+        }
+
+        /// <summary> Удалёет вершину vertex из графа </summary>
+        void IGraph.RemoveVertex(IVertex vertex)
+        {
+            RemoveVertex((TVertex)vertex);
+        }
+
+        #endregion
+
+
+        #region Implementation of IGraph
+
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
         public ReadOnlyCollection<TEdge> Edges
         {
-            get { return new ReadOnlyCollection<TEdge>(EdgesList); } 
+            get { return _readOnlyTEdges ?? (_readOnlyTEdges = new ReadOnlyCollection<TEdge>(EdgesList)); } 
         }
+        private ReadOnlyCollection<TEdge> _readOnlyTEdges;
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        public virtual void AddEdge(TEdge edge)
+        public void AddEdge(TEdge edge)
         {
             EdgesList.Add(edge);
             OnGraphChanged(this,
@@ -76,7 +107,7 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        public virtual void RemoveEdge(TEdge edge)
+        public void RemoveEdge(TEdge edge)
         {
             EdgesList.Remove(edge);
             OnGraphChanged(this,
@@ -88,37 +119,15 @@ namespace GraphLabs.Core
                     );
         }
 
-        /// <summary> Числов вершин </summary>
-        public int VerticesCount
-        {
-            get { return VerticesList.Count; }
-        }
-
-        ReadOnlyCollection<IVertex> IGraph.Vertices
-        {
-            get { return new ReadOnlyCollection<IVertex>(Vertices.Cast<IVertex>().ToList());}
-        }
-
-        /// <summary> Добавляет вершину vertex в граф </summary>
-        public void AddVertex(IVertex vertex)
-        {
-            AddVertex((TVertex)vertex);
-        }
-
-        /// <summary> Удалёет вершину vertex из графа </summary>
-        public void RemoveVertex(IVertex vertex)
-        {
-            RemoveVertex((TVertex)vertex);
-        }
-
         /// <summary> Доступная только для чтения коллекция вершин </summary>
         public ReadOnlyCollection<TVertex> Vertices
         {
-            get { return new ReadOnlyCollection<TVertex>(VerticesList); }
+            get { return _readOnlyTVertices ?? (_readOnlyTVertices = new ReadOnlyCollection<TVertex>(VerticesList)); }
         }
+        private ReadOnlyCollection<TVertex> _readOnlyTVertices;
 
         /// <summary> Добавляет вершину vertex в граф </summary>
-        public virtual void AddVertex(TVertex vertex)
+        public void AddVertex(TVertex vertex)
         {
             VerticesList.Add(vertex);
             OnGraphChanged(this,
@@ -131,7 +140,7 @@ namespace GraphLabs.Core
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
-        public virtual void RemoveVertex(TVertex vertex)
+        public void RemoveVertex(TVertex vertex)
         {
             var edgesToRemove = EdgesList.Where(e => e.IsIncidentTo(vertex)).ToArray();
             edgesToRemove.ForEach(e => EdgesList.Remove(e));
