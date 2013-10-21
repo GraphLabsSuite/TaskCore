@@ -81,7 +81,7 @@ namespace GraphLabs.Tests.Core
             Assert.AreEqual(graph.EdgesCount, 0);
             Assert.IsNull(graph[vertex1, vertex2]);
             Assert.IsNull(graph[vertex2, vertex1]);
-            Assert.Throws<ArgumentException>(() => graph.RemoveEdge(edge));
+            Assert.Throws<InvalidOperationException>(() => graph.RemoveEdge(edge));
             Assert.Throws<ArgumentNullException>(() => graph.RemoveEdge(null));
         }
 
@@ -92,11 +92,11 @@ namespace GraphLabs.Tests.Core
             var graph = new DirectedGraph();
             var newVertex = new Vertex("test");
             graph.AddVertex(newVertex);
-            Assert.Throws<ArgumentException>(() => graph.RemoveVertex(new Vertex("test-2")));
+            Assert.Throws<InvalidOperationException>(() => graph.RemoveVertex(new Vertex("test-2")));
             Assert.DoesNotThrow(() => graph.RemoveVertex(newVertex));
             Assert.AreEqual(graph.VerticesCount, 0);
             Assert.AreEqual(graph.Vertices.Count, 0);
-            Assert.Throws<ArgumentException>(() => graph.RemoveVertex(newVertex));
+            Assert.Throws<InvalidOperationException>(() => graph.RemoveVertex(newVertex));
             Assert.Throws<ArgumentNullException>(() => graph.RemoveVertex(null));
         }
 

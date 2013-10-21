@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using GraphLabs.Core.Contracts;
 
 namespace GraphLabs.Core
 {
