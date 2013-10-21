@@ -5,7 +5,7 @@ using GraphLabs.Core.Contracts;
 namespace GraphLabs.Core
 {
     /// <summary> Граф </summary>
-    [ContractClass(typeof(GraphContracts<,>))]
+    [ContractClass(typeof(GraphOfVEContracts<,>))]
     public interface IGraph<TVertex, TEdge> : IGraph
         where TVertex : IVertex
         where TEdge : IEdge<TVertex>
@@ -30,7 +30,7 @@ namespace GraphLabs.Core
         #region Vertices
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        ReadOnlyCollection<TVertex> Vertices { get; }
+        new ReadOnlyCollection<TVertex> Vertices { get; }
 
         /// <summary> Добавляет вершину vertex в граф </summary>
         void AddVertex(TVertex vertex);

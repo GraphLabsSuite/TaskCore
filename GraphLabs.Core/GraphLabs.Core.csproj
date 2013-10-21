@@ -107,6 +107,7 @@
     <None Include="Properties\AssemblyInfo.cs.template" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\GraphContracts.cs" />
     <Compile Include="Helpers\ListAdapter.cs" />
     <Compile Include="IGraph.cs" />
     <Compile Include="DataTransferObjects\Converters\EdgeToDtoConverter.cs" />
@@ -122,7 +123,7 @@
     <Compile Include="Edge.cs" />
     <Compile Include="Graph.cs" />
     <Compile Include="GraphChangedEventArgs.cs" />
-    <Compile Include="Contracts\GraphContracts.cs" />
+    <Compile Include="Contracts\GraphOfVEContracts.cs" />
     <Compile Include="GraphOperations.cs" />
     <Compile Include="Helpers\DebugGraphGenerator.cs" />
     <Compile Include="Helpers\EdgeExtensions.cs" />

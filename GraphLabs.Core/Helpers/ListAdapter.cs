@@ -35,7 +35,7 @@ namespace GraphLabs.Core.Helpers
         /// <summary> </summary>
         public void Add(TTarget item)
         {
-            Contract.Requires<ArgumentException>(item is TSource);
+            Contract.Assert(item is TSource);
             _sourceList.Add((TSource)item);
         }
 
@@ -48,7 +48,7 @@ namespace GraphLabs.Core.Helpers
         /// <summary> </summary>
         public bool Contains(TTarget item)
         {
-            Contract.Requires<ArgumentException>(item is TSource);
+            Contract.Assert(item is TSource);
             return _sourceList
                 .Cast<TTarget>()
                 .Contains(item);
@@ -66,7 +66,7 @@ namespace GraphLabs.Core.Helpers
         /// <summary> </summary>
         public bool Remove(TTarget item)
         {
-            Contract.Requires<ArgumentException>(item is TSource);
+            Contract.Assert(item is TSource);
             return _sourceList.Remove((TSource)item);
         }
 
@@ -85,14 +85,14 @@ namespace GraphLabs.Core.Helpers
         /// <summary> </summary>
         public int IndexOf(TTarget item)
         {
-            Contract.Requires<ArgumentException>(item is TSource);
+            Contract.Assert(item is TSource);
             return _sourceList.IndexOf((TSource)item);
         }
 
         /// <summary> </summary>
         public void Insert(int index, TTarget item)
         {
-            Contract.Requires<ArgumentException>(item is TSource);
+            Contract.Assert(item is TSource);
             _sourceList.Insert(index, (TSource)item);
         }
 
@@ -108,7 +108,7 @@ namespace GraphLabs.Core.Helpers
             get { return _sourceList[index]; }
             set
             {
-                Contract.Requires<ArgumentException>(value is TSource);
+                Contract.Assert(value is TSource);
                 _sourceList[index] = (TSource)value;
             }
         }

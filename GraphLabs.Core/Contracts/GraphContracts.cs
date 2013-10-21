@@ -6,10 +6,9 @@ using System.Diagnostics.Contracts;
 namespace GraphLabs.Core.Contracts
 {
     /// <summary> Класс контрактов для интерфейса IGaph </summary>
-    [ContractClassFor(typeof(IGraph<,>))]
-    public abstract class GraphContracts<TVertex, TEdge> : IGraph<TVertex, TEdge>
-        where TVertex : IVertex
-        where TEdge : IEdge<TVertex>
+    [ContractClassFor(typeof(IGraph))]
+    public abstract class GraphContracts : IGraph
+
     {
 
         #region Implementation of IGraph
@@ -31,39 +30,36 @@ namespace GraphLabs.Core.Contracts
         }
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdge> IGraph.Edges
+        public ReadOnlyCollection<IEdge> Edges
         {
             get
             {
                 Contract.Ensures(Contract.Result<ReadOnlyCollection<IEdge>>() != null);
-                Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<IEdge>>(), e => e is TEdge));
-
                 return default(ReadOnlyCollection<IEdge>);
             }
         }
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
-        void IGraph.AddEdge(IEdge edge)
+        public void AddEdge(IEdge edge)
         {
-            Contract.Requires<ArgumentException>(edge is TEdge);
+            Contract.Requires<ArgumentNullException>(edge != null);
+            Contract.Requires<InvalidOperationException>(AllowMultipleEdges || !Edges.Contains(edge));
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
-        void IGraph.RemoveEdge(IEdge edge)
+        public void RemoveEdge(IEdge edge)
         {
-            Contract.Requires<ArgumentException>(edge is TEdge);
+            Contract.Requires<ArgumentNullException>(edge != null);
+            Contract.Requires<InvalidOperationException>(Edges.Any(e => ReferenceEquals(e, edge)));
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        IEdge IGraph.this[IVertex v1, IVertex v2]
+        public IEdge this[IVertex v1, IVertex v2]
         {
             get
             {
-                Contract.Requires<ArgumentException>(v1 is TVertex);
-                Contract.Requires<ArgumentException>(v2 is TVertex);
-
-                Contract.Ensures(Contract.Result<IEdge>() is TEdge);
-
+                Contract.Requires<ArgumentNullException>(v1 != null);
+                Contract.Requires<ArgumentNullException>(v2 != null);
                 return default(IEdge);
             }
         }
@@ -79,96 +75,29 @@ namespace GraphLabs.Core.Contracts
         }
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        ReadOnlyCollection<IVertex> IGraph.Vertices
+        public ReadOnlyCollection<IVertex> Vertices
         {
             get
             {
                 Contract.Ensures(Contract.Result<ReadOnlyCollection<IVertex>>() != null);
-                Contract.Ensures(Contract.ForAll(Contract.Result<ReadOnlyCollection<IVertex>>(), e => e is TVertex));
-
                 return default(ReadOnlyCollection<IVertex>);
             }
         }
 
         /// <summary> Добавляет вершину vertex в граф </summary>
-        void IGraph.AddVertex(IVertex vertex)
-        {
-            Contract.Requires<ArgumentException>(vertex is TVertex);
-        }
-
-        /// <summary> Удалёет вершину vertex из графа </summary>
-        void IGraph.RemoveVertex(IVertex vertex)
-        {
-            Contract.Requires<ArgumentException>(vertex is TVertex);
-        }
-        
-        #endregion
-
-
-        #region Implementation of IGraph<,>
-
-        /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        public ReadOnlyCollection<TEdge> Edges
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<ReadOnlyCollection<TEdge>>() != null);
-                return default(ReadOnlyCollection<TEdge>);
-            }
-        }
-
-        /// <summary> Добавляет ребро newEdge к графу </summary>
-        public void AddEdge(TEdge newEdge)
-        {
-            Contract.Requires<ArgumentNullException>(newEdge != null);
-            Contract.Requires<ArgumentException>(newEdge.Directed == Directed);
-            Contract.Requires<InvalidOperationException>(AllowMultipleEdges || !Edges.Contains(newEdge));
-        }
-
-        /// <summary> Удаляет ребро edge из графа </summary>
-        public void RemoveEdge(TEdge edge)
-        {
-            Contract.Requires<ArgumentNullException>(edge != null);
-            Contract.Requires<InvalidOperationException>(Edges.Contains(edge));
-        }
-
-        /// <summary> Доступная только для чтения коллекция вершин </summary>
-        public ReadOnlyCollection<TVertex> Vertices
-        {
-            get
-            {
-                Contract.Ensures(Contract.Result<ReadOnlyCollection<TVertex>>() != null);
-
-                return default(ReadOnlyCollection<TVertex>);
-            }
-        }
-
-        /// <summary> Добавляет вершину vertex в граф </summary>
-        public void AddVertex(TVertex vertex)
+        public void AddVertex(IVertex vertex)
         {
             Contract.Requires<ArgumentNullException>(vertex != null);
             Contract.Requires<InvalidOperationException>(!Vertices.Contains(vertex));
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>
-        public void RemoveVertex(TVertex vertex)
+        public void RemoveVertex(IVertex vertex)
         {
             Contract.Requires<ArgumentNullException>(vertex != null);
             Contract.Requires<InvalidOperationException>(Vertices.Any(v => ReferenceEquals(v, vertex)));
         }
-
-        /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        public TEdge this[TVertex v1, TVertex v2]
-        {
-            get
-            {
-                Contract.Requires(v1 != null);
-                Contract.Requires(v2 != null);
-
-                return default(TEdge);
-            }
-        }
-
+        
         #endregion
 
     }

@@ -1,9 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using GraphLabs.Core.Contracts;
 
 namespace GraphLabs.Core
 {
     /// <summary> Граф </summary>
+    [ContractClass(typeof(GraphContracts))]
     public interface IGraph
     {
         /// <summary> Граф ориентированный? </summary>
