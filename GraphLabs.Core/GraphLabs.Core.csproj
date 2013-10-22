@@ -142,6 +142,7 @@
     <Compile Include="UndirectedGraph.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="DirectedWeightedGraph.cs" />
+    <Compile Include="EqualityComparer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

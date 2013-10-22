@@ -43,39 +43,60 @@ namespace GraphLabs.Core
             return new Vertex(Name);
         }
 
-        /// <summary> Сравнение вершин </summary>
-        public bool Equals(IVertex other)
-        {
-            return Name == other.Name;
-        }
-
-        /// <summary> Сравниваем </summary>
-        public override bool Equals(object obj)
-        {
-            var v = obj as Vertex;
-            if (v != null)
-            {
-                return Equals(v);
-            }
-
-            return false;
-        }
-
         /// <summary> GetHashCode </summary>
         public override int GetHashCode()
         {
             return Name.GetHashCode();
         }
 
+        #region Сравнение
+
+        /// <summary> Сравнение вершин </summary>
+        public bool Equals(IVertex other)
+        {
+            return this == other;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public override bool Equals(object obj)
+        {
+            var v = obj as IVertex;
+            if (!ReferenceEquals(obj, null))
+            {
+                return this == v;
+            }
+
+            return false;
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator ==(Vertex v1, IVertex v2)
+        {
+            return EqualityComparer.VerticesEquals(v1, v2);
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator !=(Vertex v1, IVertex v2)
+        {
+            return !(v1 == v2);
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator ==(IVertex v1, Vertex v2)
+        {
+            return v2 == v1;
+        }
+
+        /// <summary> Оператор сравнения </summary>
+        public static bool operator !=(IVertex v1, Vertex v2)
+        {
+            return !(v2 == v1);
+        }
+
         /// <summary> Оператор сравнения </summary>
         public static bool operator ==(Vertex v1, Vertex v2)
         {
-            if (ReferenceEquals(v1, null) || ReferenceEquals(v2, null))
-            {
-                return ReferenceEquals(v1, null) && ReferenceEquals(v2, null);
-            }
-
-            return v1.Equals(v2);
+            return v1 == (IVertex)v2;
         }
 
         /// <summary> Оператор сравнения </summary>
@@ -83,5 +104,7 @@ namespace GraphLabs.Core
         {
             return !(v1 == v2);
         }
+
+        #endregion
     }
 }

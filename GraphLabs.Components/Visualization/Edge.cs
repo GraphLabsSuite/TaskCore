@@ -483,17 +483,11 @@ namespace GraphLabs.Components.Visualization
 
         }
 
-        /// <summary> Сравнение рёбер </summary>
-        public bool Equals(IEdge other)
+        /// <summary> Создаёт глубокую копию данного объекта </summary>
+        /// <remarks> Не в этот раз, детка </remarks>
+        public object Clone()
         {
-            return other.Vertex1.Equals(Vertex1) && other.Vertex2.Equals(Vertex2) && other.Directed == Directed;
-        }
-
-        /// <summary> Сравниваем </summary>
-        public override bool Equals(object obj)
-        {
-            var e = obj as IEdge;
-            return e != null && Equals(e);
+            throw new NotSupportedException();
         }
 
         /// <summary> GetHashCode </summary>
@@ -502,11 +496,57 @@ namespace GraphLabs.Components.Visualization
             return Vertex1.GetHashCode() ^ Vertex2.GetHashCode() ^ Directed.GetHashCode();
         }
 
-        /// <summary> Создаёт глубокую копию данного объекта </summary>
-        /// <remarks> Не в этот раз, детка </remarks>
-        public object Clone()
+        #region Сравнение
+
+        /// <summary> Сравнение рёбер </summary>
+        public bool Equals(IEdge other)
         {
-            throw new NotSupportedException();
+            return this == other;
         }
+
+        /// <summary> Сравниваем </summary>
+        public override bool Equals(object obj)
+        {
+            var e = obj as IEdge;
+            return this == e;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator ==(Edge e1, IEdge e2)
+        {
+            return EqualityComparer.EdgesEquals(e1, e2);
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator !=(Edge e1, IEdge e2)
+        {
+            return !(e1 == e2);
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator ==(IEdge e1, Edge e2)
+        {
+            return e2 == e1;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator !=(IEdge e1, Edge e2)
+        {
+            return !(e2 == e1);
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator ==(Edge e1, Edge e2)
+        {
+            return e2 == (IEdge)e1;
+        }
+
+        /// <summary> Сравниваем </summary>
+        public static bool operator !=(Edge e1, Edge e2)
+        {
+            return !(e2 == e1);
+        }
+
+        #endregion
     }
 }
