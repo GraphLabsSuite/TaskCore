@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -8,7 +7,6 @@ namespace GraphLabs.Core.Helpers
 {
     /// <summary> TTarget-обёртка коллекции элементов TSource  </summary>
     public sealed class ListAdapter<TSource, TTarget> : IList<TTarget>
-        where TSource : TTarget
     {
         private readonly IList<TSource> _sourceList;
 
@@ -36,7 +34,7 @@ namespace GraphLabs.Core.Helpers
         public void Add(TTarget item)
         {
             Contract.Assert(item is TSource);
-            _sourceList.Add((TSource)item);
+            _sourceList.Add((TSource)(object)item);
         }
 
         /// <summary> </summary>
@@ -67,7 +65,7 @@ namespace GraphLabs.Core.Helpers
         public bool Remove(TTarget item)
         {
             Contract.Assert(item is TSource);
-            return _sourceList.Remove((TSource)item);
+            return _sourceList.Remove((TSource)(object)item);
         }
 
         /// <summary> </summary>
@@ -86,14 +84,14 @@ namespace GraphLabs.Core.Helpers
         public int IndexOf(TTarget item)
         {
             Contract.Assert(item is TSource);
-            return _sourceList.IndexOf((TSource)item);
+            return _sourceList.IndexOf((TSource)(object)item);
         }
 
         /// <summary> </summary>
         public void Insert(int index, TTarget item)
         {
             Contract.Assert(item is TSource);
-            _sourceList.Insert(index, (TSource)item);
+            _sourceList.Insert(index, (TSource)(object)item);
         }
 
         /// <summary> </summary>
@@ -105,11 +103,11 @@ namespace GraphLabs.Core.Helpers
         /// <summary> </summary>
         public TTarget this[int index]
         {
-            get { return _sourceList[index]; }
+            get { return (TTarget)(object)_sourceList[index]; }
             set
             {
                 Contract.Assert(value is TSource);
-                _sourceList[index] = (TSource)value;
+                _sourceList[index] = (TSource)(object)value;
             }
         }
     }
