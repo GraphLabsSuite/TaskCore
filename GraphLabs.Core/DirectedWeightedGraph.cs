@@ -22,7 +22,7 @@ namespace GraphLabs.Core
         {
             get
             {
-                return EdgesList.FirstOrDefault(e => e.Vertex1 == v1 && e.Vertex2 == v2);
+                return EdgesList.FirstOrDefault(e => e.Vertex1.Equals(v1) && e.Vertex2.Equals(v2));
             }
         }
 

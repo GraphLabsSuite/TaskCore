@@ -157,7 +157,7 @@ namespace GraphLabs.Components.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (double)args.NewValue;
             
-            visualizer._vertices.Cast<Vertex>().ForEach(v => v.Radius = newValue);
+            visualizer._vertices.ForEach(v => v.Radius = newValue);
         }
 
         private static void DefaultVertexBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -165,7 +165,7 @@ namespace GraphLabs.Components.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (Brush)args.NewValue;
 
-            visualizer._vertices.Cast<Vertex>().ForEach(v => v.Background = newValue);
+            visualizer._vertices.ForEach(v => v.Background = newValue);
         }
 
         private static void DefaultEdgeStrokeChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -173,7 +173,7 @@ namespace GraphLabs.Components.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (Brush)args.NewValue;
 
-            visualizer._edges.Cast<Edge>().ForEach(e => e.Stroke = newValue);
+            visualizer._edges.ForEach(e => e.Stroke = newValue);
         }
 
         private static void DefaultEdgeStrokeThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -181,7 +181,7 @@ namespace GraphLabs.Components.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (double)args.NewValue;
 
-            visualizer._edges.Cast<Edge>().ForEach(e => e.StrokeThickness = newValue);
+            visualizer._edges.ForEach(e => e.StrokeThickness = newValue);
         }
 
         private static void DefaultVertexBorderBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -255,7 +255,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldEdges.ForEach(e =>
                     {
-                        var toRemove = _edges.Single(p => p == e);
+                        var toRemove = _edges.Single(e.Equals);
                         RemoveEdge(toRemove);
                     });
             }
@@ -263,7 +263,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldVertices.ForEach(e =>
                 {
-                    var toRemove = _vertices.Single(p => p == e);
+                    var toRemove = _vertices.Single(e.Equals);
                     RemoveVertex(toRemove);
                 });
             }
@@ -527,7 +527,7 @@ namespace GraphLabs.Components.Visualization
                 for (var i = 0; i < _vertices.Count; ++i)
                 {
                     var vi = _vertices[i];
-                    if (vi == _capturedVertex)
+                    if (vi.Equals(_capturedVertex))
                     {
                         continue;
                     }
@@ -699,8 +699,8 @@ namespace GraphLabs.Components.Visualization
             {
                 args.NewItems.Cast<Edge>().ForEach(e =>
                         {
-                            var vertex1 = Graph.Vertices.Single(v => v == e.Vertex1);
-                            var vertex2 = Graph.Vertices.Single(v => v == e.Vertex2);
+                            var vertex1 = Graph.Vertices.Single(e.Vertex1.Equals);
+                            var vertex2 = Graph.Vertices.Single(e.Vertex2.Equals);
                             var newEdge = Directed
                                               ? (IEdge)new DirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2)
                                               : (IEdge)new UndirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2);
@@ -712,7 +712,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldItems.Cast<Edge>().ForEach(e =>
                     {
-                        var edge = Graph.Edges.Single(p => p == e);
+                        var edge = Graph.Edges.Single(e.Equals);
                         Graph.RemoveEdge(edge);
                     });
             }
@@ -738,7 +738,7 @@ namespace GraphLabs.Components.Visualization
             {
                 args.OldItems.Cast<Vertex>().ForEach(v =>
                     {
-                        var vertex = Graph.Vertices.Single(p => p == v);
+                        var vertex = Graph.Vertices.Single(v.Equals);
                         Graph.RemoveVertex(vertex);
                     });
             }
@@ -780,8 +780,8 @@ namespace GraphLabs.Components.Visualization
         {
             var newEdge = new Edge
             {
-                Vertex1 = _vertices.Single(v => v == edge.Vertex1),
-                Vertex2 = _vertices.Single(v => v == edge.Vertex2),
+                Vertex1 = _vertices.Single(edge.Vertex1.Equals),
+                Vertex2 = _vertices.Single(edge.Vertex2.Equals),
                 Directed = edge.Directed,
                 Stroke = DefaultEdgeStroke,
                 StrokeThickness = DefaultEdgeStrokeThickness,
@@ -827,7 +827,7 @@ namespace GraphLabs.Components.Visualization
             get
             {
                 var toFind = new Edge { Vertex1 = v1, Vertex2 = v2, Directed = this.Directed };
-                return _edges.FirstOrDefault(e => e == toFind);
+                return _edges.FirstOrDefault(toFind.Equals);
             }
         }
 
