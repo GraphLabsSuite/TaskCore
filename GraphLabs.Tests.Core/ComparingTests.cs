@@ -16,10 +16,9 @@ namespace GraphLabs.Tests.Core
             var vertex1 = new Vertex("A");
             var vertex2 = new Vertex("A");
             var vertex3 = new Vertex("B");
-            Assert.IsFalse((Vertex)null == vertex1);
-            Assert.IsTrue((Vertex)null == (Vertex)null);
-            Assert.IsTrue(vertex1 == vertex2);
-            Assert.IsFalse(vertex1 == vertex3);
+            Assert.IsFalse(vertex1.Equals((Vertex)null));
+            Assert.IsTrue(vertex1.Equals(vertex2));
+            Assert.IsFalse(vertex1.Equals(vertex3));
             Assert.IsTrue(vertex2.Equals(vertex1));
             Assert.IsFalse(vertex3.Equals(vertex2));
         }
@@ -42,7 +41,6 @@ namespace GraphLabs.Tests.Core
             var undirEdge3 = new UndirectedEdge(v11, v22);
             var undirEdge4 = new UndirectedEdge(v21, v11);
             var undirEdge5 = new DirectedEdge(v11, v11);
-            Assert.IsTrue((DirectedEdge)null == (DirectedEdge)null);
             Assert.IsTrue(dirEdge1.Equals(dirEdge2));
             Assert.IsTrue(dirEdge1.Equals(dirEdge3));
             Assert.IsTrue(undirEdge1.Equals(undirEdge2));

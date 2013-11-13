@@ -348,55 +348,14 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравнение вершин </summary>
         public bool Equals(IVertex other)
         {
-            return this == other;
+            return EqualityComparer.VerticesEquals(this, other);
         }
 
         /// <summary> Сравниваем </summary>
         public override bool Equals(object obj)
         {
             var v = obj as IVertex;
-            if (!ReferenceEquals(obj, null))
-            {
-                return this == v;
-            }
-
-            return false;
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator ==(Vertex v1, IVertex v2)
-        {
-            return EqualityComparer.VerticesEquals(v1, v2);
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator !=(Vertex v1, IVertex v2)
-        {
-            return !(v1 == v2);
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator ==(IVertex v1, Vertex v2)
-        {
-            return v2 == v1;
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator !=(IVertex v1, Vertex v2)
-        {
-            return !(v2 == v1);
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator ==(Vertex v1, Vertex v2)
-        {
-            return v1 == (IVertex)v2;
-        }
-
-        /// <summary> Оператор сравнения </summary>
-        public static bool operator !=(Vertex v1, Vertex v2)
-        {
-            return !(v1 == v2);
+            return Equals(v);
         }
 
         #endregion

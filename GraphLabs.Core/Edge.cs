@@ -60,50 +60,14 @@ namespace GraphLabs.Core
         /// <summary> Сравнение рёбер </summary>
         public bool Equals(IEdge other)
         {
-            return this == other;
+            return EqualityComparer.EdgesEquals(other, this);
         }
 
         /// <summary> Сравниваем </summary>
-        public override bool Equals(object obj)
+        public sealed override bool Equals(object obj)
         {
             var e = obj as IEdge;
-            return this == e;
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator ==(Edge e1, IEdge e2)
-        {
-            return EqualityComparer.EdgesEquals(e1, e2);
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator !=(Edge e1, IEdge e2)
-        {
-            return !(e1 == e2);
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator ==(IEdge e1, Edge e2)
-        {
-            return e2 == e1;
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator !=(IEdge e1, Edge e2)
-        {
-            return !(e2 == e1);
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator ==(Edge e1, Edge e2)
-        {
-            return e2 == (IEdge)e1;
-        }
-
-        /// <summary> Сравниваем </summary>
-        public static bool operator !=(Edge e1, Edge e2)
-        {
-            return !(e2 == e1);
+            return Equals(e);
         }
 
         #endregion

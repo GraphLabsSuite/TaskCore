@@ -24,9 +24,20 @@
             if (ReferenceEquals(x, null) || ReferenceEquals(y, null))
                 return false;
 
-            return x.Directed == y.Directed &&
-                   (x.Vertex1.Equals(y.Vertex1) && x.Vertex2.Equals(y.Vertex2)
-                    || !x.Directed && x.Vertex1.Equals(y.Vertex2) && x.Vertex2.Equals(y.Vertex1));
+            var areEquals = x.Directed == y.Directed &&
+                         (x.Vertex1.Equals(y.Vertex1) && x.Vertex2.Equals(y.Vertex2)
+                          || !x.Directed && x.Vertex1.Equals(y.Vertex2) && x.Vertex2.Equals(y.Vertex1));
+            
+            var weightedX = x as IWeightedEdge;
+            var weightedY = y as IWeightedEdge;
+            if (weightedX != null && weightedY != null)
+                return areEquals && weightedX.Weight == weightedY.Weight;
+            else if (weightedX != null || weightedY != null)
+                return false;
+            else
+            {
+                return areEquals;
+            }
         }
 
     }
