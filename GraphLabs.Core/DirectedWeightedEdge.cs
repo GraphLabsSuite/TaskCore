@@ -1,9 +1,22 @@
-﻿
+﻿using System;
+
 namespace GraphLabs.Core
 {
     /// <summary> Взвешенная дуга </summary>
-    public class DirectedWeightedEdge : DirectedEdge, IWeightedEdge
+    public class DirectedWeightedEdge : DirectedEdge, IWeightedEdge, IEquatable<DirectedWeightedEdge>
     {
+        /// <summary> Сравниваем </summary>
+        public bool Equals(IWeightedEdge other)
+        {
+            return Equals((IEdge)other);
+        }
+
+        /// <summary> Сравниваем </summary>
+        public bool Equals(DirectedWeightedEdge other)
+        {
+            return Equals((IEdge)other);
+        }
+
         /// <summary> Returns a string that represents the current object. </summary>
         /// <returns> A string that represents the current object. </returns>
         public override string ToString()

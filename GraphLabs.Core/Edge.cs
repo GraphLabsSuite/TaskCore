@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 namespace GraphLabs.Core
 {
     /// <summary> Ребро / дуга графа </summary>
-    public abstract class Edge : IEdge<Vertex>
+    public abstract class Edge : IEdge<Vertex>, IEquatable<Edge>
     {
         #region Реализация IEdge
 
@@ -60,7 +60,13 @@ namespace GraphLabs.Core
         /// <summary> Сравнение рёбер </summary>
         public bool Equals(IEdge other)
         {
-            return EqualityComparer.EdgesEquals(other, this);
+            return ValueEqualityComparer.EdgesEquals(other, this);
+        }
+
+        /// <summary> Сравнение рёбер </summary>
+        public bool Equals(Edge other)
+        {
+            return Equals((IEdge)other);
         }
 
         /// <summary> Сравниваем </summary>

@@ -348,7 +348,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравнение вершин </summary>
         public bool Equals(IVertex other)
         {
-            return EqualityComparer.VerticesEquals(this, other);
+            return ValueEqualityComparer.VerticesEquals(this, other);
         }
 
         /// <summary> Сравниваем </summary>

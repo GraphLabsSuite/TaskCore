@@ -4,7 +4,7 @@ using System.Diagnostics.Contracts;
 namespace GraphLabs.Core
 {
     /// <summary> Вершина графа. </summary>
-    public class Vertex : IVertex
+    public class Vertex : IVertex, IEquatable<Vertex>
     {
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
@@ -54,7 +54,13 @@ namespace GraphLabs.Core
         /// <summary> Сравнение вершин </summary>
         public virtual bool Equals(IVertex other)
         {
-            return EqualityComparer.VerticesEquals(this, other);
+            return ValueEqualityComparer.VerticesEquals(this, other);
+        }
+
+        /// <summary> Сравнение вершин </summary>
+        public bool Equals(Vertex other)
+        {
+            return Equals((IVertex)other);
         }
 
         /// <summary> Сравниваем </summary>

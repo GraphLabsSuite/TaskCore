@@ -501,7 +501,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравнение рёбер </summary>
         public bool Equals(IEdge other)
         {
-            return EqualityComparer.EdgesEquals(this, other);
+            return ValueEqualityComparer.EdgesEquals(this, other);
         }
 
         /// <summary> Сравниваем </summary>

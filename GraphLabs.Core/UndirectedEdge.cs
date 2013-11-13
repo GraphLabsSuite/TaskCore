@@ -1,13 +1,21 @@
 ﻿
+using System;
+
 namespace GraphLabs.Core
 {
     /// <summary> Ребро графа </summary>
-    public class UndirectedEdge : Edge
+    public class UndirectedEdge : Edge, IEquatable<UndirectedEdge>
     {
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
         public override bool Directed
         {
             get { return false; }
+        }
+
+        /// <summary> Сравниваем </summary>
+        public bool Equals(UndirectedEdge other)
+        {
+            return Equals((IEdge)other);
         }
 
         /// <summary> Returns a string that represents the current object. </summary>

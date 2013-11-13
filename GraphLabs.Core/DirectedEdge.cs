@@ -1,10 +1,18 @@
 ﻿
 
+using System;
+
 namespace GraphLabs.Core
 {
     /// <summary> Ориентированное ребро </summary>
-    public class DirectedEdge : Edge
+    public class DirectedEdge : Edge, IEquatable<DirectedEdge>
     {
+        /// <summary> Сравнение рёбер </summary>
+        public bool Equals(DirectedEdge other)
+        {
+            return Equals((IEdge)other);
+        }
+
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
         public override bool Directed
         {
