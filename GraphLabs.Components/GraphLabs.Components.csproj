@@ -132,18 +132,26 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\InformationBar.xaml.cs">
+      <DependentUpon>InformationBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Matrix.xaml.cs">
       <DependentUpon>Matrix.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolBar.xaml.cs">
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ViewModels\LogEventViewModel.cs" />
     <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
     <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Helpers\Converters\BooleanToNegativeConverter.cs" />
+    <Compile Include="Helpers\Converters\PenaltyToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Converters\PenaltyToBrushConverter.cs" />
+    <Compile Include="Helpers\Converters\ScoreToBrushConverter.cs" />
+    <Compile Include="Helpers\CultureAwareBinding.cs" />
     <Compile Include="Visualization\Edge.cs" />
     <Compile Include="Visualization\GraphVisualizer.xaml.cs">
       <DependentUpon>GraphVisualizer.xaml</DependentUpon>
@@ -158,6 +166,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\InformationBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\Matrix.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

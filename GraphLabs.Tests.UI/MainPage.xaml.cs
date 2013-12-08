@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
+using GraphLabs.Components.Controls;
 using GraphLabs.Components.Controls.ViewModels;
 using GraphLabs.Core;
 using System;
@@ -89,7 +90,8 @@ namespace GraphLabs.Tests.UI
 
         public MainPage()
         {
-            InitializeComponent();     
+            InitializeComponent();  
+            Log = new ObservableCollection<LogEventViewModel>();
         }
 
 
@@ -172,5 +174,27 @@ namespace GraphLabs.Tests.UI
         }
 
         #endregion // buttonsClicks
+
+        #region Log
+
+        public static readonly DependencyProperty LogProperty =
+            DependencyProperty.Register("Log", typeof(ObservableCollection<LogEventViewModel>), typeof(MainPage), new PropertyMetadata(default(ObservableCollection<LogEventViewModel>)));
+
+        public ObservableCollection<LogEventViewModel> Log
+        {
+            get { return (ObservableCollection<LogEventViewModel>)GetValue(LogProperty); }
+            set { SetValue(LogProperty, value); }
+        }
+
+
+        private void AddMessageClick(object sender, RoutedEventArgs e)
+        {
+            var rnd = new Random();
+            var hasPenalty = rnd.NextDouble() > 0.5;
+            Log.Insert(0, new LogEventViewModel() { Message = "Msg", Penalty = hasPenalty ? -rnd.Next(0, 10) : 0, TimeStamp = DateTime.Now });
+        }
+
+        #endregion // Log
+
     }
 }

@@ -102,6 +102,21 @@
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
+        <sdk:TabItem Header="Log tests">
+            <sdk:TabItem.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="60" />
+                    </Grid.RowDefinitions>
+                    <Button Content="Add Message" Click="AddMessageClick"></Button>
+                    <controls:InformationBar Grid.Row="1"
+                        ScoreColumnWidth="90"
+                        Score="{Binding }"
+                        Log="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
+                </Grid>
+            </sdk:TabItem.Content>
+        </sdk:TabItem>
 
     </sdk:TabControl>
 </UserControl>
