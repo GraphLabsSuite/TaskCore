@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using GraphLabs.Components.Controls.ViewModels;
 
 namespace GraphLabs.Components.Controls
@@ -11,7 +12,6 @@ namespace GraphLabs.Components.Controls
         #region Константы
 
         private const double DEFAULT_SCORE_COL_WIDTH = 70.0d;
-        private const int STARTING_SCORE = 100;
 
         #endregion
 
@@ -29,18 +29,18 @@ namespace GraphLabs.Components.Controls
 
         /// <summary> Сообщения </summary>
         public static readonly DependencyProperty LogProperty =
-            DependencyProperty.Register("Log", typeof(ObservableCollection<LogEventViewModel>), typeof(InformationBar), new PropertyMetadata(default(ObservableCollection<LogEventViewModel>)));
+            DependencyProperty.Register("Log", typeof(ReadOnlyObservableCollection<LogEventViewModel>), typeof(InformationBar), new PropertyMetadata(default(ReadOnlyObservableCollection<LogEventViewModel>)));
 
         /// <summary> Сообщения </summary>
-        public ObservableCollection<LogEventViewModel> Log
+        public ReadOnlyObservableCollection<LogEventViewModel> Log
         {
-            get { return (ObservableCollection<LogEventViewModel>)GetValue(LogProperty); }
+            get { return (ReadOnlyObservableCollection<LogEventViewModel>)GetValue(LogProperty); }
             set { SetValue(LogProperty, value); }
         }
 
         /// <summary> Текущий балл </summary>
         public static readonly DependencyProperty ScoreProperty =
-            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(STARTING_SCORE));
+            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(UserActionsManager.STARTING_SCORE));
 
         /// <summary> Текущий балл </summary>
         public int Score
@@ -53,6 +53,14 @@ namespace GraphLabs.Components.Controls
         public InformationBar()
         {
             InitializeComponent();
+
+            SetBindings();
+        }
+
+        private void SetBindings()
+        {
+            SetBinding(ScoreProperty, new Binding("Score"));
+            SetBinding(LogProperty, new Binding("Log"));
         }
     }
 }

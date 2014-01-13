@@ -68,7 +68,9 @@
     <CodeContractsReferenceAssembly>Build</CodeContractsReferenceAssembly>
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
     <DocumentationFile>Bin\Debug\GraphLabs.Components.xml</DocumentationFile>
-    <WarningsAsErrors>1591</WarningsAsErrors>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -117,6 +119,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core">
@@ -141,6 +145,7 @@
     <Compile Include="Controls\ToolBar.xaml.cs">
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserActionsManager.cs" />
     <Compile Include="Controls\ViewModels\LogEventViewModel.cs" />
     <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
@@ -152,6 +157,11 @@
     <Compile Include="Helpers\Converters\PenaltyToBrushConverter.cs" />
     <Compile Include="Helpers\Converters\ScoreToBrushConverter.cs" />
     <Compile Include="Helpers\CultureAwareBinding.cs" />
+    <Compile Include="Service References\UserActionsRegistrator\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Visualization\Edge.cs" />
     <Compile Include="Visualization\GraphVisualizer.xaml.cs">
       <DependentUpon>GraphVisualizer.xaml</DependentUpon>
@@ -199,6 +209,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.cs.template" />
+    <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.disco" />
+    <None Include="Service References\UserActionsRegistrator\configuration91.svcinfo" />
+    <None Include="Service References\UserActionsRegistrator\configuration.svcinfo" />
+    <None Include="Service References\UserActionsRegistrator\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.wsdl" />
+    <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\UserActionsRegistrator\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

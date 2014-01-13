@@ -1,0 +1,18 @@
+﻿<configuration>
+    <system.serviceModel>
+        <bindings>
+            <basicHttpBinding>
+                <binding name="BasicHttpBinding_IUserActionsRegistrator" maxBufferSize="2147483647"
+                    maxReceivedMessageSize="2147483647">
+                    <security mode="None" />
+                </binding>
+            </basicHttpBinding>
+        </bindings>
+        <client>
+            <endpoint address="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc"
+                binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IUserActionsRegistrator"
+                contract="UserActionsRegistrator.IUserActionsRegistrator"
+                name="BasicHttpBinding_IUserActionsRegistrator" />
+        </client>
+    </system.serviceModel>
+</configuration>
