@@ -80,13 +80,32 @@ namespace GraphLabs.Components.UserActionsRegistrator {
     public interface IUserActionsRegistrator {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IUserActionsRegistrator/RegisterUserActions", ReplyAction="http://tempuri.org/IUserActionsRegistrator/RegisterUserActionsResponse")]
-        System.IAsyncResult BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, bool isTaskFinished, System.AsyncCallback callback, object asyncState);
         
-        void EndRegisterUserActions(System.IAsyncResult result);
+        int EndRegisterUserActions(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IUserActionsRegistratorChannel : GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator, System.ServiceModel.IClientChannel {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RegisterUserActionsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RegisterUserActionsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public int Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -152,46 +171,48 @@ namespace GraphLabs.Components.UserActionsRegistrator {
             }
         }
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RegisterUserActionsCompleted;
+        public event System.EventHandler<RegisterUserActionsCompletedEventArgs> RegisterUserActionsCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator.BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRegisterUserActions(taskId, sessionGuid, actions, callback, asyncState);
+        System.IAsyncResult GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator.BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, bool isTaskFinished, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRegisterUserActions(taskId, sessionGuid, actions, isTaskFinished, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        void GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator.EndRegisterUserActions(System.IAsyncResult result) {
-            base.Channel.EndRegisterUserActions(result);
+        int GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator.EndRegisterUserActions(System.IAsyncResult result) {
+            return base.Channel.EndRegisterUserActions(result);
         }
         
         private System.IAsyncResult OnBeginRegisterUserActions(object[] inValues, System.AsyncCallback callback, object asyncState) {
             long taskId = ((long)(inValues[0]));
             System.Guid sessionGuid = ((System.Guid)(inValues[1]));
             GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions = ((GraphLabs.Components.UserActionsRegistrator.ActionDescription[])(inValues[2]));
-            return ((GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator)(this)).BeginRegisterUserActions(taskId, sessionGuid, actions, callback, asyncState);
+            bool isTaskFinished = ((bool)(inValues[3]));
+            return ((GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator)(this)).BeginRegisterUserActions(taskId, sessionGuid, actions, isTaskFinished, callback, asyncState);
         }
         
         private object[] OnEndRegisterUserActions(System.IAsyncResult result) {
-            ((GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator)(this)).EndRegisterUserActions(result);
-            return null;
+            int retVal = ((GraphLabs.Components.UserActionsRegistrator.IUserActionsRegistrator)(this)).EndRegisterUserActions(result);
+            return new object[] {
+                    retVal};
         }
         
         private void OnRegisterUserActionsCompleted(object state) {
             if ((this.RegisterUserActionsCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RegisterUserActionsCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.RegisterUserActionsCompleted(this, new RegisterUserActionsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RegisterUserActionsAsync(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions) {
-            this.RegisterUserActionsAsync(taskId, sessionGuid, actions, null);
+        public void RegisterUserActionsAsync(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, bool isTaskFinished) {
+            this.RegisterUserActionsAsync(taskId, sessionGuid, actions, isTaskFinished, null);
         }
         
-        public void RegisterUserActionsAsync(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, object userState) {
+        public void RegisterUserActionsAsync(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, bool isTaskFinished, object userState) {
             if ((this.onBeginRegisterUserActionsDelegate == null)) {
                 this.onBeginRegisterUserActionsDelegate = new BeginOperationDelegate(this.OnBeginRegisterUserActions);
             }
@@ -204,7 +225,8 @@ namespace GraphLabs.Components.UserActionsRegistrator {
             base.InvokeAsync(this.onBeginRegisterUserActionsDelegate, new object[] {
                         taskId,
                         sessionGuid,
-                        actions}, this.onEndRegisterUserActionsDelegate, this.onRegisterUserActionsCompletedDelegate, userState);
+                        actions,
+                        isTaskFinished}, this.onEndRegisterUserActionsDelegate, this.onRegisterUserActionsCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -283,18 +305,20 @@ namespace GraphLabs.Components.UserActionsRegistrator {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginRegisterUserActions(long taskId, System.Guid sessionGuid, GraphLabs.Components.UserActionsRegistrator.ActionDescription[] actions, bool isTaskFinished, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
                 _args[0] = taskId;
                 _args[1] = sessionGuid;
                 _args[2] = actions;
+                _args[3] = isTaskFinished;
                 System.IAsyncResult _result = base.BeginInvoke("RegisterUserActions", _args, callback, asyncState);
                 return _result;
             }
             
-            public void EndRegisterUserActions(System.IAsyncResult result) {
+            public int EndRegisterUserActions(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                base.EndInvoke("RegisterUserActions", _args, result);
+                int _result = ((int)(base.EndInvoke("RegisterUserActions", _args, result)));
+                return _result;
             }
         }
     }
