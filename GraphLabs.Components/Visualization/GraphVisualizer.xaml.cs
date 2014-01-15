@@ -8,11 +8,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using GraphLabs.Components.Helpers;
-using GraphLabs.Core;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Common.Helpers;
+using GraphLabs.Graphs.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Components.Visualization
+namespace GraphLabs.Graphs.UIComponents.Visualization
 {
     /// <summary> Контрол для визуализации графов </summary>
     public sealed partial class GraphVisualizer : UserControl, IGraph<Vertex, Edge>
@@ -702,8 +702,8 @@ namespace GraphLabs.Components.Visualization
                             var vertex1 = Graph.Vertices.Single(e.Vertex1.Equals);
                             var vertex2 = Graph.Vertices.Single(e.Vertex2.Equals);
                             var newEdge = Directed
-                                              ? (IEdge)new DirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2)
-                                              : (IEdge)new UndirectedEdge((Core.Vertex)vertex1, (Core.Vertex)vertex2);
+                                              ? (IEdge)new DirectedEdge((Graphs.Vertex)vertex1, (Graphs.Vertex)vertex2)
+                                              : (IEdge)new UndirectedEdge((Graphs.Vertex)vertex1, (Graphs.Vertex)vertex2);
 
                             Graph.AddEdge(newEdge);
                         });
@@ -732,7 +732,7 @@ namespace GraphLabs.Components.Visualization
 
             if (args.NewItems != null && args.Action != NotifyCollectionChangedAction.Remove)
             {
-                args.NewItems.Cast<Vertex>().ForEach(v => Graph.AddVertex(new Core.Vertex(v.Name)));
+                args.NewItems.Cast<Vertex>().ForEach(v => Graph.AddVertex(new Graphs.Vertex(v.Name)));
             }
             if (args.OldItems != null && args.Action != NotifyCollectionChangedAction.Add)
             {

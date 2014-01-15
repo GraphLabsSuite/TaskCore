@@ -1,10 +1,9 @@
-﻿using GraphLabs.Core;
-using GraphLabs.Core.Helpers;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Linq;
+using GraphLabs.Graphs;
+using NUnit.Framework;
 
-namespace GraphLabs.Tests.Core
+namespace GraphLabs.Tests.Graphs
 {
     /// <summary> Тривиальные тесты неориентированного графа </summary>
     class DirectedGraphTests

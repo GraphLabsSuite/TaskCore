@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Non-generic IEdge </summary>
     public interface IEdge : IEquatable<IEdge>, ICloneable

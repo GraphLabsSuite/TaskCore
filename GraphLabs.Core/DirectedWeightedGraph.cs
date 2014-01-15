@@ -1,8 +1,9 @@
 ﻿using System.Globalization;
 using System.Linq;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Graphs.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Взвешенный орграф </summary>
     public sealed class DirectedWeightedGraph : Graph<Vertex, DirectedWeightedEdge>

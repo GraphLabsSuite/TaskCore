@@ -1,8 +1,8 @@
 <ResourceDictionary xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:converters="clr-namespace:GraphLabs.Components.Helpers.Converters"
-                    xmlns:visualization="clr-namespace:GraphLabs.Components.Visualization">
+                    xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization"
+                    xmlns:converters="clr-namespace:GraphLabs.Common.Helpers.Converters;assembly=GraphLabs.Common">
 
     <!-- Vertex -->
     <converters:DoubleToCornerRadiusConverter x:Key="CornerRadiusToDoubleConverter" />

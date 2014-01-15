@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Runtime.Serialization;
 
-namespace GraphLabs.Core.DataTransferObjects.Converters
+namespace GraphLabs.Graphs.DataTransferObjects.Converters
 {
     /// <summary> Вспомагательный класс для сериализации/десериализации графов </summary>
     public static class GraphSerializer

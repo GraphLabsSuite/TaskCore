@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Вершина графа </summary>
     public interface IVertex : ICloneable, IEquatable<IVertex>

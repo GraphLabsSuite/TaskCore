@@ -1,9 +1,7 @@
-﻿using System;
-using GraphLabs.Core;
-using GraphLabs.Core.Helpers;
+﻿using GraphLabs.Graphs;
 using NUnit.Framework;
 
-namespace GraphLabs.Tests.Core
+namespace GraphLabs.Tests.Graphs
 {
     /// <summary> Тесты сравнения рёбер и вершин </summary>
     [TestFixture]

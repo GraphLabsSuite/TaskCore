@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Граф </summary>
     public interface IObservableGraph : IGraph

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Core.DataTransferObjects.Converters
+namespace GraphLabs.Graphs.DataTransferObjects.Converters
 {
     /// <summary> Конвертер из вершины в соответствующую ДТО и обратно </summary>
     internal static class VertexToDtoConverter

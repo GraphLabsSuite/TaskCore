@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLabs.Components.Visualization
+namespace GraphLabs.Graphs.UIComponents.Visualization
 {
     /// <summary> EventArgs для события клика по вершине </summary>
     public class VertexClickEventArgs : EventArgs

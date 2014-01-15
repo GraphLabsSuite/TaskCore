@@ -2,7 +2,7 @@
 
 using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Ориентированное ребро </summary>
     public class DirectedEdge : Edge, IEquatable<DirectedEdge>

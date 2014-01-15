@@ -1,4 +1,4 @@
-﻿using GraphLabs.Components.Controls;
+﻿using GraphLabs.Common.Controls;
 
 namespace GraphLabs.Tests.UI
 {

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
-namespace GraphLabs.Core.Contracts
+namespace GraphLabs.Graphs.Contracts
 {
     /// <summary> Класс контрактов для интерфейса IGaph </summary>
     [ContractClassFor(typeof(IGraph<,>))]

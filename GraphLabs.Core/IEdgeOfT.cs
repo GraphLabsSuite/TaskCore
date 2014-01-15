@@ -1,4 +1,4 @@
-﻿namespace GraphLabs.Core
+﻿namespace GraphLabs.Graphs
 {
     /// <summary> Ребро или дуга графа </summary>
     public interface IEdge<TVertex> : IEdge

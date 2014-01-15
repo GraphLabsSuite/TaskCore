@@ -1,16 +1,15 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using GraphLabs.Components.Controls;
-using GraphLabs.Components.Controls.ViewModels;
-using GraphLabs.Core;
+using GraphLabs.Common.Controls.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using Vertex = GraphLabs.Components.Visualization.Vertex;
-using Edge = GraphLabs.Components.Visualization.Edge;
+using GraphLabs.Graphs;
+using Vertex = GraphLabs.Graphs.UIComponents.Visualization.Vertex;
+using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
 
 namespace GraphLabs.Tests.UI
 {

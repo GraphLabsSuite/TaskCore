@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Ребро графа </summary>
     public class UndirectedEdge : Edge, IEquatable<UndirectedEdge>

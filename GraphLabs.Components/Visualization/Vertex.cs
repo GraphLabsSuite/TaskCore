@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows.Data;
 using System.Windows;
 using System.Windows.Controls;
-using GraphLabs.Components.Helpers;
-using GraphLabs.Core;
+using System.Windows.Data;
+using GraphLabs.Common.Helpers;
 
-namespace GraphLabs.Components.Visualization
+namespace GraphLabs.Graphs.UIComponents.Visualization
 {
     /// <summary> Контрол-вершина </summary>
     public sealed class Vertex : Control, IVertex
@@ -348,7 +347,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравнение вершин </summary>
         public bool Equals(IVertex other)
         {
-            return ValueEqualityComparer.VerticesEquals(this, other);
+            return Graphs.ValueEqualityComparer.VerticesEquals(this, other);
         }
 
         /// <summary> Сравниваем </summary>

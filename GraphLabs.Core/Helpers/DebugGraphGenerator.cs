@@ -1,7 +1,8 @@
-﻿#if DEBUG
-using GraphLabs.Core.DataTransferObjects.Converters;
+﻿using GraphLabs.Graphs.DataTransferObjects.Converters;
+#if DEBUG
 
-namespace GraphLabs.Core.Helpers
+
+namespace GraphLabs.Graphs.Helpers
 {
     /// <summary> Для использования в дебаге из веб-сервисов </summary>
     public static class DebugGraphGenerator

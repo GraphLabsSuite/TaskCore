@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Graphs.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Абстрактный граф </summary>
     public abstract class Graph<TVertex, TEdge> : IGraph<TVertex, TEdge>, IObservableGraph, ICloneable

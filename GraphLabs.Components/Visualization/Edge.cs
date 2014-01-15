@@ -5,10 +5,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using GraphLabs.Core;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Components.Visualization
+namespace GraphLabs.Graphs.UIComponents.Visualization
 {
     /// <summary> Контрол-ребро </summary>
     public sealed class Edge : Control, IEdge<Vertex>
@@ -501,7 +500,7 @@ namespace GraphLabs.Components.Visualization
         /// <summary> Сравнение рёбер </summary>
         public bool Equals(IEdge other)
         {
-            return ValueEqualityComparer.EdgesEquals(this, other);
+            return Graphs.ValueEqualityComparer.EdgesEquals(this, other);
         }
 
         /// <summary> Сравниваем </summary>

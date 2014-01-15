@@ -1,8 +1,9 @@
 ﻿using System.Globalization;
 using System.Linq;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Graphs.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Обыкновенный неориентированный граф </summary>
     public class UndirectedGraph : Graph<Vertex, UndirectedEdge>

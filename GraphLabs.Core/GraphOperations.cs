@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
-using System.Collections.Generic;
-using GraphLabs.Core.Helpers;
+using GraphLabs.Graphs.Helpers;
+using GraphLabs.Utils;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Статичный класс, реализующий операции над графами. </summary>
     public static class GraphOperations

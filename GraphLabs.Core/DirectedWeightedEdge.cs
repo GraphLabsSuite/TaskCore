@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Взвешенная дуга </summary>
     public class DirectedWeightedEdge : DirectedEdge, IWeightedEdge, IEquatable<DirectedWeightedEdge>

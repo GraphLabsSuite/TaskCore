@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Взвешенное ребро </summary>
     public interface IWeightedEdge : IEdge, IEquatable<IWeightedEdge>

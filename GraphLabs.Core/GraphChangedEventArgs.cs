@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> EventArgs для события изменения графа </summary>
     public sealed class GraphChangedEventArgs : EventArgs

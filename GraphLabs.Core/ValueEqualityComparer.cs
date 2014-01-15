@@ -1,9 +1,9 @@
-﻿namespace GraphLabs.Core
+﻿namespace GraphLabs.Graphs
 {
     // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
     /// <summary> Сравниватель вершин </summary>
-    internal static class ValueEqualityComparer
+    public static class ValueEqualityComparer
     {
         /// <summary> Сравнение по значению! </summary>
         public static bool VerticesEquals(IVertex x, IVertex y)

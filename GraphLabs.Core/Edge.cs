@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace GraphLabs.Core
+namespace GraphLabs.Graphs
 {
     /// <summary> Ребро / дуга графа </summary>
     public abstract class Edge : IEdge<Vertex>, IEquatable<Edge>
