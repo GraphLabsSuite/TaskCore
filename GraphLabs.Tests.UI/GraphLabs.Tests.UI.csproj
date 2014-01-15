@@ -168,15 +168,15 @@
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphLabs.Components\GraphLabs.Graphs.UIComponents.csproj">
+    <ProjectReference Include="..\GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.csproj">
       <Project>{7c30b52b-19d9-4cec-a8b5-34ce6a6f4e72}</Project>
       <Name>GraphLabs.Graphs.UIComponents</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLabs.Core\GraphLabs.Graphs.csproj">
+    <ProjectReference Include="..\GraphLabs.Graphs\GraphLabs.Graphs.csproj">
       <Project>{f24fc8f0-f88d-4e51-8e6c-6de2727b1162}</Project>
       <Name>GraphLabs.Graphs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLabs.Tasks.Common\GraphLabs.Common.csproj">
+    <ProjectReference Include="..\GraphLabs.Common\GraphLabs.Common.csproj">
       <Project>{92f3715e-f80d-4685-a1d6-78c7434ad433}</Project>
       <Name>GraphLabs.Common</Name>
     </ProjectReference>

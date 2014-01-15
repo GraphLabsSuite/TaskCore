@@ -132,7 +132,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GraphLabs.Core\GraphLabs.Graphs.csproj">
+    <ProjectReference Include="..\GraphLabs.Graphs\GraphLabs.Graphs.csproj">
       <Project>{f24fc8f0-f88d-4e51-8e6c-6de2727b1162}</Project>
       <Name>GraphLabs.Graphs</Name>
     </ProjectReference>

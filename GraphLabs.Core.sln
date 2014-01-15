@@ -10,13 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{191BC0
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Graphs", "GraphLabs.Tests.Core\GraphLabs.Tests.Graphs.csproj", "{4A2A7051-E562-487A-AA67-14C7F277B828}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Graphs", "GraphLabs.Tests.Graphs\GraphLabs.Tests.Graphs.csproj", "{4A2A7051-E562-487A-AA67-14C7F277B828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs", "GraphLabs.Core\GraphLabs.Graphs.csproj", "{F24FC8F0-F88D-4E51-8E6C-6DE2727B1162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs", "GraphLabs.Graphs\GraphLabs.Graphs.csproj", "{F24FC8F0-F88D-4E51-8E6C-6DE2727B1162}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs.UIComponents", "GraphLabs.Components\GraphLabs.Graphs.UIComponents.csproj", "{7C30B52B-19D9-4CEC-A8B5-34CE6A6F4E72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs.UIComponents", "GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.csproj", "{7C30B52B-19D9-4CEC-A8B5-34CE6A6F4E72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Common", "GraphLabs.Tasks.Common\GraphLabs.Common.csproj", "{92F3715E-F80D-4685-A1D6-78C7434AD433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Common", "GraphLabs.Common\GraphLabs.Common.csproj", "{92F3715E-F80D-4685-A1D6-78C7434AD433}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Utils", "GraphLabs.Utils\GraphLabs.Utils.csproj", "{186DFF1F-1D55-45A3-ADC6-423135DB8D65}"
 EndProject
