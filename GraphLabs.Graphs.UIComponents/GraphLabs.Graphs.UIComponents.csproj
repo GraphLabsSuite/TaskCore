@@ -140,6 +140,10 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AssemblyInfo.General.cs">
+      <Link>Properties\AssemblyInfo.General.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Visualization\Edge.cs" />
     <Compile Include="Visualization\GraphVisualizer.xaml.cs">
       <DependentUpon>GraphVisualizer.xaml</DependentUpon>
@@ -178,8 +182,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\AssemblyVersion.cs.template">
+      <Link>Properties\AssemblyVersion.cs.template</Link>
+    </None>
     <None Include="packages.config" />
-    <None Include="Properties\AssemblyInfo.cs.template" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
@@ -191,7 +197,7 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PreBuildEvent>cd "$(SolutionDir)"
-SubWCRev "." "$(ProjectDir)\Properties\AssemblyInfo.cs.template" "$(ProjectDir)\Properties\AssemblyInfo.cs"</PreBuildEvent>
+SubWCRev "." "AssemblyVersion.cs.template" "$(ProjectDir)Properties\AssemblyVersion.cs"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

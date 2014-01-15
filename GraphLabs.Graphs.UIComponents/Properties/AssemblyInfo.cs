@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GraphLabs.Common")]
-[assembly: AssemblyDescription("Библиотека общих элементов модулей-заданий.")]
+[assembly: AssemblyTitle("GraphLabs.Graphs.UIComponents")]
+[assembly: AssemblyDescription("Библиотека UI-компонентов для теории графов.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 
@@ -15,5 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("92f3715e-f80d-4685-a1d6-78c7434ad433")]
-
+[assembly: Guid("7c30b52b-19d9-4cec-a8b5-34ce6a6f4e72")]
