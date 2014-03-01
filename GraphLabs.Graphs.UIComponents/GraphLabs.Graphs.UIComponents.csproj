@@ -118,6 +118,9 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -172,9 +175,9 @@
       <Project>{f24fc8f0-f88d-4e51-8e6c-6de2727b1162}</Project>
       <Name>GraphLabs.Graphs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLabs.Common\GraphLabs.Common.csproj">
+    <ProjectReference Include="..\GraphLabs.CommonUI\GraphLabs.CommonUI.csproj">
       <Project>{92f3715e-f80d-4685-a1d6-78c7434ad433}</Project>
-      <Name>GraphLabs.Common</Name>
+      <Name>GraphLabs.CommonUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\GraphLabs.Utils\GraphLabs.Utils.csproj">
       <Project>{186DFF1F-1D55-45A3-ADC6-423135DB8D65}</Project>
@@ -185,6 +188,7 @@
     <None Include="..\AssemblyVersion.cs.template">
       <Link>Properties\AssemblyVersion.cs.template</Link>
     </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -5,16 +5,19 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
-using System.Windows;
-using GraphLabs.Common.Controls;
-using GraphLabs.Common.Controls.ViewModels;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Utils;
+using GraphLabs.Utils.Services;
+using JetBrains.Annotations;
 
 namespace GraphLabs.Common
 {
     /// <summary> Менеджер по сохранению действий студентов (по совместительству - ViewModel для InformationBar) </summary>
-    public class UserActionsManager : DependencyObject, IDisposable
+    public class UserActionsManager : INotifyPropertyChanged, IDisposable
     {
+        /// <summary> Сервис даты-времени </summary>
+        protected IDateTimeService DateService { get; private set; }
+
         /// <summary> Сообщения </summary>
         protected ObservableCollection<LogEventViewModel> InternalLog { get; private set; }
 
@@ -31,59 +34,42 @@ namespace GraphLabs.Common
         protected virtual LinkedList<ActionDescription> NonRegisteredActions { get; private set; }
 
         /// <summary> Начальный балл </summary>
-        public const int STARTING_SCORE = 100;
+        public const int StartingScore = 100;
 
-        #region DependencyProperties
 
-        /// <summary> Идёт отправка отчёта? </summary>
-        public static readonly DependencyProperty IsSendingReportProperty =
-            DependencyProperty.Register("IsSendingReport", typeof(bool), typeof(UserActionsManager), new PropertyMetadata(false));
-
-        /// <summary> Идёт отправка отчёта? </summary>
-        public bool IsSendingReport
-        {
-            get { return (bool)GetValue(IsSendingReportProperty); }
-            set { SetValue(IsSendingReportProperty, value); }
-        }
+        #region Публичные свойства
 
         /// <summary> Отправлять отчёт после каждого действия? По-умолчанию false, т.е. отправка отчёта происходит только при совершении ошибки. </summary>
-        public static readonly DependencyProperty SendReportOnEveryActionProperty =
-            DependencyProperty.Register("SendReportOnEveryAction", typeof(bool), typeof(UserActionsManager), new PropertyMetadata(false));
-
-        /// <summary> Отправлять отчёт после каждого действия? По-умолчанию false, т.е. отправка отчёта происходит только при совершении ошибки. </summary>
-        public bool SendReportOnEveryAction
-        {
-            get { return (bool)GetValue(SendReportOnEveryActionProperty); }
-            set { SetValue(SendReportOnEveryActionProperty, value); }
-        }
-
-        /// <summary> Сообщения </summary>
-        public static readonly DependencyProperty LogProperty =
-            DependencyProperty.Register("Log", typeof(ReadOnlyObservableCollection<LogEventViewModel>), typeof(InformationBar), new PropertyMetadata(default(ReadOnlyObservableCollection<LogEventViewModel>)));
+        public bool SendReportOnEveryAction { get; set; }
 
         /// <summary> Сообщения </summary>
         public ReadOnlyObservableCollection<LogEventViewModel> Log
         {
-            get { return (ReadOnlyObservableCollection<LogEventViewModel>)GetValue(LogProperty); }
-            set { SetValue(LogProperty, value); }
+            get { return _log; }
+            set
+            {
+                _log = value;
+                OnPropertyChanged(ExpressionUtility.NameForMember(() => Log));
+            }
         }
-
-        /// <summary> Текущий балл </summary>
-        public static readonly DependencyProperty ScoreProperty =
-            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(STARTING_SCORE));
 
         /// <summary> Текущий балл </summary>
         public int Score
         {
-            get { return (int)GetValue(ScoreProperty); }
-            set { SetValue(ScoreProperty, value); }
+            get { return _score; }
+            set
+            {
+                _score = value;
+                OnPropertyChanged(ExpressionUtility.NameForMember(() => Score));
+            }
         }
 
         #endregion
 
         /// <summary> ViewModel для панели информации </summary>
-        internal UserActionsManager(long taskId, Guid sessionGuid, IUserActionsRegistratorClient registratorClient)
+        public UserActionsManager(long taskId, Guid sessionGuid, IUserActionsRegistratorClient registratorClient, IDateTimeService dateService)
         {
+            DateService = dateService;
             TaskId = taskId;
             SessionGuid = sessionGuid;
             InternalLog = new ObservableCollection<LogEventViewModel>();
@@ -96,7 +82,6 @@ namespace GraphLabs.Common
         private void InitClient(IUserActionsRegistratorClient registratorClient)
         {
             UserActionsRegistratorClient = registratorClient;
-            UserActionsRegistratorClient.RegisterUserActionsCompleted += RegisterUserActionsCompleted;
             UserActionsRegistratorClient.CloseCompleted += CloseCompleted;
         }
 
@@ -109,12 +94,6 @@ namespace GraphLabs.Common
         public virtual void Dispose()
         {
             CheckNotDisposed();
-
-            const int CHECK_SENDING_COMPLETE_INTERVAL = 100;
-            while (IsSendingReport)
-            {
-                Thread.Sleep(CHECK_SENDING_COMPLETE_INTERVAL);
-            }
 
             UserActionsRegistratorClient.CloseAsync();
             NonRegisteredActions = null;
@@ -138,8 +117,11 @@ namespace GraphLabs.Common
         /// <summary> Задание завершено? </summary>
         protected bool IsTaskFinished = false;
 
+        private int _score = StartingScore;
+        private ReadOnlyObservableCollection<LogEventViewModel> _log;
+
         /// <summary> Проверяет, что задание ещё не завершено </summary>
-        protected void CheckTaskNotFinished()
+        protected void CheckTaskIsNotFinished()
         {
             Contract.Requires(!IsTaskFinished, "Уже отправлен признак завершения задания.");
         }
@@ -148,10 +130,10 @@ namespace GraphLabs.Common
         #region Actions
 
         /// <summary> Добавить событие </summary>
-        public virtual void RegisterInfoEvent(string text)
+        public virtual void RegisterInfo(string text)
         {
             CheckNotDisposed();
-            CheckTaskNotFinished();
+            CheckTaskIsNotFinished();
 
             AddActionInternal(text);
             if (SendReportOnEveryAction)
@@ -162,17 +144,17 @@ namespace GraphLabs.Common
         public virtual void RegisterMistake(string description, short penalty)
         {
             CheckNotDisposed();
-            CheckTaskNotFinished();
+            CheckTaskIsNotFinished();
 
             AddActionInternal(description, penalty);
             SendReport();
         }
 
         /// <summary> Отправить сообщение о том, что задание завершено </summary>
-        public void ReportTaskFinished()
+        public void ReportThatTaskFinished()
         {
             CheckNotDisposed();
-            CheckTaskNotFinished();
+            CheckTaskIsNotFinished();
 
             SendReport(true);
         }
@@ -180,7 +162,7 @@ namespace GraphLabs.Common
         /// <summary> Ставит задание в буфер для последующей отправки </summary>
         protected virtual void AddActionInternal(string description, short penalty = 0)
         {
-            NonRegisteredActions.AddLast(new ActionDescription { Description = description, Penalty = penalty, TimeStamp = DateTime.Now });
+            NonRegisteredActions.AddLast(new ActionDescription { Description = description, Penalty = penalty, TimeStamp = DateService.Now() });
         }
 
         #endregion
@@ -189,37 +171,62 @@ namespace GraphLabs.Common
         #region Отправка данных
 
         /// <summary> Принудительно отправляет действия </summary>
-        protected virtual void SendReport(bool isTaskFinished = false)
+        protected virtual void SendReport(bool finishTask = false)
         {
-            Contract.Requires(!IsSendingReport, "Вызвана повторная отправка отчёта в то время, как предыдущая ещё не завершена.");
             CheckNotDisposed();
-            CheckTaskNotFinished();
+            CheckTaskIsNotFinished();
 
-            if (!NonRegisteredActions.Any() && !isTaskFinished)
+            if (!NonRegisteredActions.Any() && !finishTask)
             {
                 return;
             }
 
-            if (isTaskFinished)
+            if (finishTask)
                 IsTaskFinished = true;
 
-            UserActionsRegistratorClient.RegisterUserActionsAsync(TaskId, SessionGuid, NonRegisteredActions.ToArray(), isTaskFinished);
+
+            using (var flag = new AutoResetEvent(false))
+            {
+                EventHandler<RegisterUserActionsCompletedEventArgs> completedHandler = (s, e) => RegistrationComplete(flag, e);
+                UserActionsRegistratorClient.RegisterUserActionsCompleted += completedHandler;
+                UserActionsRegistratorClient.RegisterUserActionsAsync(TaskId, SessionGuid, NonRegisteredActions.ToArray(), finishTask);
+                flag.WaitOne();
+                UserActionsRegistratorClient.RegisterUserActionsCompleted -= completedHandler;
+            }
+            
             NonRegisteredActions.Clear();
-            IsSendingReport = true;
         }
 
-
-        private void RegisterUserActionsCompleted(object sender, RegisterUserActionsCompletedEventArgs e)
+        private void RegistrationComplete(AutoResetEvent flag, RegisterUserActionsCompletedEventArgs registerUserActionsCompletedEventArgs)
         {
-            if (e.Error != null)
+            Contract.Requires(flag != null);
+            Contract.Requires(registerUserActionsCompletedEventArgs != null);
+            Contract.Requires(!registerUserActionsCompletedEventArgs.Cancelled);
+
+            if (registerUserActionsCompletedEventArgs.Error != null)
             {
-                throw new Exception(string.Format("Не удалось отправить отчёт о действиях: {0}", e.Error));
+                throw registerUserActionsCompletedEventArgs.Error;
             }
 
-            Score = e.Result;
-            IsSendingReport = false;
+            var score = registerUserActionsCompletedEventArgs.Result;
+
+            Score = score;
+
+            flag.Set();
         }
 
         #endregion
+
+        /// <summary> Occurs when a property value changes. </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary> Occurs when a property value changes. </summary>
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

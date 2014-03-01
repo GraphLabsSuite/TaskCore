@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="377dd251-f233-4bf7-982c-f87b7897e070" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b65bb54d-3858-41c5-b843-1c5f0f3b86fa" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -8,7 +8,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>false</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -21,11 +23,11 @@
     <MetadataSource Address="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="UserActionsRegistrator.xsd" MetadataType="Schema" ID="b7c91b35-7fde-4e7a-be5c-54da2d93a752" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd2" />
-    <MetadataFile FileName="UserActionsRegistrator1.xsd" MetadataType="Schema" ID="da528da5-4f75-47dd-bab2-1d12c9a25b11" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd1" />
-    <MetadataFile FileName="UserActionsRegistrator.disco" MetadataType="Disco" ID="7f32c40c-5957-42ba-85ac-1dff7cf54a29" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?disco" />
-    <MetadataFile FileName="UserActionsRegistrator.wsdl" MetadataType="Wsdl" ID="63a61a53-d210-4596-b84e-b517873bc1f7" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?wsdl" />
-    <MetadataFile FileName="UserActionsRegistrator2.xsd" MetadataType="Schema" ID="b2a99ec2-7984-4b27-ad66-1d40c3e0da44" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd0" />
+    <MetadataFile FileName="UserActionsRegistrator.xsd" MetadataType="Schema" ID="e56f6e48-304f-4043-ba7d-0cc02cd11dab" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd2" />
+    <MetadataFile FileName="UserActionsRegistrator1.xsd" MetadataType="Schema" ID="20f1f2e9-f614-4fc7-87ce-b03e51724daa" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd1" />
+    <MetadataFile FileName="UserActionsRegistrator.disco" MetadataType="Disco" ID="61f83d2f-2991-464c-b6bc-2183ec8a17e0" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?disco" />
+    <MetadataFile FileName="UserActionsRegistrator.wsdl" MetadataType="Wsdl" ID="3fbcf298-3cc2-4dc4-a9ae-14316d2fe610" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?wsdl" />
+    <MetadataFile FileName="UserActionsRegistrator2.xsd" MetadataType="Schema" ID="57823a38-1019-4254-9eaf-226dee181e98" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/UserActionsRegistrator.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

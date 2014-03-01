@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using GraphLabs.Common.Helpers;
+using GraphLabs.CommonUI.Helpers;
 using GraphLabs.Graphs.Helpers;
 using GraphLabs.Utils;
 

@@ -24,4 +24,3 @@ namespace GraphLabs.Common.UserActionsRegistrator
     {
     }
 }
-    

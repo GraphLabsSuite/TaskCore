@@ -129,6 +129,9 @@
     <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -162,12 +165,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\OutOfBrowserSettings.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GraphLabs.Common\GraphLabs.Common.csproj">
+      <Project>{c3138d96-6a31-434c-8fce-fb37ee624714}</Project>
+      <Name>GraphLabs.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.csproj">
       <Project>{7c30b52b-19d9-4cec-a8b5-34ce6a6f4e72}</Project>
       <Name>GraphLabs.Graphs.UIComponents</Name>
@@ -176,9 +185,9 @@
       <Project>{f24fc8f0-f88d-4e51-8e6c-6de2727b1162}</Project>
       <Name>GraphLabs.Graphs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLabs.Common\GraphLabs.Common.csproj">
+    <ProjectReference Include="..\GraphLabs.CommonUI\GraphLabs.CommonUI.csproj">
       <Project>{92f3715e-f80d-4685-a1d6-78c7434ad433}</Project>
-      <Name>GraphLabs.Common</Name>
+      <Name>GraphLabs.CommonUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

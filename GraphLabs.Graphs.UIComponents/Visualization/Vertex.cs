@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using GraphLabs.Common.Helpers;
+using GraphLabs.CommonUI.Helpers;
 
 namespace GraphLabs.Graphs.UIComponents.Visualization
 {

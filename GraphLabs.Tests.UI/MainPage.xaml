@@ -4,7 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization;assembly=GraphLabs.Graphs.UIComponents"
-    xmlns:controls="clr-namespace:GraphLabs.Common.Controls;assembly=GraphLabs.Common"
+    xmlns:controls="clr-namespace:GraphLabs.CommonUI.Controls;assembly=GraphLabs.CommonUI"
              xmlns:ui="clr-namespace:GraphLabs.Tests.UI"
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">

@@ -1,38 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{92F3715E-F80D-4685-A1D6-78C7434AD433}</ProjectGuid>
-    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectGuid>{C3138D96-6A31-434C-8FCE-FB37EE624714}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GraphLabs.Common</RootNamespace>
     <AssemblyName>GraphLabs.Common</AssemblyName>
-    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
-    <SilverlightApplication>false</SilverlightApplication>
-    <ValidateXaml>true</ValidateXaml>
-    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile24</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
-  </PropertyGroup>
-  <!-- This property group is only here to support building this project using the 
-       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
-       to set the TargetFrameworkVersion to v3.5 -->
-  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT; CONTRACTS_FULL</DefineConstants>
-    <NoStdLib>true</NoStdLib>
-    <NoConfig>true</NoConfig>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -74,58 +63,22 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>Bin\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
-    <NoStdLib>true</NoStdLib>
-    <NoConfig>true</NoConfig>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Windows" />
-    <Reference Include="system" />
-    <Reference Include="System.Core">
-      <HintPath>$(TargetFrameworkDirectory)System.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Windows.Controls.Data, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Windows.Controls.Data.Input, Version=5.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Browser" />
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.General.cs">
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
-    <Compile Include="Controls\InformationBar.xaml.cs">
-      <DependentUpon>InformationBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Matrix.xaml.cs">
-      <DependentUpon>Matrix.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ToolBar.xaml.cs">
-      <DependentUpon>ToolBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ViewModels\LogEventViewModel.cs" />
-    <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
-    <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
-    <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
-    <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="Helpers\Converters\BooleanToNegativeConverter.cs" />
-    <Compile Include="Helpers\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Helpers\Converters\DoubleToCornerRadiusConverter.cs" />
-    <Compile Include="Helpers\Converters\PenaltyToBrushConverter.cs" />
-    <Compile Include="Helpers\Converters\PenaltyToVisibilityConverter.cs" />
-    <Compile Include="Helpers\Converters\ScoreToBrushConverter.cs" />
-    <Compile Include="Helpers\CultureAwareBinding.cs" />
-    <Compile Include="Helpers\SilverlightHelper.cs" />
-    <Compile Include="Helpers\ThrottledMouseMoveEvent.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
+    <Compile Include="LogEventViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\IUserActionsRegistratorClient.cs" />
     <Compile Include="Service References\UserActionsRegistrator\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -133,10 +86,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="UserActionsManager.cs" />
-    <Compile Include="VariantProvider.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AssemblyVersion.cs.template">
@@ -175,40 +124,16 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphLabs.Utils\GraphLabs.Utils.csproj">
-      <Project>{186DFF1F-1D55-45A3-ADC6-423135DB8D65}</Project>
+      <Project>{186dff1f-1d55-45a3-adc6-423135db8d65}</Project>
       <Name>GraphLabs.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\InformationBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\MatrixCellStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\Matrix.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\ToolBar.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
-        <SilverlightProjectProperties />
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>cd "$(SolutionDir)"
 SubWCRev "." "AssemblyVersion.cs.template" "$(ProjectDir)Properties\AssemblyVersion.cs"</PreBuildEvent>

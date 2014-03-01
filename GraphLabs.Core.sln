@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs", "GraphLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs.UIComponents", "GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.csproj", "{7C30B52B-19D9-4CEC-A8B5-34CE6A6F4E72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Common", "GraphLabs.Common\GraphLabs.Common.csproj", "{92F3715E-F80D-4685-A1D6-78C7434AD433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.CommonUI", "GraphLabs.CommonUI\GraphLabs.CommonUI.csproj", "{92F3715E-F80D-4685-A1D6-78C7434AD433}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Utils", "GraphLabs.Utils\GraphLabs.Utils.csproj", "{186DFF1F-1D55-45A3-ADC6-423135DB8D65}"
 EndProject
@@ -25,6 +25,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		AssemblyInfo.General.cs = AssemblyInfo.General.cs
 		AssemblyVersion.cs.template = AssemblyVersion.cs.template
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Common", "GraphLabs.Tests.Common\GraphLabs.Tests.Common.csproj", "{A60C9D54-410B-412C-99B7-8049FF570984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Common", "GraphLabs.Common\GraphLabs.Common.csproj", "{C3138D96-6A31-434C-8FCE-FB37EE624714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Utils", "GraphLabs.Tests.Utils\GraphLabs.Tests.Utils.csproj", "{59D04B62-E51D-4014-A353-820DCF13DB87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,6 +102,36 @@ Global
 		{186DFF1F-1D55-45A3-ADC6-423135DB8D65}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{186DFF1F-1D55-45A3-ADC6-423135DB8D65}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{186DFF1F-1D55-45A3-ADC6-423135DB8D65}.Release|x86.ActiveCfg = Release|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A60C9D54-410B-412C-99B7-8049FF570984}.Release|x86.ActiveCfg = Release|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C3138D96-6A31-434C-8FCE-FB37EE624714}.Release|x86.ActiveCfg = Release|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,5 +139,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6D3CD930-E5C7-4B76-BB53-5DE04AD8B9A9} = {187D1E43-6865-44BB-BC49-5D4D0A561EFB}
 		{4A2A7051-E562-487A-AA67-14C7F277B828} = {187D1E43-6865-44BB-BC49-5D4D0A561EFB}
+		{A60C9D54-410B-412C-99B7-8049FF570984} = {187D1E43-6865-44BB-BC49-5D4D0A561EFB}
+		{59D04B62-E51D-4014-A353-820DCF13DB87} = {187D1E43-6865-44BB-BC49-5D4D0A561EFB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

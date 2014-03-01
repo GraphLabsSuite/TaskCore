@@ -1,14 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
-using GraphLabs.Common.Controls.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using GraphLabs.Common;
+using GraphLabs.CommonUI.Controls.ViewModels;
 using GraphLabs.Graphs;
-using Vertex = GraphLabs.Graphs.UIComponents.Visualization.Vertex;
 using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
 
 namespace GraphLabs.Tests.UI
