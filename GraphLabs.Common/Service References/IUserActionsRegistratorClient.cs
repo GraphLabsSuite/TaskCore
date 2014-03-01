@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using JetBrains.Annotations;
 
 namespace GraphLabs.Common.UserActionsRegistrator
 {
@@ -20,6 +21,7 @@ namespace GraphLabs.Common.UserActionsRegistrator
     }
 
     /// <summary> Сервис регистрации действий клиента </summary>
+    [CoverageExclude]
     public partial class UserActionsRegistratorClient : IUserActionsRegistratorClient
     {
     }

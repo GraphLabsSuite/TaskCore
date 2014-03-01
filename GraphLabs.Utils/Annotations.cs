@@ -575,4 +575,13 @@ namespace JetBrains.Annotations
   /// </summary>
   [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, Inherited = true)]
   public sealed class RazorSectionAttribute : Attribute { }
+
+
+  // Misc
+
+  /// <summary> Помечать код, который должен быть пропущен dotCover'ом </summary>
+  [AttributeUsage(AttributeTargets.All, Inherited = false)]
+  public class CoverageExcludeAttribute : Attribute
+  {
+  }
 }
