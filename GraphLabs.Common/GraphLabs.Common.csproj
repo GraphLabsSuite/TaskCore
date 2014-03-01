@@ -102,7 +102,6 @@
     <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\UserActionsRegistrator\" />
