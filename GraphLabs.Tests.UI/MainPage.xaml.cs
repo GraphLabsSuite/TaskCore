@@ -117,7 +117,8 @@ namespace GraphLabs.Tests.UI
                 .Callback<long, Guid, ActionDescription[], bool>((l, g, d, b) => registratorMock.Raise(mock => mock.RegisterUserActionsCompleted += null,
                     new RegisterUserActionsCompletedEventArgs(new object[] { _currentScore = _currentScore - d[0].Penalty }, null, false, null)));
 
-            UserActionsManager = new UserActionsManager(0, new Guid(), registratorMock.Object, Container.Resolve<IDateTimeService>())
+            _registratorWrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object);
+            UserActionsManager = new UserActionsManager(0, new Guid(), _registratorWrapper, Container.Resolve<IDateTimeService>())
             {
                 SendReportOnEveryAction = true
             };
@@ -208,6 +209,7 @@ namespace GraphLabs.Tests.UI
         #region Log
 
         private int _currentScore = UserActionsManager.StartingScore;
+        private readonly DisposableWcfClientWrapper<IUserActionsRegistratorClient> _registratorWrapper;
 
         public static readonly DependencyProperty LogProperty =
             DependencyProperty.Register("UserActionsManager", typeof(UserActionsManager), typeof(MainPage), new PropertyMetadata(null));
@@ -238,7 +240,7 @@ namespace GraphLabs.Tests.UI
 
         public void Dispose()
         {
-            UserActionsManager.Dispose();
+            _registratorWrapper.Dispose();
         }
     }
 }
