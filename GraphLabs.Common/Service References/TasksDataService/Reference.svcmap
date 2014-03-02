@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="609421f9-6df2-4e25-b77f-61a7715b6493" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://glservice.svtz.ru:8000/TasksDataService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="TasksDataService.wsdl" MetadataType="Wsdl" ID="5dd2036c-6afd-4e79-aabf-b0f6301e1d86" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?wsdl" />
+    <MetadataFile FileName="TasksDataService.xsd" MetadataType="Schema" ID="942129b1-abaf-4583-bc0b-61e3c8d3e702" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TasksDataService.disco" MetadataType="Disco" ID="0a621e91-c1b8-4b23-9b69-a551591b0a6f" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?disco" />
+    <MetadataFile FileName="TasksDataService1.xsd" MetadataType="Schema" ID="ccefe8e9-7845-41d2-bf07-5e2e16b6be7e" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TasksDataService2.xsd" MetadataType="Schema" ID="4c09e33d-fecd-446e-9784-b37dda44a0ef" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

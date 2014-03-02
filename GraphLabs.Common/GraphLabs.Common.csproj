@@ -79,7 +79,13 @@
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="LogEventViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\ITasksDataService.cs" />
     <Compile Include="Service References\IUserActionsRegistratorClient.cs" />
+    <Compile Include="Service References\TasksDataService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\UserActionsRegistrator\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +98,19 @@
       <Link>Properties\AssemblyVersion.cs.template</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="Service References\TasksDataService\GraphLabs.Common.TasksDataService.TaskVariantInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\TasksDataService\TasksDataService.wsdl" />
+    <None Include="Service References\TasksDataService\TasksDataService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TasksDataService\TasksDataService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\TasksDataService\TasksDataService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.wsdl" />
     <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.xsd">
       <SubType>Designer</SubType>
@@ -104,6 +123,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\TasksDataService\" />
     <WCFMetadataStorage Include="Service References\UserActionsRegistrator\" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +151,21 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TasksDataService\TasksDataService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TasksDataService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TasksDataService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\TasksDataService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

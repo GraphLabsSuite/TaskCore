@@ -25,4 +25,16 @@ namespace GraphLabs.Common.UserActionsRegistrator
     public partial class UserActionsRegistratorClient : IUserActionsRegistratorClient
     {
     }
+
+    /// <summary> Описание действия </summary>
+    [CoverageExclude]
+    public partial class ActionDescription
+    {
+    }
+
+    /// <summary> EventArgs для завершения регистрации действий </summary>
+    [CoverageExclude]
+    public partial class RegisterUserActionsCompletedEventArgs
+    {
+    }
 }

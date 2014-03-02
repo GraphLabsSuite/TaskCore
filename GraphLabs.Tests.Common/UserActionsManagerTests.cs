@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 using Moq;
 using NUnit.Framework;
@@ -332,6 +333,34 @@ namespace GraphLabs.Tests.Common
             }
 
             registratorMock.Verify();
+        }
+
+        [Test]
+        public void TestPropertyChanged()
+        {
+            const string descr = "TestScoreChanged";
+            const int penalty = 10;
+            const int newScore = UserActionsManager.StartingScore - penalty;
+
+            var dateService = _container.Resolve<IDateTimeService>();
+            var registratorMock = new Mock<IUserActionsRegistratorClient>(MockBehavior.Loose);
+            registratorMock.Setup(reg => reg.RegisterUserActionsAsync(
+                It.IsAny<long>(),
+                It.IsAny<Guid>(),
+                It.IsAny<ActionDescription[]>(),
+                It.IsAny<bool>()))
+                .Callback(() => registratorMock.Raise(mock => mock.RegisterUserActionsCompleted += null,
+                    new RegisterUserActionsCompletedEventArgs(new object[] {newScore}, null, false, false)));
+                
+            var flag = false;
+            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            {
+                manager.PropertyChanged += (sender, args) => 
+                    flag = args.PropertyName == ExpressionUtility.NameForMember((UserActionsManager m) => m.Score);
+                manager.RegisterMistake(descr, penalty);
+            }
+
+            Assert.IsTrue(flag);
         }
 
         private static void SetupCloseAsync(Mock<IUserActionsRegistratorClient> registratorMock)
