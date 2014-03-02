@@ -24,4 +24,10 @@ namespace GraphLabs.Common
     public partial class GetVariantCompletedEventArgs
     {
     }
+
+    /// <summary> Информация о варианте </summary>
+    [CoverageExclude]
+    public partial class TaskVariantInfo
+    {
+    }
 }

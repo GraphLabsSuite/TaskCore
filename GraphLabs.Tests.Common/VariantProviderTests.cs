@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using GraphLabs.Common;
 using Moq;
 using NUnit.Framework;
@@ -21,21 +19,52 @@ namespace GraphLabs.Tests.Common
         public void TestGetVariant()
         {
             const string variantData = "Пусть это будут данные варианта. То, что это на самом деле строка, не принципиально.";
+            var allowedVersion = new Version(1, 0);
 
             var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
+            var taskVariantInfo = new TaskVariantInfo
+            {
+                Data = Encoding.UTF8.GetBytes(variantData),
+                GeneratorVersion = allowedVersion.ToString(),
+                Id = 7,
+                Number = "test",
+                Version = 1
+            };
+
             dataServiceMock
                 .Setup(srv => srv.GetVariantAsync(It.Is<long>(l => l == TaskId), It.Is<Guid>(g => g == _sessionGuid)))
                 .Callback(() => dataServiceMock.Raise(mock => mock.GetVariantCompleted += null,
-                    new GetVariantCompletedEventArgs(new object[] { variantData }, null, false, null)))
+                    new GetVariantCompletedEventArgs(new object[] { taskVariantInfo }, null, false, null)))
                 .Verifiable();
             SetupCloseAsync(dataServiceMock);
 
             using (var wrapper = new DisposableWcfClientWrapper<ITasksDataServiceClient>(dataServiceMock.Object))
             {
-                var variantProvider = new VariantProvider(wrapper);
-                
+                var variantProvider = new VariantProvider(TaskId, _sessionGuid, new [] {allowedVersion}, wrapper);
+                using (var flag = new AutoResetEvent(false))
+                {
+                    var handled = false;
+                    EventHandler<VariantDownloadedEventArgs> handler = (sender, args) =>
+                    {
+                        Assert.AreSame(sender, variantProvider);
+                        Assert.NotNull(args);
+                        Assert.That(args.Data.SequenceEqual(taskVariantInfo.Data));
+                        Assert.AreEqual(taskVariantInfo.Number, args.Number);
+                        Assert.AreEqual(taskVariantInfo.Number, args.Number);
+                        handled = true;
+                        flag.Set();
+                    };
+
+                    variantProvider.VariantDownloaded += handler;
+                    variantProvider.DownloadVariantAsync();
+                    flag.WaitOne(1000);
+                    variantProvider.VariantDownloaded -= handler;
+
+                    Assert.IsTrue(handled);
+                }
             }
 
+            dataServiceMock.Verify();
         }
 
 

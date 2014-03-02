@@ -77,6 +77,7 @@
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
     <Compile Include="DisposableWcfClientWrapper.cs" />
+    <Compile Include="VariantDownloadedEventArgs.cs" />
     <Compile Include="IUiBlockerAsyncProcessor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="LogEventViewModel.cs" />
