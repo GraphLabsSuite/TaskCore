@@ -8,6 +8,7 @@ namespace GraphLabs.Tests.UI
     public partial class App : Application
     {
         private IContainer _container;
+        private MainPage _page;
 
         public App()
         {
@@ -30,12 +31,12 @@ namespace GraphLabs.Tests.UI
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage(_container);
+            this.RootVisual = _page = new MainPage(_container);
         }
 
         private void Application_Exit(object sender, EventArgs e)
         {
-
+            _page.Dispose();
         }
 
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)

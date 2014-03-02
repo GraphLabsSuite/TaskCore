@@ -18,7 +18,7 @@ using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
 
 namespace GraphLabs.Tests.UI
 {
-    public partial class MainPage : UserControl
+    public partial class MainPage : UserControl, IDisposable
     {
         /// <summary> Ioc-контейнер </summary>
         protected IContainer Container { get; private set; }
@@ -235,5 +235,10 @@ namespace GraphLabs.Tests.UI
 
         #endregion // Log
 
+
+        public void Dispose()
+        {
+            UserActionsManager.Dispose();
+        }
     }
 }

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace GraphLabs.Common.TasksDataService
 {
-    /// <summary> Сервис регистрации действий клиента </summary>
+    /// <summary> Сервис регистрации действий студента </summary>
     public interface ITasksDataServiceClient
     {
         /// <summary> Получить вариант </summary>
@@ -16,7 +16,7 @@ namespace GraphLabs.Common.TasksDataService
         void CloseAsync();
     }
 
-    /// <summary> Сервис регистрации действий клиента </summary>
+    /// <summary> Сервис регистрации действий студента </summary>
     [CoverageExclude]
     public partial class TasksDataServiceClient : ITasksDataServiceClient
     {
