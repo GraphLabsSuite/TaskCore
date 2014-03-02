@@ -132,6 +132,12 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\sl5\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq.Silverlight">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\sl4\Moq.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -188,6 +194,10 @@
     <ProjectReference Include="..\GraphLabs.CommonUI\GraphLabs.CommonUI.csproj">
       <Project>{92f3715e-f80d-4685-a1d6-78c7434ad433}</Project>
       <Name>GraphLabs.CommonUI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphLabs.Utils\GraphLabs.Utils.csproj">
+      <Project>{186dff1f-1d55-45a3-adc6-423135db8d65}</Project>
+      <Name>GraphLabs.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

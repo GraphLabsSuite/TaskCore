@@ -43,15 +43,7 @@ namespace GraphLabs.Common
         public bool SendReportOnEveryAction { get; set; }
 
         /// <summary> Сообщения </summary>
-        public ReadOnlyObservableCollection<LogEventViewModel> Log
-        {
-            get { return _log; }
-            set
-            {
-                _log = value;
-                OnPropertyChanged(ExpressionUtility.NameForMember(() => Log));
-            }
-        }
+        public ReadOnlyObservableCollection<LogEventViewModel> Log { get; set; }
 
         /// <summary> Текущий балл </summary>
         public int Score
@@ -61,6 +53,18 @@ namespace GraphLabs.Common
             {
                 _score = value;
                 OnPropertyChanged(ExpressionUtility.NameForMember(() => Score));
+            }
+        }
+
+        /// <summary> Идёт отправка данных? </summary>
+        //TODO: перевести на асинхронную модель
+        public bool IsSendingData
+        {
+            get { return false; }
+            private set
+            {
+                _isSendingData = value;
+                OnPropertyChanged(ExpressionUtility.NameForMember(() => IsSendingData));
             }
         }
 
@@ -119,7 +123,7 @@ namespace GraphLabs.Common
         protected bool IsTaskFinished = false;
 
         private int _score = StartingScore;
-        private ReadOnlyObservableCollection<LogEventViewModel> _log;
+        private bool _isSendingData;
 
         /// <summary> Проверяет, что задание ещё не завершено </summary>
         protected void CheckTaskIsNotFinished()
@@ -163,7 +167,19 @@ namespace GraphLabs.Common
         /// <summary> Ставит задание в буфер для последующей отправки </summary>
         protected virtual void AddActionInternal(string description, short penalty = 0)
         {
-            NonRegisteredActions.AddLast(new ActionDescription { Description = description, Penalty = penalty, TimeStamp = DateService.Now() });
+            var actionDescr = new ActionDescription
+            {
+                Description = description,
+                Penalty = penalty,
+                TimeStamp = DateService.Now()
+            };
+            NonRegisteredActions.AddLast(actionDescr);
+            AddToLog(actionDescr);
+        }
+
+        private void AddToLog(ActionDescription actionDescr)
+        {
+            InternalLog.Insert(0, new LogEventViewModel { Message = actionDescr.Description, Penalty = actionDescr.Penalty, TimeStamp = actionDescr .TimeStamp});
         }
 
         #endregion

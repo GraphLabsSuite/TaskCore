@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
+using Autofac;
+using GraphLabs.Utils.Services;
 
 namespace GraphLabs.Tests.UI
 {
     public partial class App : Application
     {
+        private IContainer _container;
 
         public App()
         {
@@ -21,12 +15,22 @@ namespace GraphLabs.Tests.UI
             this.Exit += this.Application_Exit;
             this.UnhandledException += this.Application_UnhandledException;
 
+            InitializeAutofac();
+
             InitializeComponent();
+        }
+
+        private void InitializeAutofac()
+        {
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(new DateTimeService()).As<IDateTimeService>();
+
+            _container = builder.Build();
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            this.RootVisual = new MainPage();
+            this.RootVisual = new MainPage(_container);
         }
 
         private void Application_Exit(object sender, EventArgs e)

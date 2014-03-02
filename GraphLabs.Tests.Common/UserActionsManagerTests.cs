@@ -336,7 +336,7 @@ namespace GraphLabs.Tests.Common
         }
 
         [Test]
-        public void TestPropertyChanged()
+        public void TestScoreChanged()
         {
             const string descr = "TestScoreChanged";
             const int penalty = 10;

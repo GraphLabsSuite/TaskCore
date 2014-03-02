@@ -15,7 +15,7 @@ namespace GraphLabs.CommonUI.Helpers.Converters
             Contract.Assert(targetType == typeof(Brush));
             var penalty = (int)value;
 
-            if (penalty >= 0)
+            if (penalty <= 0)
             {
                 return new SolidColorBrush(Color.FromArgb(255, 70, 130, 180));
             }

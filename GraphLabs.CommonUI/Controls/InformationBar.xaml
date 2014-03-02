@@ -4,9 +4,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-             xmlns:glob="clr-namespace:System.Globalization;assembly=mscorlib"
              xmlns:converters="clr-namespace:GraphLabs.CommonUI.Helpers.Converters"
              xmlns:helpers="clr-namespace:GraphLabs.CommonUI.Helpers"
+             xmlns:ui="clr-namespace:GraphLabs.CommonUI.Controls"
              mc:Ignorable="d"
     d:DesignHeight="50" d:DesignWidth="600">
     <UserControl.Resources>
@@ -31,29 +31,28 @@
                                         RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                         Converter={StaticResource ScoreToBrushConverter}}"
                    Content="{Binding Score, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
-        <ListBox Grid.Column="1" Margin="0,3,3,3" ItemsSource="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}">
+        <ListBox Grid.Column="1" Margin="0,3,3,3" ItemsSource="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=ui:InformationBar}}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                        <TextBlock Text="{helpers:CultureAwareBinding Path=TimeStamp, StringFormat=(\{0:T\})}" Margin="0,0,3,0"
+                                   Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Message}"
+                                   Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Penalty, StringFormat=(\{0\})}" Margin="3,0,0,0"
+                                   Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
+                                   FontWeight="Bold"
+                                   Visibility="{Binding Penalty, Converter={StaticResource PenaltyToVisibilityConverter}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
-                                    <TextBlock Text="{helpers:CultureAwareBinding Path=TimeStamp, StringFormat=(\{0:T\})}" Margin="0,0,3,0"
-                                               Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
-                                               FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Message}"
-                                               Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
-                                               FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Penalty, StringFormat=(\{0\})}" Margin="3,0,0,0"
-                                               Foreground="{Binding Penalty, Converter={StaticResource PenaltyToBrushConverter}}"
-                                               FontWeight="Bold"
-                                               Visibility="{Binding Penalty, Converter={StaticResource PenaltyToVisibilityConverter}}"/>
-                                </StackPanel>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Padding" Value="0"/>
                 </Style>
-            </ListBox.ItemContainerStyle>            
+            </ListBox.ItemContainerStyle>
         </ListBox>
     </Grid>
 </UserControl>

@@ -1,20 +1,28 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Autofac;
 using GraphLabs.Common;
+using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.CommonUI.Controls.ViewModels;
 using GraphLabs.Graphs;
+using GraphLabs.Utils.Services;
+using Moq;
 using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
 
 namespace GraphLabs.Tests.UI
 {
     public partial class MainPage : UserControl
     {
+        /// <summary> Ioc-контейнер </summary>
+        protected IContainer Container { get; private set; }
+
 
         #region CrazyAnimation
 
@@ -85,12 +93,34 @@ namespace GraphLabs.Tests.UI
         }
 
         #endregion CrazyAnimation
+        
 
-
-        public MainPage()
+        public MainPage(IContainer container)
         {
-            InitializeComponent();  
-            Log = new ObservableCollection<LogEventViewModel>();
+            InitializeComponent();
+
+            Container = container;
+            
+            var registratorMock = new Mock<IUserActionsRegistratorClient>(MockBehavior.Loose);
+            registratorMock.Setup(reg => reg.RegisterUserActionsAsync(
+                It.IsAny<long>(),
+                It.IsAny<Guid>(),
+                It.Is<ActionDescription[]>(d => d.Count() == 1 && d[0].Penalty == 0),
+                It.IsAny<bool>()))
+                .Callback(() => registratorMock.Raise(mock => mock.RegisterUserActionsCompleted += null,
+                    new RegisterUserActionsCompletedEventArgs(new object[] { _currentScore }, null, false, null)));
+            registratorMock.Setup(reg => reg.RegisterUserActionsAsync(
+                It.IsAny<long>(),
+                It.IsAny<Guid>(),
+                It.Is<ActionDescription[]>(d => d.Count() == 1 && d[0].Penalty != 0),
+                It.IsAny<bool>()))
+                .Callback<long, Guid, ActionDescription[], bool>((l, g, d, b) => registratorMock.Raise(mock => mock.RegisterUserActionsCompleted += null,
+                    new RegisterUserActionsCompletedEventArgs(new object[] { _currentScore = _currentScore - d[0].Penalty }, null, false, null)));
+
+            UserActionsManager = new UserActionsManager(0, new Guid(), registratorMock.Object, Container.Resolve<IDateTimeService>())
+            {
+                SendReportOnEveryAction = true
+            };
         }
 
 
@@ -174,23 +204,33 @@ namespace GraphLabs.Tests.UI
 
         #endregion // buttonsClicks
 
+
         #region Log
 
-        public static readonly DependencyProperty LogProperty =
-            DependencyProperty.Register("Log", typeof(ObservableCollection<LogEventViewModel>), typeof(MainPage), new PropertyMetadata(default(ObservableCollection<LogEventViewModel>)));
+        private int _currentScore = UserActionsManager.StartingScore;
 
-        public ObservableCollection<LogEventViewModel> Log
+        public static readonly DependencyProperty LogProperty =
+            DependencyProperty.Register("UserActionsManager", typeof(UserActionsManager), typeof(MainPage), new PropertyMetadata(null));
+
+        public UserActionsManager UserActionsManager
         {
-            get { return (ObservableCollection<LogEventViewModel>)GetValue(LogProperty); }
+            get { return (UserActionsManager)GetValue(LogProperty); }
             set { SetValue(LogProperty, value); }
         }
 
-
+        private readonly Random _rnd = new Random();
         private void AddMessageClick(object sender, RoutedEventArgs e)
         {
-            var rnd = new Random();
-            var hasPenalty = rnd.NextDouble() > 0.5;
-            Log.Insert(0, new LogEventViewModel() { Message = "Msg", Penalty = hasPenalty ? -rnd.Next(0, 10) : 0, TimeStamp = DateTime.Now });
+            var hasPenalty = _rnd.NextDouble() > 0.5;
+
+            if (hasPenalty)
+            {
+                UserActionsManager.RegisterMistake("Ошибочка!", 1);
+            }
+            else
+            {
+                UserActionsManager.RegisterInfo("Информация");
+            }
         }
 
         #endregion // Log

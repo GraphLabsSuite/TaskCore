@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization;assembly=GraphLabs.Graphs.UIComponents"
     xmlns:controls="clr-namespace:GraphLabs.CommonUI.Controls;assembly=GraphLabs.CommonUI"
-             xmlns:ui="clr-namespace:GraphLabs.Tests.UI"
+             xmlns:uiTests="clr-namespace:GraphLabs.Tests.UI"
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">
 
@@ -96,7 +96,7 @@
         <sdk:TabItem Header="Matrix tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <ui:DerivedMatrix x:Name="Grid" Margin="0,0,0,0" />
+                    <uiTests:DerivedMatrix x:Name="Grid" Margin="0,0,0,0" />
                     <Button Width="100" Height="30" Content="Run" Click="RunMatrixClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>
@@ -112,8 +112,8 @@
                     <Button Content="Add Message" Click="AddMessageClick"></Button>
                     <controls:InformationBar Grid.Row="1"
                         ScoreColumnWidth="90"
-                        Score="{Binding }"
-                        Log="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
+                        Name="InformationBar"
+                        DataContext="{Binding UserActionsManager, RelativeSource={RelativeSource FindAncestor, AncestorType=uiTests:MainPage}}"/>
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
