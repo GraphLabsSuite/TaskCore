@@ -51,7 +51,12 @@ namespace GraphLabs.Common
 
 
         /// <summary> Поставщик вариантов задания </summary>
-        public VariantProvider(long taskId, Guid sessionGuid, Version[] allowedVariantGenerationVersions, DisposableWcfClientWrapper<ITasksDataServiceClient> client)
+        /// <param name="taskId">Id задания</param>
+        /// <param name="sessionGuid">Guid сессии</param>
+        /// <param name="allowedVariantGenerationVersions">Допустимые версии генераторов. АХТУНГ! Имеет смысл только мажорная часть версии!</param>
+        /// <param name="client">Клиент</param>
+        public VariantProvider(long taskId, Guid sessionGuid, Version[] allowedVariantGenerationVersions, 
+            DisposableWcfClientWrapper<ITasksDataServiceClient> client)
         {
             Contract.Requires(client != null);
             Contract.Requires(sessionGuid != null);
@@ -104,8 +109,7 @@ namespace GraphLabs.Common
 
         private void CheckVersion(Version generatorVersion)
         {
-            var success = _allowedVariantGenerationVersions.Any(
-                v => v.Major == generatorVersion.Major && v.Minor == generatorVersion.Minor);
+            var success = _allowedVariantGenerationVersions.Any(v => v.Major == generatorVersion.Major);
 
             if (!success)
                 throw new Exception("Полученный вариант сгенерирован неизвестной версией генератора. Продолжение работы невозможно.");
