@@ -32,9 +32,9 @@ namespace GraphLabs.Tests.Common
             _container = builder.Build();
         }
 
-        private UserActionsManager CreateUAManager(IUserActionsRegistratorClient registratorMock, IDateTimeService dateService)
+        private UserActionsManager CreateUAManager(DisposableWcfClientWrapper<IUserActionsRegistratorClient> registratorMock, IDateTimeService dateService)
         {
-            return new UserActionsManager(TaskId, _sessionGuid, registratorMock, dateService);;
+            return new UserActionsManager(TaskId, _sessionGuid, registratorMock, dateService);
         }
 
         [Test]
@@ -63,8 +63,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = true;
 
                 // Action
@@ -89,8 +90,9 @@ namespace GraphLabs.Tests.Common
             var registratorMock = new Mock<IUserActionsRegistratorClient>(MockBehavior.Strict);
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
 
                 // Action
@@ -129,8 +131,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
 
                 // Action
@@ -184,8 +187,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = true;
 
                 // Action
@@ -230,8 +234,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
 
                 // Action
@@ -270,8 +275,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
 
                 // Action
@@ -320,8 +326,9 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
 
                 // Action
@@ -353,8 +360,9 @@ namespace GraphLabs.Tests.Common
                     new RegisterUserActionsCompletedEventArgs(new object[] {newScore}, null, false, false)));
                 
             var flag = false;
-            using (var manager = CreateUAManager(registratorMock.Object, dateService))
+            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
             {
+                var manager = CreateUAManager(wrapper, dateService);
                 manager.PropertyChanged += (sender, args) => 
                     flag = args.PropertyName == ExpressionUtility.NameForMember((UserActionsManager m) => m.Score);
                 manager.RegisterMistake(descr, penalty);

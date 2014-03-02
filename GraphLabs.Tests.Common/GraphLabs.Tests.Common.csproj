@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserActionsManagerTests.cs" />
+    <Compile Include="VariantProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

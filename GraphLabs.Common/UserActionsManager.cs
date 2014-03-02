@@ -13,7 +13,7 @@ using JetBrains.Annotations;
 namespace GraphLabs.Common
 {
     /// <summary> Менеджер по сохранению действий студентов (по совместительству - ViewModel для InformationBar) </summary>
-    public class UserActionsManager : INotifyPropertyChanged, IDisposable
+    public class UserActionsManager : INotifyPropertyChanged, IUiBlockerAsyncProcessor
     {
         /// <summary> Сервис даты-времени </summary>
         protected IDateTimeService DateService { get; private set; }
@@ -51,6 +51,10 @@ namespace GraphLabs.Common
             get { return _score; }
             set
             {
+                if (_score == value)
+                {
+                    return;
+                }
                 _score = value;
                 OnPropertyChanged(ExpressionUtility.NameForMember(() => Score));
             }
@@ -58,13 +62,17 @@ namespace GraphLabs.Common
 
         /// <summary> Идёт отправка данных? </summary>
         //TODO: перевести на асинхронную модель
-        public bool IsSendingData
+        public bool IsBusy
         {
             get { return false; }
             private set
             {
-                _isSendingData = value;
-                OnPropertyChanged(ExpressionUtility.NameForMember(() => IsSendingData));
+                if (_isBusy == value)
+                {
+                    return;
+                }
+                _isBusy = value;
+                OnPropertyChanged(ExpressionUtility.NameForMember(() => IsBusy));
             }
         }
 
@@ -72,8 +80,13 @@ namespace GraphLabs.Common
 
 
         /// <summary> ViewModel для панели информации </summary>
-        public UserActionsManager(long taskId, Guid sessionGuid, IUserActionsRegistratorClient registratorClient, IDateTimeService dateService)
+        public UserActionsManager(long taskId, Guid sessionGuid, 
+            DisposableWcfClientWrapper<IUserActionsRegistratorClient> registratorClient, IDateTimeService dateService)
         {
+            Contract.Requires(sessionGuid != null);
+            Contract.Requires(registratorClient != null);
+            Contract.Requires(dateService != null);
+
             DateService = dateService;
             TaskId = taskId;
             SessionGuid = sessionGuid;
@@ -81,49 +94,14 @@ namespace GraphLabs.Common
             Log = new ReadOnlyObservableCollection<LogEventViewModel>(InternalLog);
             NonRegisteredActions = new LinkedList<ActionDescription>();
 
-            InitClient(registratorClient);
+            UserActionsRegistratorClient = registratorClient.Instance;
         }
-
-        private void InitClient(IUserActionsRegistratorClient registratorClient)
-        {
-            UserActionsRegistratorClient = registratorClient;
-            UserActionsRegistratorClient.CloseCompleted += CloseCompleted;
-        }
-
-        #region IDisposable
-
-        /// <summary> Уже уничтожен? </summary>
-        protected bool IsDisposed = false;
-
-        /// <summary> Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources. </summary>
-        public virtual void Dispose()
-        {
-            CheckNotDisposed();
-
-            UserActionsRegistratorClient.CloseAsync();
-            NonRegisteredActions = null;
-            IsDisposed = true;
-        }
-
-        /// <summary> Проверить, что мы не уничтожены </summary>
-        protected void CheckNotDisposed()
-        {
-            Contract.Requires(!IsDisposed, "Менеджер задания уже уничтожен.");
-        }
-
-        private void CloseCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            UserActionsRegistratorClient = null;
-        }
-
-        #endregion
-
 
         /// <summary> Задание завершено? </summary>
         protected bool IsTaskFinished = false;
 
         private int _score = StartingScore;
-        private bool _isSendingData;
+        private bool _isBusy = false;
 
         /// <summary> Проверяет, что задание ещё не завершено </summary>
         protected void CheckTaskIsNotFinished()
@@ -137,7 +115,8 @@ namespace GraphLabs.Common
         /// <summary> Добавить событие </summary>
         public virtual void RegisterInfo(string text)
         {
-            CheckNotDisposed();
+            Contract.Requires(!string.IsNullOrWhiteSpace(text));
+
             CheckTaskIsNotFinished();
 
             AddActionInternal(text);
@@ -148,7 +127,8 @@ namespace GraphLabs.Common
         /// <summary> Добавить ошибку </summary>
         public virtual void RegisterMistake(string description, short penalty)
         {
-            CheckNotDisposed();
+            Contract.Requires(!string.IsNullOrWhiteSpace(description));
+            Contract.Requires(penalty > 0);
             CheckTaskIsNotFinished();
 
             AddActionInternal(description, penalty);
@@ -158,7 +138,6 @@ namespace GraphLabs.Common
         /// <summary> Отправить сообщение о том, что задание завершено </summary>
         public void ReportThatTaskFinished()
         {
-            CheckNotDisposed();
             CheckTaskIsNotFinished();
 
             SendReport(true);
@@ -190,7 +169,6 @@ namespace GraphLabs.Common
         /// <summary> Принудительно отправляет действия </summary>
         protected virtual void SendReport(bool finishTask = false)
         {
-            CheckNotDisposed();
             CheckTaskIsNotFinished();
 
             if (!NonRegisteredActions.Any() && !finishTask)
@@ -233,6 +211,7 @@ namespace GraphLabs.Common
         }
 
         #endregion
+
 
         /// <summary> Occurs when a property value changes. </summary>
         public event PropertyChangedEventHandler PropertyChanged;

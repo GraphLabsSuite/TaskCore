@@ -76,11 +76,14 @@
     <Compile Include="..\AssemblyInfo.General.cs">
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
+    <Compile Include="DisposableWcfClientWrapper.cs" />
+    <Compile Include="IUiBlockerAsyncProcessor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="LogEventViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ITasksDataService.cs" />
     <Compile Include="Service References\IUserActionsRegistratorClient.cs" />
+    <Compile Include="IWcfClient.cs" />
     <Compile Include="Service References\TasksDataService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,6 +95,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="UserActionsManager.cs" />
+    <Compile Include="VariantProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AssemblyVersion.cs.template">

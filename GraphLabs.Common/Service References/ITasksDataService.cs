@@ -1,22 +1,19 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace GraphLabs.Common.TasksDataService
+namespace GraphLabs.Common
 {
-    /// <summary> Сервис регистрации действий студента </summary>
-    public interface ITasksDataServiceClient
+    /// <summary> Сервис получения вариантов </summary>
+    public interface ITasksDataServiceClient : IWcfClient
     {
         /// <summary> Получить вариант </summary>
         void GetVariantAsync(long taskId, Guid sessionGuid);
 
         /// <summary> Подключение закрыто </summary>
         event EventHandler<GetVariantCompletedEventArgs> GetVariantCompleted;
-
-        /// <summary> Закрыть подключение </summary>
-        void CloseAsync();
     }
 
-    /// <summary> Сервис регистрации действий студента </summary>
+    /// <summary> Сервис получения вариантов </summary>=
     [CoverageExclude]
     public partial class TasksDataServiceClient : ITasksDataServiceClient
     {
