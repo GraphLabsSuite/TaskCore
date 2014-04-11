@@ -6,6 +6,7 @@ namespace GraphLabs.Graphs
     /// <summary> Вершина графа. </summary>
     public class Vertex : IVertex, IEquatable<Vertex>
     {
+        public int Color{ get; set; }
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
 
