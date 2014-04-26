@@ -202,7 +202,7 @@ namespace GraphLabs.CommonUI.Controls
                     .Cast<ButtonBase>()
                     .ForEach(b =>
                         {
-                            b.Width = b.Height = ButtonsPanel.ActualWidth - BUTTON_MARGIN * 2;
+                            b.Width = b.Height = ButtonsPanel.ActualHeight - BUTTON_MARGIN * 2;
                             b.Margin = new Thickness(BUTTON_MARGIN / 2, BUTTON_MARGIN, BUTTON_MARGIN / 2, BUTTON_MARGIN);
                         });
             }
