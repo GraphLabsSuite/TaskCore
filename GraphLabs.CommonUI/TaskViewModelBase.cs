@@ -43,6 +43,9 @@ namespace GraphLabs.CommonUI
             get { return CommonUI.DependencyResolver.Current; }
         }
 
+        /// <summary> View </summary>
+        protected TView View { get; private set; }
+
         /// <summary> Поставщик варианта </summary>
         protected VariantProvider VariantProvider { get; private set; }
 
@@ -88,6 +91,7 @@ namespace GraphLabs.CommonUI
             };
 
             view.DataContext = this;
+            View = view;
 
             OnInitialized();
         }
