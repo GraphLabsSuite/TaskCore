@@ -38,7 +38,7 @@ namespace GraphLabs.Tests.Common
                 .Verifiable();
             SetupCloseAsync(dataServiceMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<ITasksDataServiceClient>(dataServiceMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(dataServiceMock.Object))
             {
                 var variantProvider = new VariantProvider(
                     TaskId,
@@ -95,7 +95,7 @@ namespace GraphLabs.Tests.Common
                 .Verifiable();
             SetupCloseAsync(dataServiceMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<ITasksDataServiceClient>(dataServiceMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(dataServiceMock.Object))
             {
                 var variantProvider = new VariantProvider(TaskId, _sessionGuid, new[] { allowedVersion }, wrapper);
                 using (var flag = new AutoResetEvent(false))
@@ -151,7 +151,7 @@ namespace GraphLabs.Tests.Common
                     .Verifiable();
                 SetupCloseAsync(dataServiceMock);
 
-                using (var wrapper = new DisposableWcfClientWrapper<ITasksDataServiceClient>(dataServiceMock.Object))
+                using (var wrapper = DisposableWcfClientWrapper.Create(dataServiceMock.Object))
                 {
                     var variantProvider = new VariantProvider(
                         TaskId,

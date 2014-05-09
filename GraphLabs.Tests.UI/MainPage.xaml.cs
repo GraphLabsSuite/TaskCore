@@ -117,7 +117,7 @@ namespace GraphLabs.Tests.UI
                 .Callback<long, Guid, ActionDescription[], bool>((l, g, d, b) => registratorMock.Raise(mock => mock.RegisterUserActionsCompleted += null,
                     new RegisterUserActionsCompletedEventArgs(new object[] { _currentScore = _currentScore - d[0].Penalty }, null, false, null)));
 
-            _registratorWrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object);
+            _registratorWrapper = DisposableWcfClientWrapper.Create(registratorMock.Object);
             UserActionsManager = new UserActionsManager(0, new Guid(), _registratorWrapper, Container.Resolve<IDateTimeService>())
             {
                 SendReportOnEveryAction = true

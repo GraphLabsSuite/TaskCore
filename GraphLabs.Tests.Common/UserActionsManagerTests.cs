@@ -63,7 +63,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = true;
@@ -90,7 +90,7 @@ namespace GraphLabs.Tests.Common
             var registratorMock = new Mock<IUserActionsRegistratorClient>(MockBehavior.Strict);
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
@@ -131,7 +131,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
@@ -187,7 +187,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = true;
@@ -234,7 +234,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
@@ -275,7 +275,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
@@ -326,7 +326,7 @@ namespace GraphLabs.Tests.Common
 
             SetupCloseAsync(registratorMock);
 
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.SendReportOnEveryAction = false;
@@ -360,7 +360,7 @@ namespace GraphLabs.Tests.Common
                     new RegisterUserActionsCompletedEventArgs(new object[] {newScore}, null, false, false)));
                 
             var flag = false;
-            using (var wrapper = new DisposableWcfClientWrapper<IUserActionsRegistratorClient>(registratorMock.Object))
+            using (var wrapper = DisposableWcfClientWrapper.Create(registratorMock.Object))
             {
                 var manager = CreateUAManager(wrapper, dateService);
                 manager.PropertyChanged += (sender, args) => 
