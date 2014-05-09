@@ -18,7 +18,7 @@ namespace GraphLabs.CommonUI
         }
 
         /// <summary> Базовая точка входа модуля-задания </summary>
-        protected TaskApplicationBase(params IDependencyResolverConfigurator[] iocConfigurators)
+        protected TaskApplicationBase(IEnumerable<IDependencyResolverConfigurator> iocConfigurators)
         {
             SetupDependencyResolver(iocConfigurators);
             SubscribeToEvents();
