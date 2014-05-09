@@ -44,6 +44,7 @@ namespace GraphLabs.CommonUI
             InitStartupParameters(e);
 
             var viewModel = new TViewModel();
+            viewModel.Initialize(StartupParameters);
             RootVisual = new TView { ViewModel = viewModel };
         }
 

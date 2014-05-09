@@ -11,9 +11,36 @@ namespace GraphLabs.CommonUI
     /// <summary> Базовая ViewModel задания </summary>
     public abstract class TaskViewModelBase : DependencyObject
     {
-        private readonly DisposableWcfClientWrapper<ITasksDataServiceClient> _dataServiceClient;
-        private readonly DisposableWcfClientWrapper<IUserActionsRegistratorClient> _actionsRegistratorClient;
-        protected IDateTimeService DateTimeService { get; private set; }
+        private DisposableWcfClientWrapper<ITasksDataServiceClient> DataServiceClient
+        {
+            get
+            {
+                return DependencyResolver.Resolve<DisposableWcfClientWrapper<ITasksDataServiceClient>>();
+            }
+        }
+
+        private DisposableWcfClientWrapper<IUserActionsRegistratorClient> ActionsRegistratorClient
+        {
+            get
+            {
+                return DependencyResolver.Resolve<DisposableWcfClientWrapper<IUserActionsRegistratorClient>>();
+            }
+        }
+
+        /// <summary> Сервис системного времени </summary>
+        protected IDateTimeService DateTimeService
+        {
+            get
+            {
+                return DependencyResolver.Resolve<IDateTimeService>();
+            }
+        }
+
+        /// <summary> IOC-контейнер </summary>
+        protected IContainer DependencyResolver
+        {
+            get { return CommonUI.DependencyResolver.Current; }
+        }
 
         /// <summary> Поставщик варианта </summary>
         protected VariantProvider VariantProvider { get; private set; }
@@ -24,11 +51,6 @@ namespace GraphLabs.CommonUI
         /// <summary> Параметры запуска </summary>
         protected StartupParameters StartupParameters { get; private set; }
 
-        /// <summary> IOC-контейнер </summary>
-        protected IContainer DependencyResolver
-        {
-            get { return CommonUI.DependencyResolver.Current; }
-        }
 
         #region Public свойства вьюмодели
 
@@ -55,10 +77,10 @@ namespace GraphLabs.CommonUI
         {
             StartupParameters = startupParameters;
 
-            VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, _dataServiceClient);
+            VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, DataServiceClient);
             VariantProvider.VariantDownloaded += (s, e) => OnTaskLoadingComlete(e);
 
-            UserActionsManager = new UserActionsManager(StartupParameters.TaskId, StartupParameters.SessionGuid, _actionsRegistratorClient, DateTimeService)
+            UserActionsManager = new UserActionsManager(StartupParameters.TaskId, StartupParameters.SessionGuid, ActionsRegistratorClient, DateTimeService)
             {
                 SendReportOnEveryAction = sendReportOnEveryAction
             };
