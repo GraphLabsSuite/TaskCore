@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using Autofac;
 using GraphLabs.CommonUI.Configuration;
 
 namespace GraphLabs.CommonUI
 {
     /// <summary> Базовая точка входа модуля-задания </summary>
-    public abstract class TaskApplicationBase<TView, TViewModel> : Application
-        where TView : TaskViewBase<TViewModel>, new()
-        where TViewModel : TaskViewModelBase, new()
+    public abstract class TaskApplicationBase : Application
     {
         /// <summary> Параметры запуска задания </summary>
         protected StartupParameters StartupParameters { get; private set; }
+
+        private IViewBuilder ViewBuilder
+        {
+            get { return DependencyResolver.Current.Resolve<IViewBuilder>(); }
+        }
 
         /// <summary> Базовая точка входа модуля-задания </summary>
         protected TaskApplicationBase(params IDependencyResolverConfigurator[] iocConfigurators)
@@ -43,9 +47,7 @@ namespace GraphLabs.CommonUI
         {
             InitStartupParameters(e);
 
-            var viewModel = new TViewModel();
-            viewModel.Initialize(StartupParameters, IsRunningOutOfBrowser);
-            RootVisual = new TView { ViewModel = viewModel };
+            RootVisual = ViewBuilder.BuildView(StartupParameters, IsRunningOutOfBrowser);
         }
 
         private void InitStartupParameters(StartupEventArgs e)

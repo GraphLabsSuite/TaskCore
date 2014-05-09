@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Configuration\CommonItemsConfigurator.cs" />
     <Compile Include="Configuration\MockedWcfServicesConfiguratorBase.cs" />
+    <Compile Include="Configuration\ViewBuilderConfigurator.cs" />
     <Compile Include="Configuration\WcfServicesConfigurator.cs" />
     <Compile Include="Configuration\WcfServicesConfiguratorBase.cs" />
     <Compile Include="Controls\InformationBar.xaml.cs">
@@ -138,6 +139,7 @@
     <Compile Include="Helpers\SilverlightHelper.cs" />
     <Compile Include="Helpers\ThrottledMouseMoveEvent.cs" />
     <Compile Include="Configuration\IDependencyResolverConfigurator.cs" />
+    <Compile Include="IViewBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="StartupHelper.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="TaskApplicationBase.cs" />
     <Compile Include="TaskViewBase.cs" />
     <Compile Include="TaskViewModelBase.cs" />
+    <Compile Include="ViewBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AssemblyVersion.cs.template">

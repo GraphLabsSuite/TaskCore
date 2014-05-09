@@ -9,7 +9,8 @@ using GraphLabs.Utils.Services;
 namespace GraphLabs.CommonUI
 {
     /// <summary> Базовая ViewModel задания </summary>
-    public abstract class TaskViewModelBase : DependencyObject
+    public abstract class TaskViewModelBase<TView> : DependencyObject
+        where TView : TaskViewBase
     {
         private DisposableWcfClientWrapper<ITasksDataServiceClient> DataServiceClient
         {
@@ -53,13 +54,14 @@ namespace GraphLabs.CommonUI
 
 
         #region Public свойства вьюмодели
+        // ReSharper disable StaticFieldInGenericType
 
         /// <summary> Регистратор действий студента </summary>
         public static readonly DependencyProperty UserActionsManagerProperty =
             DependencyProperty.Register(
-            ExpressionUtility.NameForMember((TaskViewModelBase m) => m.UserActionsManager),
-            typeof(UserActionsManager), 
-            typeof(TaskViewModelBase), 
+            ExpressionUtility.NameForMember((TaskViewModelBase<TView> m) => m.UserActionsManager),
+            typeof(UserActionsManager),
+            typeof(TaskViewModelBase<TView>), 
             new PropertyMetadata(default(UserActionsManager)));
 
         /// <summary> Регистратор действий студента </summary>
@@ -69,11 +71,11 @@ namespace GraphLabs.CommonUI
             set { SetValue(UserActionsManagerProperty, value); }
         }
 
+        // ReSharper restore StaticFieldInGenericType
         #endregion
 
-
-        /// <summary> Начальная инициализация </summary>
-        public virtual void Initialize(StartupParameters startupParameters, bool sendReportOnEveryAction)
+        /// <summary> Инициализировать ViewModel и записаться во view.DataContext </summary>
+        public void Initialize(TView view, StartupParameters startupParameters, bool sendReportOnEveryAction)
         {
             StartupParameters = startupParameters;
 
@@ -84,6 +86,15 @@ namespace GraphLabs.CommonUI
             {
                 SendReportOnEveryAction = sendReportOnEveryAction
             };
+
+            view.DataContext = this;
+
+            OnInitialized();
+        }
+
+        /// <summary> Инициализация завершена </summary>
+        protected virtual void OnInitialized()
+        {
         }
 
         /// <summary> Вариант загружен </summary>
