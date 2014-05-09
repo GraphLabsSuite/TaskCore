@@ -1,0 +1,70 @@
+﻿using System;
+using System.Windows;
+using Autofac;
+using GraphLabs.Common;
+using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Utils;
+using GraphLabs.Utils.Services;
+
+namespace GraphLabs.CommonUI
+{
+    /// <summary> Базовая ViewModel задания </summary>
+    public abstract class TaskViewModelBase : DependencyObject
+    {
+        private readonly DisposableWcfClientWrapper<ITasksDataServiceClient> _dataServiceClient;
+        private readonly DisposableWcfClientWrapper<IUserActionsRegistratorClient> _actionsRegistratorClient;
+        protected IDateTimeService DateTimeService { get; private set; }
+
+        /// <summary> Поставщик варианта </summary>
+        protected VariantProvider VariantProvider { get; private set; }
+
+        /// <summary> Допустимые версии генератора, с помощью которого сгенерирован вариант </summary>
+        protected abstract Version[] AllowedGeneratorVersions { get; }
+
+        /// <summary> Параметры запуска </summary>
+        protected StartupParameters StartupParameters { get; private set; }
+
+        /// <summary> IOC-контейнер </summary>
+        protected IContainer DependencyResolver
+        {
+            get { return CommonUI.DependencyResolver.Current; }
+        }
+
+        #region Public свойства вьюмодели
+
+        /// <summary> Регистратор действий студента </summary>
+        public static readonly DependencyProperty UserActionsManagerProperty =
+            DependencyProperty.Register(
+            ExpressionUtility.NameForMember((TaskViewModelBase m) => m.UserActionsManager),
+            typeof(UserActionsManager), 
+            typeof(TaskViewModelBase), 
+            new PropertyMetadata(default(UserActionsManager)));
+
+        /// <summary> Регистратор действий студента </summary>
+        public UserActionsManager UserActionsManager
+        {
+            get { return (UserActionsManager)GetValue(UserActionsManagerProperty); }
+            set { SetValue(UserActionsManagerProperty, value); }
+        }
+
+        #endregion
+
+
+        /// <summary> Начальная инициализация </summary>
+        public virtual void Initialize(StartupParameters startupParameters, bool sendReportOnEveryAction)
+        {
+            StartupParameters = startupParameters;
+
+            VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, _dataServiceClient);
+            VariantProvider.VariantDownloaded += (s, e) => OnTaskLoadingComlete(e);
+
+            UserActionsManager = new UserActionsManager(StartupParameters.TaskId, StartupParameters.SessionGuid, _actionsRegistratorClient, DateTimeService)
+            {
+                SendReportOnEveryAction = sendReportOnEveryAction
+            };
+        }
+
+        /// <summary> Вариант загружен </summary>
+        protected abstract void OnTaskLoadingComlete(VariantDownloadedEventArgs e);
+    }
+}

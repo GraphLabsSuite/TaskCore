@@ -85,6 +85,12 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.3.0\lib\portable-win+net40+sl50+wp8\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.2\lib\sl5\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq.Silverlight">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\sl4\Moq.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -103,6 +109,9 @@
     <Compile Include="..\AssemblyInfo.General.cs">
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
+    <Compile Include="Configuration\MockedWcfServicesConfiguratorBase.cs" />
+    <Compile Include="Configuration\WcfServicesConfigurator.cs" />
+    <Compile Include="Configuration\WcfServicesConfiguratorBase.cs" />
     <Compile Include="Controls\InformationBar.xaml.cs">
       <DependentUpon>InformationBar.xaml</DependentUpon>
     </Compile>
@@ -117,6 +126,7 @@
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
     <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />
     <Compile Include="DelegateCommand.cs" />
+    <Compile Include="Configuration\DependencyResolver.cs" />
     <Compile Include="Helpers\Converters\BooleanToNegativeConverter.cs" />
     <Compile Include="Helpers\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\DoubleToCornerRadiusConverter.cs" />
@@ -126,9 +136,14 @@
     <Compile Include="Helpers\CultureAwareBinding.cs" />
     <Compile Include="Helpers\SilverlightHelper.cs" />
     <Compile Include="Helpers\ThrottledMouseMoveEvent.cs" />
+    <Compile Include="Configuration\IDependencyResolverConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="StartupHelper.cs" />
+    <Compile Include="StartupParameters.cs" />
+    <Compile Include="TaskApplicationBase.cs" />
+    <Compile Include="TaskViewBase.cs" />
+    <Compile Include="TaskViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AssemblyVersion.cs.template">

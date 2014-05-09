@@ -7,17 +7,29 @@ using System.Threading;
 namespace GraphLabs.Common
 {
     /// <summary> Disposable-обёртка для Wcf-клиента (чтобы не делать каждый раз Close вручную) </summary>
+    public static class DisposableWcfClientWrapper
+    {
+        /// <summary> Обернуть </summary>
+        /// <typeparam name="T">Wcf-клиент</typeparam>
+        public static DisposableWcfClientWrapper<T> Create<T>(T client)
+            where T : class, IWcfClient
+        {
+            return new DisposableWcfClientWrapper<T>(client);
+        }
+    }
+
+    /// <summary> Disposable-обёртка для Wcf-клиента (чтобы не делать каждый раз Close вручную) </summary>
     /// <typeparam name="T">Wcf-клиент</typeparam>
     public class DisposableWcfClientWrapper<T> : IDisposable
         where T: class, IWcfClient
     {
-        private const int CloseWaitingTimeoutMs = 1000;
+        private const int CLOSE_WAITING_TIMEOUT_MS = 1000;
 
         /// <summary> Экземпляр клиента </summary>
         public T Instance { get; private set; }
 
         /// <summary> Disposable-обёртка для Wcf-клиента </summary>
-        public DisposableWcfClientWrapper(T instance)
+        internal DisposableWcfClientWrapper(T instance)
         {
             Contract.Requires(instance != null);
 
@@ -45,13 +57,14 @@ namespace GraphLabs.Common
                     };
                 Instance.CloseCompleted += closeCompleted;
                 Instance.CloseAsync();
-                closedEvent.WaitOne(CloseWaitingTimeoutMs);
+                closedEvent.WaitOne(CLOSE_WAITING_TIMEOUT_MS);
+                Instance.CloseCompleted -= closeCompleted;
+                Instance = null;
+
                 if (!closed)
                 {
                     Debug.WriteLine("Не удалось дождаться закрытия подключения {0}", Instance);
                 }
-                Instance.CloseCompleted -= closeCompleted;
-                Instance = null;
             }
         }
 
