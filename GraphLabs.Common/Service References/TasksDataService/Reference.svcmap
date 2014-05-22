@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="609421f9-6df2-4e25-b77f-61a7715b6493" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6833de18-1783-4276-809a-17b5314a374d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,11 +23,11 @@
     <MetadataSource Address="http://glservice.svtz.ru:8000/TasksDataService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TasksDataService.wsdl" MetadataType="Wsdl" ID="5dd2036c-6afd-4e79-aabf-b0f6301e1d86" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?wsdl" />
-    <MetadataFile FileName="TasksDataService.xsd" MetadataType="Schema" ID="942129b1-abaf-4583-bc0b-61e3c8d3e702" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd1" />
-    <MetadataFile FileName="TasksDataService.disco" MetadataType="Disco" ID="0a621e91-c1b8-4b23-9b69-a551591b0a6f" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?disco" />
-    <MetadataFile FileName="TasksDataService1.xsd" MetadataType="Schema" ID="ccefe8e9-7845-41d2-bf07-5e2e16b6be7e" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd2" />
-    <MetadataFile FileName="TasksDataService2.xsd" MetadataType="Schema" ID="4c09e33d-fecd-446e-9784-b37dda44a0ef" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="TasksDataService.wsdl" MetadataType="Wsdl" ID="3459dfe4-336c-4964-955f-3fd4f1de43cc" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?wsdl" />
+    <MetadataFile FileName="TasksDataService.xsd" MetadataType="Schema" ID="52a79c93-f8f5-4c68-b552-4516e8a7f785" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd1" />
+    <MetadataFile FileName="TasksDataService.disco" MetadataType="Disco" ID="8bbc5296-7402-433d-8b5b-95daeeb58ecf" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?disco" />
+    <MetadataFile FileName="TasksDataService1.xsd" MetadataType="Schema" ID="02ee533f-d3af-43db-8cba-ce0d48dc4b26" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd2" />
+    <MetadataFile FileName="TasksDataService2.xsd" MetadataType="Schema" ID="a1db74a9-6758-470d-bdf4-034f91b3b571" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

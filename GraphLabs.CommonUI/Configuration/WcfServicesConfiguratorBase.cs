@@ -1,5 +1,6 @@
 using Autofac;
 using GraphLabs.Common;
+using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
 
 namespace GraphLabs.CommonUI.Configuration

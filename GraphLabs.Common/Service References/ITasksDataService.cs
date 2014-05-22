@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace GraphLabs.Common
+namespace GraphLabs.Common.TasksDataService
 {
     /// <summary> Сервис получения вариантов </summary>
     public interface ITasksDataServiceClient : IWcfClient

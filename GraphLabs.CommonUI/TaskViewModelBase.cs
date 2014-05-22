@@ -2,6 +2,7 @@
 using System.Windows;
 using Autofac;
 using GraphLabs.Common;
+using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.Common.Utils;
 using GraphLabs.Tasks.Contract;

@@ -77,6 +77,11 @@
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
     <Compile Include="DisposableWcfClientWrapper.cs" />
+    <Compile Include="Service References\TasksDataService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="VariantDownloadedEventArgs.cs" />
     <Compile Include="IUiBlockerAsyncProcessor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
@@ -85,11 +90,6 @@
     <Compile Include="Service References\ITasksDataService.cs" />
     <Compile Include="Service References\IUserActionsRegistratorClient.cs" />
     <Compile Include="IWcfClient.cs" />
-    <Compile Include="Service References\TasksDataService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\UserActionsRegistrator\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,6 +103,7 @@
       <Link>Properties\AssemblyVersion.cs.template</Link>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
     <None Include="Service References\TasksDataService\GraphLabs.Common.TasksDataService.TaskVariantInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

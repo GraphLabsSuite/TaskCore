@@ -95,6 +95,11 @@ namespace GraphLabs.CommonUI
             else
             {
                 //TODO: redirect...
+                e.Handled = true;
+                MessageBox.Show(
+                    string.Format("Произошла ошибка:\r\n{0}", e.ExceptionObject),
+                    "Ошибка",
+                    MessageBoxButton.OK);
             }
         }
     }

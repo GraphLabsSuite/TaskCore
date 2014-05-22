@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.Utils;
-using GraphLabs.Utils;
 using JetBrains.Annotations;
 
 namespace GraphLabs.Common
