@@ -4,7 +4,7 @@ using System.Linq;
 using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
-using GraphLabs.Utils;
+using GraphLabs.Common.Utils;
 using GraphLabs.Utils.Services;
 using Moq;
 using NUnit.Framework;

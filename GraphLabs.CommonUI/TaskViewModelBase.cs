@@ -3,6 +3,7 @@ using System.Windows;
 using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Common.Utils;
 using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 

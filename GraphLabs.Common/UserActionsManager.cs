@@ -6,6 +6,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Common.Utils;
 using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 using JetBrains.Annotations;
