@@ -4,6 +4,7 @@ using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.Common.Utils;
+using GraphLabs.Tasks.Contract;
 using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 
@@ -54,7 +55,7 @@ namespace GraphLabs.CommonUI
         protected abstract Version[] AllowedGeneratorVersions { get; }
 
         /// <summary> Параметры запуска </summary>
-        protected StartupParameters StartupParameters { get; private set; }
+        protected InitParams StartupParameters { get; private set; }
 
 
         #region Public свойства вьюмодели
@@ -79,7 +80,7 @@ namespace GraphLabs.CommonUI
         #endregion
 
         /// <summary> Инициализировать ViewModel и записаться во view.DataContext </summary>
-        public void Initialize(TView view, StartupParameters startupParameters, bool sendReportOnEveryAction)
+        public void Initialize(TView view, InitParams startupParameters, bool sendReportOnEveryAction)
         {
             StartupParameters = startupParameters;
 

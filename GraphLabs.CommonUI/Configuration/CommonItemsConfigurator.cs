@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using GraphLabs.Tasks.Contract;
 using GraphLabs.Utils.Services;
 
 namespace GraphLabs.CommonUI.Configuration
@@ -10,6 +11,7 @@ namespace GraphLabs.CommonUI.Configuration
         public void Configure(ContainerBuilder builder)
         {
             builder.RegisterType<DateTimeService>().As<IDateTimeService>();
+            builder.RegisterType<InitParamsProvider>().As<IInitParamsProvider>();
         }
     }
 }

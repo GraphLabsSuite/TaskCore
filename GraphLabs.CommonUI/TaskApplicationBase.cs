@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Windows;
 using Autofac;
 using GraphLabs.CommonUI.Configuration;
+using GraphLabs.Tasks.Contract;
 
 namespace GraphLabs.CommonUI
 {
@@ -10,7 +12,7 @@ namespace GraphLabs.CommonUI
     public abstract class TaskApplicationBase : Application
     {
         /// <summary> Параметры запуска задания </summary>
-        protected StartupParameters StartupParameters { get; private set; }
+        protected InitParams StartupParameters { get; private set; }
 
         private IViewBuilder ViewBuilder
         {
@@ -52,13 +54,23 @@ namespace GraphLabs.CommonUI
 
         private void InitStartupParameters(StartupEventArgs e)
         {
-            var taskId = !IsRunningOutOfBrowser ? e.GetTaskId() : 0;
-            var sessionGuid = !IsRunningOutOfBrowser ? e.GetSessionGuid() : new Guid();
-
-            StartupParameters = new StartupParameters(taskId, sessionGuid);
+            StartupParameters = GetInitParams(e);
         }
 
-        
+        /// <summary> Получить параметры запуска </summary>
+        public InitParams GetInitParams(StartupEventArgs args)
+        {
+            Contract.Requires(args != null);
+
+            var initParamsProvider = DependencyResolver.Current.Resolve<IInitParamsProvider>();
+            if (args.InitParams.ContainsKey(initParamsProvider.ParamsKey))
+            {
+                return initParamsProvider.ParseInitParamsString(args.InitParams[initParamsProvider.ParamsKey]);
+            }
+
+            throw new Exception("Не удалось получить параметры модуля-задания.");
+        }
+
         /// <summary> Непосредственно перед завершением </summary>
         protected virtual void Application_Exit(object sender, EventArgs e)
         {

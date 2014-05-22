@@ -1,4 +1,6 @@
-﻿namespace GraphLabs.CommonUI
+﻿using GraphLabs.Tasks.Contract;
+
+namespace GraphLabs.CommonUI
 {
     /// <summary> Постритель View </summary>
     public class ViewBuilder<TView, TViewModel> : IViewBuilder
@@ -6,7 +8,7 @@
         where TViewModel: TaskViewModelBase<TView>, new()
     {
         /// <summary> Постритель View </summary>
-        public TaskViewBase BuildView(StartupParameters startupParameters, bool sendReportOnEveryAction)
+        public TaskViewBase BuildView(InitParams startupParameters, bool sendReportOnEveryAction)
         {
             var view = new TView();
             var viewModel = new TViewModel();
