@@ -54,7 +54,9 @@ namespace GraphLabs.CommonUI
 
         private void InitStartupParameters(StartupEventArgs e)
         {
-            StartupParameters = GetInitParams(e);
+            StartupParameters = !IsRunningOutOfBrowser
+                ? GetInitParams(e)
+                : new InitParams();
         }
 
         /// <summary> Получить параметры запуска </summary>
