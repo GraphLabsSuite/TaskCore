@@ -87,7 +87,12 @@
         <sdk:TabItem Header="Visualizer tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <visualization:GraphVisualizer Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"/>
+                    <visualization:GraphVisualizer Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"
+                                                   VertexClick="VisualizerVertexClick"
+                                                   EdgeClick="VisualizeEdgeClick"
+                                                   DefaultEdgeStrokeThickness="2.5"
+                                                   DefaultVertexRadius="15"
+                                                   DefaultVertexBackground="LightGray"/>
                     <Button Width="100" Height="30" Content="Run" Click="RunClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Grid>

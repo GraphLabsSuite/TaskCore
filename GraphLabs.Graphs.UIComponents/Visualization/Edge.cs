@@ -478,8 +478,10 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <returns> A string that represents the current object. </returns>
         public override string ToString()
         {
-            return string.Format(Directed ? "{0}->{1}" : "{0}--{1}", Vertex1, Vertex2);
-
+            if (!IsWeighted)
+                return string.Format(Directed ? "{0}->{1}" : "{0}--{1}", Vertex1, Vertex2);
+            else
+                return string.Format(Directed ? "{0}-({1})->{2}" : "{0}-({1})-{2}", Vertex1, Weight, Vertex2);
         }
 
         /// <summary> Создаёт глубокую копию данного объекта </summary>

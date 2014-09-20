@@ -12,6 +12,7 @@ using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.CommonUI.Controls.ViewModels;
 using GraphLabs.Graphs;
+using GraphLabs.Graphs.UIComponents.Visualization;
 using GraphLabs.Utils.Services;
 using Moq;
 using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
@@ -171,8 +172,6 @@ namespace GraphLabs.Tests.UI
             graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[6], graph.Vertices[7], 4));
             graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[7], graph.Vertices[3], 1));
             Visualizer.Graph = graph;
-            Visualizer.DefaultVertexRadius = 10.0;
-            Visualizer.DefaultVertexBackground = new SolidColorBrush(Colors.LightGray);
             //((Vertex)Visualizer.Vertices[3]).Background = new SolidColorBrush(Colors.Magenta);
             //((Vertex)Visualizer.Vertices[1]).Radius = 30;
             ((Button)sender).Visibility = Visibility.Collapsed;
@@ -241,6 +240,16 @@ namespace GraphLabs.Tests.UI
         public void Dispose()
         {
             _registratorWrapper.Dispose();
+        }
+
+        private void VisualizerVertexClick(object sender, VertexClickEventArgs e)
+        {
+            MessageBox.Show(e.Control.Name);
+        }
+
+        private void VisualizeEdgeClick(object sender, EdgeClickEventArgs e)
+        {
+            MessageBox.Show(e.Control.ToString());
         }
     }
 }

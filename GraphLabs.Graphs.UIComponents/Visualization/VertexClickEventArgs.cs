@@ -1,17 +1,32 @@
 ﻿using System;
+using System.Windows.Controls;
 
 namespace GraphLabs.Graphs.UIComponents.Visualization
 {
-    /// <summary> EventArgs для события клика по вершине </summary>
-    public class VertexClickEventArgs : EventArgs
+    public class VisualizerClickEventArgs<T> : EventArgs
+        where T: Control
     {
-        /// <summary> Вершина </summary>
-        public Vertex Vertex { get; private set; }
-
         /// <summary> Ctor. </summary>
-        public VertexClickEventArgs(Vertex vertex)
+        public VisualizerClickEventArgs(T control)
         {
-            Vertex = vertex;
+            Control = control;
+        }
+
+        /// <summary> Вершина </summary>
+        public T Control { get; private set; }
+    }
+
+    /// <summary> EventArgs для события клика по вершине </summary>
+    public class VertexClickEventArgs : VisualizerClickEventArgs<Vertex>
+    {
+        public VertexClickEventArgs(Vertex control) : base(control)
+        {
+        }
+    }
+    public class EdgeClickEventArgs : VisualizerClickEventArgs<Edge>
+    {
+        public EdgeClickEventArgs(Edge control) : base(control)
+        {
         }
     }
 }

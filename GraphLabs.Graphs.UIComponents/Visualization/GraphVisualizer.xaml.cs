@@ -361,6 +361,17 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             }
         }
 
+        /// <summary> Клик по ребру </summary>
+        public event EventHandler<EdgeClickEventArgs> EdgeClick;
+
+        private void OnEdgeClick(Edge edge)
+        {
+            if (EdgeClick != null)
+            {
+                EdgeClick(this, new EdgeClickEventArgs(edge));
+            }
+        }
+
         #endregion // Методы и свойства визуализатора
 
 
@@ -793,6 +804,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             }
             _edges.Add(newEdge);
             LayoutRoot.Children.Add(newEdge);
+            newEdge.MouseLeftButtonDown += (sender, args) => OnEdgeClick((Edge)sender);
         }
 
         /// <summary> Удаляет ребро edge из графа </summary>
