@@ -89,6 +89,13 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             set { SetValue(DefaultVertexStyleProperty, value); }
         }
 
+        /// <summary> Возможность наложения вершин по умолчанию </summary>
+        public bool AllowVerticesOverlap
+        {
+            get { return (bool)GetValue(AllowVerticesOverlapProperty); }
+            set { SetValue(AllowVerticesOverlapProperty, value); }
+        }
+
         /// <summary> Радиус вершины по-умолчанию </summary>
         public static DependencyProperty DefaultVertexRadiusProperty =
             DependencyProperty.Register(
@@ -151,6 +158,10 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 typeof(GraphVisualizer),
                 new PropertyMetadata(null, DefaultVertexStyleChanged)
                 );
+
+        /// <summary> Позволить наложение вершин </summary>
+        public static readonly DependencyProperty AllowVerticesOverlapProperty = DependencyProperty.Register(
+            "AllowVerticesOverlap", typeof (bool), typeof (GraphVisualizer), new PropertyMetadata(default(bool)));
 
         private static void DefaultVertexRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
@@ -648,24 +659,44 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
             var position = mouseEventArgs.GetPosition(LayoutRoot);
 
+            var radius = _capturedVertex.Radius;
+
+            foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
             {
-                var radius = _capturedVertex.Radius;
-                if (position.X < radius)
+                var CurVerRadius = vertex.Radius;
+                if ((position.X + radius > vertex.X - CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius)) 
                 {
-                    position.X = radius;
+                    position.X = vertex.X - radius - CurVerRadius;
                 }
-                if (position.X > LayoutRoot.ActualWidth - radius)
+                if ((position.X - radius < vertex.X + radius) && (position.X > vertex.X - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
                 {
-                    position.X = LayoutRoot.ActualWidth - radius;
+                    position.X = vertex.X + radius + CurVerRadius;
                 }
-                if (position.Y < radius)
+                if ((position.Y + radius > vertex.Y - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
                 {
-                    position.Y = radius;
+                    position.Y = vertex.Y - radius - CurVerRadius;
                 }
-                if (position.Y > LayoutRoot.ActualHeight - radius)
+                if ((position.Y - radius < vertex.Y + radius) && (position.Y > vertex.Y - CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
                 {
-                    position.Y = LayoutRoot.ActualHeight - radius;
+                    position.Y = vertex.Y + radius + CurVerRadius;
                 }
+            }
+
+             if (position.X < radius)
+            {
+                position.X = radius;
+            }
+            if (position.X > LayoutRoot.ActualWidth - radius)
+            {
+                position.X = LayoutRoot.ActualWidth - radius;
+            }
+            if (position.Y < radius)
+            {
+                position.Y = radius;
+            }
+            if (position.Y > LayoutRoot.ActualHeight - radius)
+            {
+                position.Y = LayoutRoot.ActualHeight - radius;
             }
 
             _capturedVertex.X = position.X;
