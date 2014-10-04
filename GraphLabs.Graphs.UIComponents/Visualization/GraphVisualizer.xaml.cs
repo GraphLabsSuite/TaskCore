@@ -661,6 +661,23 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
             var radius = _capturedVertex.Radius;
 
+            if (position.X < radius)
+            {
+                position.X = radius;
+            }
+            if (position.X > LayoutRoot.ActualWidth - radius)
+            {
+                position.X = LayoutRoot.ActualWidth - radius;
+            }
+            if (position.Y < radius)
+            {
+                position.Y = radius;
+            }
+            if (position.Y > LayoutRoot.ActualHeight - radius)
+            {
+                position.Y = LayoutRoot.ActualHeight - radius;
+            }
+
             foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
             {
                 var CurVerRadius = vertex.Radius;
@@ -680,23 +697,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 {
                     position.Y = vertex.Y + radius + CurVerRadius;
                 }
-            }
-
-             if (position.X < radius)
-            {
-                position.X = radius;
-            }
-            if (position.X > LayoutRoot.ActualWidth - radius)
-            {
-                position.X = LayoutRoot.ActualWidth - radius;
-            }
-            if (position.Y < radius)
-            {
-                position.Y = radius;
-            }
-            if (position.Y > LayoutRoot.ActualHeight - radius)
-            {
-                position.Y = LayoutRoot.ActualHeight - radius;
             }
 
             _capturedVertex.X = position.X;
