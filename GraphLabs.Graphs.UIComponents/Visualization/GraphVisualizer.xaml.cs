@@ -678,24 +678,31 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 position.Y = LayoutRoot.ActualHeight - radius;
             }
 
-            foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
+            if (AllowVerticesOverlap)
             {
-                var CurVerRadius = vertex.Radius;
-                if ((position.X + radius > vertex.X - CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius)) 
+                foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
                 {
-                    position.X = vertex.X - radius - CurVerRadius;
-                }
-                if ((position.X - radius < vertex.X + radius) && (position.X > vertex.X - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
-                {
-                    position.X = vertex.X + radius + CurVerRadius;
-                }
-                if ((position.Y + radius > vertex.Y - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
-                {
-                    position.Y = vertex.Y - radius - CurVerRadius;
-                }
-                if ((position.Y - radius < vertex.Y + radius) && (position.Y > vertex.Y - CurVerRadius) && (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
-                {
-                    position.Y = vertex.Y + radius + CurVerRadius;
+                    var CurVerRadius = vertex.Radius;
+                    if ((position.X + radius > vertex.X - CurVerRadius) && (position.X < vertex.X + CurVerRadius) &&
+                        (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
+                    {
+                        position.X = vertex.X - radius - CurVerRadius;
+                    }
+                    if ((position.X - radius < vertex.X + radius) && (position.X > vertex.X - CurVerRadius) &&
+                        (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
+                    {
+                        position.X = vertex.X + radius + CurVerRadius;
+                    }
+                    if ((position.Y + radius > vertex.Y - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) &&
+                        (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
+                    {
+                        position.Y = vertex.Y - radius - CurVerRadius;
+                    }
+                    if ((position.Y - radius < vertex.Y + radius) && (position.Y > vertex.Y - CurVerRadius) &&
+                        (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
+                    {
+                        position.Y = vertex.Y + radius + CurVerRadius;
+                    }
                 }
             }
 
