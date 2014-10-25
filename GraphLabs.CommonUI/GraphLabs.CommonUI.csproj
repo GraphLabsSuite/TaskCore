@@ -129,6 +129,7 @@
     <Compile Include="Controls\ToolBar.xaml.cs">
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ViewModels\CellViewModel.cs" />
     <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
