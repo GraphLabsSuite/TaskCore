@@ -678,7 +678,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 position.Y = LayoutRoot.ActualHeight - radius;
             }
 
-            if (AllowVerticesOverlap)
+            if (!AllowVerticesOverlap)
             {
                 foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
                 {
