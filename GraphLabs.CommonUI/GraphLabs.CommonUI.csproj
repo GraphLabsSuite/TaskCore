@@ -130,8 +130,10 @@
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ViewModels\CellViewModel.cs" />
+    <Compile Include="Controls\ViewModels\Matrix\MatrixColumnViewModel.cs" />
     <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
-    <Compile Include="Controls\ViewModels\MatrixViewModel.cs" />
+    <Compile Include="Controls\ViewModels\Matrix\MatrixRowViewModelNew.cs" />
+    <Compile Include="Controls\ViewModels\Matrix\MatrixViewModel.cs" />
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
     <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />

@@ -10,13 +10,17 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace GraphLabs.CommonUI.Controls.ViewModels
+namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
 {
     public class MatrixViewModel<T> : DependencyObject
     {
         private CellViewModel<T>[,] _matrix;
 
         public ReadOnlyCollection<ReadOnlyCollection<CellViewModel<T>>> Matrix;
+
+        public readonly MatrixColumnViewModel<T> HeaderColumn;
+
+        public readonly MatrixRowViewModel<T> HeaderRow;
 
         public uint ColsCount
         {
@@ -34,7 +38,7 @@ namespace GraphLabs.CommonUI.Controls.ViewModels
             typeof (MatrixViewModel<T>), 
             new PropertyMetadata(default(Brush))
         );
-         
+        
         public Brush Background
         {
             get { return (Brush) GetValue(BackgroundProperty); }
@@ -44,6 +48,7 @@ namespace GraphLabs.CommonUI.Controls.ViewModels
         public void reSize(uint rows, uint cols)
         {
             var newMatrix = new CellViewModel<T>[cols, rows];
+
             for (int i = 0; i < Math.Min(cols,ColsCount); i++)
             {
                 for (int j = 0; j < Math.Min(rows,RowsCount); j++)
@@ -56,6 +61,9 @@ namespace GraphLabs.CommonUI.Controls.ViewModels
 
             ColsCount = cols;
             RowsCount = rows;
+
+            HeaderColumn.reSize(ColsCount);
+            HeaderRow.reSize(RowsCount);
         }
 
         public void clear()
