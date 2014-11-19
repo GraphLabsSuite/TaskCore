@@ -34,8 +34,8 @@ namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
 
         public void reSize(uint countOfColumns)
         {
-            var newcolumn = new CellViewModel<T>[countOfRows];
-            for (int i = 0; i < Math.Min((_column.Length), countOfRows); i++)
+            var newcolumn = new CellViewModel<T>[countOfColumns];
+            for (int i = 0; i < Math.Min((_column.Length), countOfColumns); i++)
             {
                 newcolumn[i] = _column[i];
             }

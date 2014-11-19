@@ -137,6 +137,9 @@
     <Compile Include="Controls\ViewModels\ToolBarCommandBase.cs" />
     <Compile Include="Controls\ViewModels\ToolBarInstantCommand.cs" />
     <Compile Include="Controls\ViewModels\ToolBarToggleCommand.cs" />
+    <Compile Include="Controls\MatrixVisualization\MatrixVisualizer.xaml.cs">
+      <DependentUpon>MatrixVisualizer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="Configuration\DependencyResolver.cs" />
     <Compile Include="Helpers\Converters\BooleanToNegativeConverter.cs" />
@@ -177,6 +180,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\InformationBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\MatrixVisualization\MatrixVisualizer.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
