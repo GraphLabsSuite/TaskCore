@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using GraphLabs.Common;
 using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
@@ -11,6 +13,14 @@ namespace GraphLabs.CommonUI.Configuration
     public abstract class MockedWcfServicesConfiguratorBase : WcfServicesConfiguratorBase
     {
         private int _currentScore = UserActionsManager.StartingScore;
+        private int _gettingVariantDelay = 1000;
+
+        /// <summary> Задержка по-умолчанию для получения варианта </summary>
+        public int GettingVariantDelay
+        {
+            get { return _gettingVariantDelay; }
+            set { _gettingVariantDelay = value; }
+        }
 
         /// <summary> Получить клиент регистратора действий </summary>
         protected override IUserActionsRegistratorClient GetActionRegistratorClient()
@@ -47,8 +57,15 @@ namespace GraphLabs.CommonUI.Configuration
             var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Loose);
             dataServiceMock.Setup(srv => srv.GetVariantAsync(It.IsAny<long>(), It.IsAny<Guid>()))
                 .Callback(() =>
-                    dataServiceMock.Raise(mock => mock.GetVariantCompleted += null,
-                        new GetVariantCompletedEventArgs(new object[] { debugVariant }, null, false, null)));
+                          {
+                              var delay = GettingVariantDelay;
+                              Task.Factory.StartNew(() =>
+                              {
+                                  Thread.Sleep(delay);
+                                  dataServiceMock.Raise(mock => mock.GetVariantCompleted += null,
+                                      new GetVariantCompletedEventArgs(new object[] {debugVariant}, null, false, null));
+                              });
+                          });
 
             return dataServiceMock.Object;
         }
