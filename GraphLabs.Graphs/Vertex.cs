@@ -7,7 +7,9 @@ namespace GraphLabs.Graphs
     public class Vertex : IVertex, IEquatable<Vertex>
     {
         /// <summary> Цвет </summary>
-        public int Color{ get; set; }
+        public int Color { get; set; }
+        /// <summary> текст </summary>
+        public string Text { get; private set; }
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
 
@@ -15,8 +17,8 @@ namespace GraphLabs.Graphs
         public Vertex(string name)
         {
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name));
-
             Name = name;
+            Text = "";
         }
 
         /// <summary> Переименовать </summary>

@@ -51,6 +51,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 SetValue(RadiusProperty, value);
             }
         }
+        /// <summary> текст </summary>
+        public string Text { get; set; }
 
         /// <summary> Длина </summary>
         [Obsolete("Используйте Radius")]
@@ -59,6 +61,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             get { return base.Width; }
             set { base.Width = value; }
         }
+
 
         /// <summary> Ширина </summary>
         [Obsolete("Используйте Radius")]
@@ -69,6 +72,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         }
 
         private UIElement _label;
+        private UIElement _comments;
 
         /// <summary> Возвращает предпочитаемый радиус вершины </summary>
         public double GetDesiredRadius()
@@ -90,8 +94,13 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             DependencyProperty.Register(
                 "ScaleFactor",
                 typeof(double),
-                typeof(Vertex), 
+                typeof(Vertex),
                 new PropertyMetadata((double)1, UpdatePosition));
+
+        /// <summary> Подпись надо графом </summary>
+         public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register("Text", typeof(string), typeof(Vertex), new PropertyMetadata(""));
+
 
         private static void UpdatePosition(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -239,6 +248,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         {
             base.OnApplyTemplate();
             _label = GetTemplateChild("PART_LABEL") as UIElement;
+            _comments = GetTemplateChild("COMMENTS") as UIElement;
         }
 
 
@@ -356,6 +366,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var v = obj as IVertex;
             return Equals(v);
         }
+
 
         #endregion
     }

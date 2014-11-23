@@ -913,7 +913,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 BorderBrush = DefaultVertexBorderBrush,
                 Background = DefaultVertexBackground,
                 Style = DefaultVertexStyle,
-                Radius = DefaultVertexRadius
+                Radius = DefaultVertexRadius,
+                Text = ""
             };
             newVertex.MouseLeftButtonDown += CaptureVertex;
             _vertices.Add(newVertex);

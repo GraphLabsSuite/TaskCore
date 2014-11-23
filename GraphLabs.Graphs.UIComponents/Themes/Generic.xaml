@@ -10,18 +10,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="visualization:Vertex">
-                    <Border Name ="PART_BORDER"
+
+                    <Grid>
+                        <Border Name ="PART_BORDER"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{Binding Radius, 
                                                    Converter={StaticResource CornerRadiusToDoubleConverter}, 
                                                    RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Vertex}}">
+                   
                         <sdk:Label Name="PART_LABEL"
                                    Content="{TemplateBinding Name}" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Center"/>
+
                     </Border>
+
+                        <sdk:Label Name="COMMENTS"
+                                   Content="{TemplateBinding Text}" 
+                                   VerticalAlignment="Top" 
+                                   HorizontalAlignment="Center"
+                                   Margin="0,-15,0,0"/>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
