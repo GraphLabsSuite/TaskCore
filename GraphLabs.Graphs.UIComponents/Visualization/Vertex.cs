@@ -51,8 +51,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 SetValue(RadiusProperty, value);
             }
         }
-        /// <summary> текст </summary>
-        public string Text { get; set; }
 
         /// <summary> Длина </summary>
         [Obsolete("Используйте Radius")]
@@ -97,10 +95,17 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 typeof(Vertex),
                 new PropertyMetadata((double)1, UpdatePosition));
 
-        /// <summary> Подпись надо графом </summary>
+        /// <summary> Подпись над графом </summary>
          public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(Vertex), new PropertyMetadata(""));
+            DependencyProperty.Register("Text", typeof(string), typeof(Vertex), null);
 
+        
+        /// <summary> текст </summary>
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+       } 
 
         private static void UpdatePosition(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

@@ -9,7 +9,7 @@ namespace GraphLabs.Graphs
         /// <summary> Цвет </summary>
         public int Color { get; set; }
         /// <summary> текст </summary>
-        public string Text { get; private set; }
+        public string Text { get; set; }
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
 
