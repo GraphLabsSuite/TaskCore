@@ -4,11 +4,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using GraphLabs.CommonUI.Helpers;
+using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 namespace GraphLabs.Graphs.UIComponents.Visualization
 {
     /// <summary> Контрол-вершина </summary>
-    public sealed class Vertex : Control, IVertex
+    public sealed class Vertex : Control, IVertex, ILabeledVertex
     {
         #region Size
 
@@ -101,7 +103,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         
         /// <summary> текст </summary>
-        public string Text
+        public string Label
         {
             get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
@@ -231,7 +233,40 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             InitBindings();
         }
 
+        public Vertex(IVertex prototype) : this()
+        {
+            Name = prototype.Name;
+
+            var labeledVertex = prototype as ILabeledVertex;
+            if (labeledVertex != null)
+              Label = labeledVertex.Label;
+
+            var propChanged = prototype as INotifyPropertyChanged;
+            if (propChanged != null)
+            {
+                _prototype = prototype;
+                propChanged.PropertyChanged += OnPrototypeChanged;
+            }
+        }
+
         #endregion // Constructors
+
+
+        #region Подтягивание свойств с оригинальной вершины
+
+        /// <summary> Обработка изменения свойств вершины-прототипа </summary>
+        protected void OnPrototypeChanged(object sender, PropertyChangedEventArgs e)
+        {
+            Contract.Requires<InvalidOperationException>(sender == _prototype);
+
+            if (e.PropertyName == "Label")
+                this.Label = ((ILabeledVertex)_prototype).Label;
+            else if (e.PropertyName == "Name")
+                this.Name = _prototype.Name;
+            else throw new NotImplementedException("Поддержка изменения свойства " + e.PropertyName + " не реализована.");
+        }
+
+        #endregion
 
 
         /// <summary>
@@ -360,6 +395,12 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Сравнение
 
         /// <summary> Сравнение вершин </summary>
+        public bool Equals(ILabeledVertex other)
+        {
+            return Equals((IVertex)other);
+        }
+        
+        /// <summary> Сравнение вершин </summary>
         public bool Equals(IVertex other)
         {
             return Graphs.ValueEqualityComparer.VerticesEquals(this, other);
@@ -374,5 +415,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
 
         #endregion
+
+        protected readonly IVertex _prototype;
     }
 }

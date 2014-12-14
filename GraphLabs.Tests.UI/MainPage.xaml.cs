@@ -157,6 +157,7 @@ namespace GraphLabs.Tests.UI
         }
 
 
+        private DirectedWeightedGraph _visualizerGraphProto;
         private void RunClick(object sender, RoutedEventArgs e)
         {
             var graph = DirectedWeightedGraph.CreateEmpty(8);
@@ -174,9 +175,21 @@ namespace GraphLabs.Tests.UI
             Visualizer.Graph = graph;
             //((Vertex)Visualizer.Vertices[3]).Background = new SolidColorBrush(Colors.Magenta);
             //((Vertex)Visualizer.Vertices[1]).Radius = 30;
+            _visualizerGraphProto = graph;
             ((Button)sender).Visibility = Visibility.Collapsed;
         }
 
+        private void ChangeLabelsClick(object sender, RoutedEventArgs e)
+        {
+            if (_visualizerGraphProto == null)
+                return;
+
+            var rnd = new Random();
+            foreach (var v in _visualizerGraphProto.Vertices)
+            {
+                v.Label = rnd.Next(0, 10).ToString();
+            }
+        }
 
         private void FitAutosizeClick(object sender, RoutedEventArgs e)
         {

@@ -1,15 +1,38 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics.Contracts;
 
 namespace GraphLabs.Graphs
 {
     /// <summary> Вершина графа. </summary>
-    public class Vertex : IVertex, IEquatable<Vertex>
+    public class Vertex : IVertex, ILabeledVertex, IEquatable<Vertex>, INotifyPropertyChanged
     {
+        private int _color;
+
         /// <summary> Цвет </summary>
-        public int Color { get; set; }
-        /// <summary> текст </summary>
-        public string Text { get; set; }
+        public int Color 
+        {
+            get { return _color; } 
+            set 
+            {
+                _color = value;
+                OnPropertyChanged("Color");
+            }
+        }
+
+        private string _label;
+
+        /// <summary> Метка </summary>
+        public string Label
+        {
+            get { return _label; }
+            set
+            {
+                _label = value;
+                OnPropertyChanged("Label");
+            }
+        }
+        
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
 
@@ -18,7 +41,7 @@ namespace GraphLabs.Graphs
         {
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name));
             Name = name;
-            Text = "";
+            Label = "";
         }
 
         /// <summary> Переименовать </summary>
@@ -31,6 +54,7 @@ namespace GraphLabs.Graphs
         IVertex IVertex.Rename(string newName)
         {
             Name = newName;
+            OnPropertyChanged("Name");
             return this;
         }
 
@@ -56,6 +80,12 @@ namespace GraphLabs.Graphs
         #region Сравнение
 
         /// <summary> Сравнение вершин </summary>
+        public virtual bool Equals(ILabeledVertex other)
+        {
+            return Equals((IVertex)other);
+        }
+
+        /// <summary> Сравнение вершин </summary>
         public virtual bool Equals(IVertex other)
         {
             return ValueEqualityComparer.VerticesEquals(this, other);
@@ -72,6 +102,22 @@ namespace GraphLabs.Graphs
         {
             var v = obj as IVertex;
             return Equals(v);
+        }
+
+        #endregion
+
+
+        #region
+
+        /// <summary> Уведомляет об изменении свойства </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary> Уведомляет об изменении свойства </summary>
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var h = PropertyChanged;
+            if (h != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

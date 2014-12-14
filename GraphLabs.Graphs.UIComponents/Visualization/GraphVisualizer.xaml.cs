@@ -906,19 +906,18 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <remarks> Для добавления вершины на конкретную позицию используйте AddVertex(Vertex) </remarks>
         public void AddVertex(IVertex vertex)
         {
-            var newVertex = new Vertex
+            var newVertex = new Vertex(vertex)
             {
-                Name = vertex.Name,
                 BorderThickness = new Thickness(DefaultVertexBorderThickness),
                 BorderBrush = DefaultVertexBorderBrush,
                 Background = DefaultVertexBackground,
                 Style = DefaultVertexStyle,
                 Radius = DefaultVertexRadius,
-                Text = ""
             };
+
             newVertex.MouseLeftButtonDown += CaptureVertex;
             _vertices.Add(newVertex);
-            LayoutRoot.Children.Add(newVertex);           
+            LayoutRoot.Children.Add(newVertex);
         }
 
         /// <summary> Удалёет вершину vertex из графа </summary>

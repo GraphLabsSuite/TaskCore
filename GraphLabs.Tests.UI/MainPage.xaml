@@ -87,14 +87,23 @@
         <sdk:TabItem Header="Visualizer tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <visualization:GraphVisualizer Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <visualization:GraphVisualizer Grid.Column="0"
+                                                   Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"
                                                    VertexClick="VisualizerVertexClick"
                                                    EdgeClick="VisualizeEdgeClick"
                                                    DefaultEdgeStrokeThickness="2.5"
                                                    DefaultVertexRadius="15"
                                                    DefaultVertexBackground="LightGray"/>
-                    <Button Width="100" Height="30" Content="Run" Click="RunClick" 
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <Button Width="100" Height="30" Content="Run" Click="RunClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Width="100" Height="30" Content="ChangeLabels" Click="ChangeLabelsClick" 
+                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    </StackPanel>
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
