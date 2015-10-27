@@ -84,4 +84,34 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!-- Arrow -->
+    <Style TargetType="visualization:Arrow">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="visualization:Arrow">
+                    <Canvas Name="LAYOUT_ROOT" Background="Transparent">
+                        <Line Name="PART_LINE"
+                              X1="{TemplateBinding X1}"
+                              Y1="{TemplateBinding Y1}"
+                              X2="{TemplateBinding X2}"
+                              Y2="{TemplateBinding Y2}" 
+                              Stroke="{TemplateBinding Stroke}" 
+                              StrokeThickness="{TemplateBinding StrokeThickness}"/>
+
+                        <Polygon Name="PART_TRIANGLE"
+                                 Stroke="{TemplateBinding Stroke}" 
+                                 StrokeThickness="{TemplateBinding StrokeThickness}" 
+                                 Fill="{TemplateBinding Stroke}"/>
+
+                        <Border Name ="PART_BORDER"
+                            Background="White"
+                            CornerRadius="7" Width="14" Height="14"
+                            Margin="-4,0,0,0"
+                            BorderBrush="Black"
+                            BorderThickness="0"/>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

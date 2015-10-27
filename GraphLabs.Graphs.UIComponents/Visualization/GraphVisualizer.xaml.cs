@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Windows;
@@ -440,8 +441,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var deltaPhi = 2*Math.PI/_vertices.Count;
             foreach (var vertex in _vertices)
             {
-                vertex.ModelX = r * Math.Cos(phi) + r + DefaultVertexRadius;
-                vertex.ModelY = r * Math.Sin(phi) + r + DefaultVertexRadius;
+                vertex.ModelX = (r - 2 * DefaultVertexRadius) * Math.Cos(phi) + r;
+                vertex.ModelY = (r - 2 * DefaultVertexRadius) * Math.Sin(phi) + r;
                 vertex.ScaleFactor = 1;
 
                 phi += deltaPhi;
@@ -597,6 +598,115 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #endregion // Вычисление коориднат вершин
 
 
+        #region Добавление рёбер
+
+        /// <summary> Добавление рёбер </summary>
+        public static readonly DependencyProperty IsEdgesAddingEnabledProperty = DependencyProperty.Register(
+            "IsEdgesAddingEnabled",
+            typeof(bool),
+            typeof(GraphVisualizer),
+            new PropertyMetadata(false)
+            );
+
+        /// <summary> Включить добавление рёбер </summary>
+        public bool IsEdgesAddingEnabled
+        {
+            get { return (bool)GetValue(IsEdgesAddingEnabledProperty); }
+            set { SetValue(IsEdgesAddingEnabledProperty, value); }
+        }
+
+        private Vertex _source;
+        private Arrow _arrow;
+
+        private void CreateEdge(object sender, MouseButtonEventArgs args)
+        {
+            Contract.Assert(!args.Handled);
+            Contract.Assert(_arrow == null);
+            Contract.Assert(sender != null);
+            Contract.Assert(sender is Vertex);
+
+            if (!IsEdgesAddingEnabled) return;
+            _source = (Vertex)sender;
+            _arrow = new Arrow
+            {
+                X1 = _source.X,
+                Y1 = _source.Y,
+                X2 = _source.X,
+                Y2 = _source.Y,
+                Stroke = DefaultEdgeStroke,
+                StrokeThickness = DefaultEdgeStrokeThickness
+            };
+            LayoutRoot.Children.Add(_arrow);
+            LayoutRoot.MouseMove += DirectEdge;
+            foreach (var v in LayoutRoot.Children) v.MouseLeftButtonUp += ReleaseEdge;
+            MouseLeftButtonUp += ReleaseEdge;
+        }
+
+        private void DirectEdge(object sender, MouseEventArgs args)
+        {
+            Contract.Assert(_source != null);
+
+            var mousePos = args.GetPosition(LayoutRoot);
+            _arrow.X2 = mousePos.X;
+            _arrow.Y2 = mousePos.Y;
+        }
+
+        private void ReleaseEdge(object sender, MouseButtonEventArgs args)
+        {
+            Contract.Assert(!args.Handled);
+            Contract.Assert(sender != null);
+            Contract.Assert(_source != null);
+
+            var vertex = sender as Vertex;
+            if (vertex != null)
+            {
+                String sourceName = (String)_source.GetValue(NameProperty),
+                       sinkName = (String)vertex.GetValue(NameProperty);
+
+                if (GetValue(GraphProperty) is DirectedWeightedGraph)
+                {
+                    var g = (DirectedWeightedGraph)GetValue(GraphProperty);
+                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
+                                  sink = g.Vertices.Single(v => v.Name == sinkName);
+                    var e = new DirectedWeightedEdge(source, sink, 0); // нужно сделать вызов диалога задания веса
+                    var ed = g[source, sink];
+                    if (ed == null) g.AddEdge(e);
+                    else g.RemoveEdge(ed);
+                }
+
+                if (GetValue(GraphProperty) is DirectedGraph)
+                {
+                    var g = (DirectedGraph)GetValue(GraphProperty);
+                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
+                                  sink = g.Vertices.Single(v => v.Name == sinkName);
+                    var e = new DirectedEdge(source, sink);
+                    var ed = g[source, sink];
+                    if (ed == null) g.AddEdge(e);
+                    else g.RemoveEdge(ed);
+                }
+
+                if (GetValue(GraphProperty) is UndirectedGraph)
+                {
+                    var g = (UndirectedGraph)GetValue(GraphProperty);
+                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
+                                  sink = g.Vertices.Single(v => v.Name == sinkName);
+                    var e = new UndirectedEdge(source, sink);
+                    var ed = g[source, sink];
+                    if (ed == null) g.AddEdge(e);
+                    else g.RemoveEdge(ed);
+                }
+            }
+
+            LayoutRoot.Children.Remove(_arrow);
+            _arrow = null;
+            LayoutRoot.MouseMove -= DirectEdge;
+            foreach (var v in LayoutRoot.Children) v.MouseLeftButtonUp -= ReleaseEdge;
+            LayoutRoot.ReleaseMouseCapture();
+        }
+
+        #endregion //Добавление рёбер
+
+
         #region Перемещение вершин
 
         /// <summary> Разрешено ли перемещение вершин мышкой? </summary>
@@ -636,9 +746,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             Contract.Assert(!args.Handled);
             Contract.Assert(sender != null);
             Contract.Assert(sender is Vertex);
-            
-            args.Handled = true;
-
 
             if (!IsMouseVerticesMovingEnabled)
             {
@@ -683,26 +790,13 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 foreach (Vertex vertex in Vertices.Except(Enumerable.Repeat(_capturedVertex, 1)))
                 {
                     var CurVerRadius = vertex.Radius;
-                    if ((position.X + radius > vertex.X - CurVerRadius) && (position.X < vertex.X + CurVerRadius) &&
-                        (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
-                    {
-                        position.X = vertex.X - radius - CurVerRadius;
-                    }
-                    if ((position.X - radius < vertex.X + radius) && (position.X > vertex.X - CurVerRadius) &&
-                        (position.Y < vertex.Y + CurVerRadius) && (position.Y > vertex.Y - CurVerRadius))
-                    {
-                        position.X = vertex.X + radius + CurVerRadius;
-                    }
-                    if ((position.Y + radius > vertex.Y - CurVerRadius) && (position.Y < vertex.Y + CurVerRadius) &&
-                        (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
-                    {
-                        position.Y = vertex.Y - radius - CurVerRadius;
-                    }
-                    if ((position.Y - radius < vertex.Y + radius) && (position.Y > vertex.Y - CurVerRadius) &&
-                        (position.X < vertex.X + CurVerRadius) && (position.X > vertex.X - CurVerRadius))
-                    {
-                        position.Y = vertex.Y + radius + CurVerRadius;
-                    }
+                    var hyp = Math.Sqrt((position.X - vertex.X) * (position.X - vertex.X) +
+                              (position.Y - vertex.Y) * (position.Y - vertex.Y));
+                    if (!(hyp < radius + CurVerRadius)) continue;
+                    var sin = (hyp > 0) ? (position.X - vertex.X) / hyp : 0;
+                    var cos = (hyp > 0) ? (position.Y - vertex.Y) / hyp : 0;
+                    position.X = vertex.X + (radius + CurVerRadius) * sin;
+                    position.Y = vertex.Y + (radius + CurVerRadius) * cos;
                 }
             }
 
@@ -916,6 +1010,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             };
 
             newVertex.MouseLeftButtonDown += CaptureVertex;
+            newVertex.MouseLeftButtonDown += CreateEdge;
             _vertices.Add(newVertex);
             LayoutRoot.Children.Add(newVertex);
         }
@@ -938,6 +1033,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             vertex.ModelY = 0;
             _vertices.Add(vertex);
             vertex.MouseLeftButtonDown += CaptureVertex;
+            vertex.MouseLeftButtonDown += CreateEdge;
             LayoutRoot.Children.Add(vertex);
             vertex.ModelX = x;
             vertex.ModelY = y;

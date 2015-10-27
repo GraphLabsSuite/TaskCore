@@ -32,12 +32,9 @@
             var weightedY = y as IWeightedEdge;
             if (weightedX != null && weightedY != null)
                 return areEquals && weightedX.Weight == weightedY.Weight;
-            else if (weightedX != null || weightedY != null)
-                return false;
-            else
-            {
+            if (weightedX != null ^ weightedY != null)
                 return areEquals;
-            }
+            return areEquals;
         }
 
     }

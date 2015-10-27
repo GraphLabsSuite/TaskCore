@@ -147,6 +147,7 @@
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyVersion.cs" />
+    <Compile Include="Visualization\Arrow.cs" />
     <Compile Include="Visualization\Edge.cs" />
     <Compile Include="Visualization\GraphVisualizer.xaml.cs">
       <DependentUpon>GraphVisualizer.xaml</DependentUpon>

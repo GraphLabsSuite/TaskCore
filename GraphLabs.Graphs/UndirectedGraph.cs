@@ -21,6 +21,28 @@ namespace GraphLabs.Graphs
             return newGraph;
         }
 
+        /// <summary> Проверяет эквивалентность неориентированных графов </summary>
+        public override bool Equals(object o)
+        {
+            var g = o as UndirectedGraph;
+            if (g == null) return false;
+            if (this == g) return true;
+            if (VerticesCount != g.VerticesCount || EdgesCount != g.EdgesCount) return false;
+            if (Vertices.Any(v => g.Vertices.SingleOrDefault(v.Equals) == null)) return false;
+            var eq = true;
+            Vertices.ForEach(v1 =>
+                Vertices.ForEach(v2 =>
+                    eq &= (this[v1, v2] != null && g[
+                        g.Vertices.SingleOrDefault(v1.Equals),
+                        g.Vertices.SingleOrDefault(v2.Equals)] != null) ^
+                          (this[v1, v2] == null && g[
+                              g.Vertices.SingleOrDefault(v1.Equals),
+                              g.Vertices.SingleOrDefault(v2.Equals)] == null)
+                    )
+                );
+            return eq;
+        }
+
         #endregion // Полезности
 
 

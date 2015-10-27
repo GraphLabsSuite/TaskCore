@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,7 @@ using System.Windows.Media.Animation;
 using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.CommonUI.Controls;
 using GraphLabs.CommonUI.Controls.ViewModels;
 using GraphLabs.Graphs;
 using GraphLabs.Graphs.UIComponents.Visualization;
@@ -189,6 +191,25 @@ namespace GraphLabs.Tests.UI
             {
                 v.Label = rnd.Next(0, 10).ToString();
             }
+        }
+
+        private void ChangeStateClick(object sender, RoutedEventArgs e)
+        {
+            if (_visualizerGraphProto == null) return;
+            if (Visualizer.GetType() != typeof (GraphVisualizer)) return;
+
+            var t = (bool)Visualizer.GetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty);
+            Visualizer.SetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty, !t);
+
+            t = (bool)Visualizer.GetValue(GraphVisualizer.IsEdgesAddingEnabledProperty);
+            Visualizer.SetValue(GraphVisualizer.IsEdgesAddingEnabledProperty, !t);
+            Debug.WriteLine("Edges: {0}", !t);
+        }
+
+        private void EditVerticesClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new EditVerticesDialog(Visualizer.Graph, Visualizer.Vertices);
+            dialog.Show();
         }
 
         private void FitAutosizeClick(object sender, RoutedEventArgs e)

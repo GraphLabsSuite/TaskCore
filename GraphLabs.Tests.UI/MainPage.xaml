@@ -93,8 +93,6 @@
                     </Grid.ColumnDefinitions>
                     <visualization:GraphVisualizer Grid.Column="0"
                                                    Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"
-                                                   VertexClick="VisualizerVertexClick"
-                                                   EdgeClick="VisualizeEdgeClick"
                                                    DefaultEdgeStrokeThickness="2.5"
                                                    DefaultVertexRadius="15"
                                                    DefaultVertexBackground="LightGray"/>
@@ -103,6 +101,10 @@
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Button Width="100" Height="30" Content="ChangeLabels" Click="ChangeLabelsClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Width="100" Height="30" Content="ChangeState" Click="ChangeStateClick" 
+                        	HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Button Width="100" Height="30" Content="EditVertices" Click="EditVerticesClick" 
+                        	HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
                 </Grid>
             </sdk:TabItem.Content>
