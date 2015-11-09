@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.ServiceModel;
+using System.Text;
 using GraphLabs.Utils.MsBuild.DebugTaskUploader;
 using Microsoft.Build.Utilities;
 
@@ -21,9 +21,12 @@ namespace GraphLabs.Utils.MsBuild
         /// <summary> Путь к сервису загрузки </summary>
         public string UploadServiceUri { get; set; }
 
-        /// <summary> Путь к страницы выполнения лабы </summary>
+        /// <summary> Путь к странице выполнения лабы </summary>
         /// <remarks> Пример: http://glservice.svtz.ru:81/LabWorkExecution/Index?labId={0}&amp;labVarId={1} </remarks>
         public string LabUriFormat { get; set; }
+
+        /// <summary> Путь к автогенерируемой странице </summary>
+        public string OutputPagePath { get; set; }
 
         #endregion
 
@@ -83,11 +86,19 @@ namespace GraphLabs.Utils.MsBuild
 
             var response = proxy.UploadDebugTask(x, v);
 
-            if (!string.IsNullOrEmpty(LabUriFormat))
+            if (string.IsNullOrEmpty(LabUriFormat))
             {
-                var uri = string.Format(LabUriFormat, response.LabWorkId, response.LabVariantId);
-                Process.Start(uri);
+                throw new ArgumentException($"Не указан параметр {nameof(LabUriFormat)} - ссылка на страницу выполнения ЛР.");
             }
+
+
+            if (string.IsNullOrEmpty(OutputPagePath))
+            {
+                throw new ArgumentException($"Не указан параметр {nameof(OutputPagePath)} - путь к автогенерируемой странице выполнения ЛР.");
+            }
+
+            var testPage = string.Format(Resources.TestPage, response.LabWorkId, response.LabVariantId);
+            File.WriteAllText(OutputPagePath, testPage, Encoding.UTF8);
 
             return true;
         }
