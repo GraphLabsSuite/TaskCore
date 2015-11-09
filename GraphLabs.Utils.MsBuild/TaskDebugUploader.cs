@@ -94,14 +94,14 @@ namespace GraphLabs.Utils.MsBuild
             {
                 throw new ArgumentException($"Не указан параметр {nameof(LabUriFormat)} - ссылка на страницу выполнения ЛР.");
             }
-
-
+            var uri = string.Format(LabUriFormat, response.LabWorkId, response.LabVariantId);
+            
             if (string.IsNullOrEmpty(OutputPagePath))
             {
                 throw new ArgumentException($"Не указан параметр {nameof(OutputPagePath)} - путь к автогенерируемой странице выполнения ЛР.");
             }
 
-            var testPage = string.Format(Resources.TestPage, response.LabWorkId, response.LabVariantId);
+            var testPage = Resources.TestPage.Replace("#link-to-lab#", uri);
             File.WriteAllText(OutputPagePath, testPage, Encoding.UTF8);
 
             return true;
