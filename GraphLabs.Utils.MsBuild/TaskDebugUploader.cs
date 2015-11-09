@@ -78,7 +78,11 @@ namespace GraphLabs.Utils.MsBuild
         public override bool Execute()
         {
             var address = new EndpointAddress(UploadServiceUri);
-            var binding = new BasicHttpBinding();
+            var binding = new BasicHttpBinding()
+            {
+                MaxReceivedMessageSize = 10485760,
+                MaxBufferSize = 10485760
+            };
             var proxy = new DebugTaskUploaderClient(binding, address);
 
             var x = GetXap();
