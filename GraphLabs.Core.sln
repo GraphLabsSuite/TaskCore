@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{187D1E43-6865-44BB-BC49-5D4D0A561EFB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.UI", "GraphLabs.Tests.UI\GraphLabs.Tests.UI.csproj", "{6D3CD930-E5C7-4B76-BB53-5DE04AD8B9A9}"
@@ -31,6 +33,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Common", "GraphLabs.Common\GraphLabs.Common.csproj", "{C3138D96-6A31-434C-8FCE-FB37EE624714}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Utils", "GraphLabs.Tests.Utils\GraphLabs.Tests.Utils.csproj", "{59D04B62-E51D-4014-A353-820DCF13DB87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Utils.MsBuild", "GraphLabs.Utils.MsBuild\GraphLabs.Utils.MsBuild.csproj", "{6D957E8E-2094-443D-BC39-38A54164F721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -132,6 +136,18 @@ Global
 		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{59D04B62-E51D-4014-A353-820DCF13DB87}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Debug|x86.Build.0 = Debug|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|x86.ActiveCfg = Release|Any CPU
+		{6D957E8E-2094-443D-BC39-38A54164F721}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
