@@ -113,7 +113,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\TasksDataService\GraphLabs.Common.TasksDataService.TaskVariantInfo.datasource">
+    <None Include="Service References\TasksDataService\GraphLabs.Common.TasksDataService.TaskVariantDto1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\TasksDataService\TasksDataService.wsdl" />

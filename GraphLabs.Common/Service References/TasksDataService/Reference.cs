@@ -14,8 +14,8 @@ namespace GraphLabs.Common.TasksDataService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="TaskVariantInfo", Namespace="http://schemas.datacontract.org/2004/07/GraphLabs.WcfServices.Data")]
-    public partial class TaskVariantInfo : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="TaskVariantDto", Namespace="http://schemas.datacontract.org/2004/07/GraphLabs.WcfServices.Data")]
+    public partial class TaskVariantDto : object, System.ComponentModel.INotifyPropertyChanged {
         
         private byte[] DataField;
         
@@ -24,6 +24,8 @@ namespace GraphLabs.Common.TasksDataService {
         private long IdField;
         
         private string NumberField;
+        
+        private long TaskIdField;
         
         private System.Nullable<long> VersionField;
         
@@ -80,6 +82,19 @@ namespace GraphLabs.Common.TasksDataService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public long TaskId {
+            get {
+                return this.TaskIdField;
+            }
+            set {
+                if ((this.TaskIdField.Equals(value) != true)) {
+                    this.TaskIdField = value;
+                    this.RaisePropertyChanged("TaskId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<long> Version {
             get {
                 return this.VersionField;
@@ -109,7 +124,7 @@ namespace GraphLabs.Common.TasksDataService {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITasksDataService/GetVariant", ReplyAction="http://tempuri.org/ITasksDataService/GetVariantResponse")]
         System.IAsyncResult BeginGetVariant(long taskId, System.Guid sessionGuid, System.AsyncCallback callback, object asyncState);
         
-        GraphLabs.Common.TasksDataService.TaskVariantInfo EndGetVariant(System.IAsyncResult result);
+        GraphLabs.Common.TasksDataService.TaskVariantDto EndGetVariant(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -127,10 +142,10 @@ namespace GraphLabs.Common.TasksDataService {
             this.results = results;
         }
         
-        public GraphLabs.Common.TasksDataService.TaskVariantInfo Result {
+        public GraphLabs.Common.TasksDataService.TaskVariantDto Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GraphLabs.Common.TasksDataService.TaskVariantInfo)(this.results[0]));
+                return ((GraphLabs.Common.TasksDataService.TaskVariantDto)(this.results[0]));
             }
         }
     }
@@ -211,7 +226,7 @@ namespace GraphLabs.Common.TasksDataService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GraphLabs.Common.TasksDataService.TaskVariantInfo GraphLabs.Common.TasksDataService.ITasksDataService.EndGetVariant(System.IAsyncResult result) {
+        GraphLabs.Common.TasksDataService.TaskVariantDto GraphLabs.Common.TasksDataService.ITasksDataService.EndGetVariant(System.IAsyncResult result) {
             return base.Channel.EndGetVariant(result);
         }
         
@@ -222,7 +237,7 @@ namespace GraphLabs.Common.TasksDataService {
         }
         
         private object[] OnEndGetVariant(System.IAsyncResult result) {
-            GraphLabs.Common.TasksDataService.TaskVariantInfo retVal = ((GraphLabs.Common.TasksDataService.ITasksDataService)(this)).EndGetVariant(result);
+            GraphLabs.Common.TasksDataService.TaskVariantDto retVal = ((GraphLabs.Common.TasksDataService.ITasksDataService)(this)).EndGetVariant(result);
             return new object[] {
                     retVal};
         }
@@ -362,9 +377,9 @@ namespace GraphLabs.Common.TasksDataService {
                 return _result;
             }
             
-            public GraphLabs.Common.TasksDataService.TaskVariantInfo EndGetVariant(System.IAsyncResult result) {
+            public GraphLabs.Common.TasksDataService.TaskVariantDto EndGetVariant(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GraphLabs.Common.TasksDataService.TaskVariantInfo _result = ((GraphLabs.Common.TasksDataService.TaskVariantInfo)(base.EndInvoke("GetVariant", _args, result)));
+                GraphLabs.Common.TasksDataService.TaskVariantDto _result = ((GraphLabs.Common.TasksDataService.TaskVariantDto)(base.EndInvoke("GetVariant", _args, result)));
                 return _result;
             }
         }

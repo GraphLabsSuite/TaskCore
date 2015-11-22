@@ -119,7 +119,7 @@ namespace GraphLabs.Common
         /// <summary> Вариант загружен </summary>
         public event EventHandler<VariantDownloadedEventArgs> VariantDownloaded;
 
-        /// <summary> Вариант загружен </summary>
+        /// <summary> Вариант загружен. Событие может быть вызвано не из UI-потока </summary>
         private void OnVariantDownloaded(byte[] data, string number, long? version)
         {
             Interlocked.CompareExchange(ref VariantDownloaded, null, null)
