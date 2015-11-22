@@ -2,21 +2,21 @@
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Threading;
 using GraphLabs.Common.TasksDataService;
-using GraphLabs.Common.Utils;
 using JetBrains.Annotations;
 
 namespace GraphLabs.Common
 {
     /// <summary> Поставщик вариантов задания </summary>
-    public class VariantProvider : INotifyPropertyChanged, IUiBlockerAsyncProcessor
+    public sealed class VariantProvider : INotifyPropertyChanged, IUiBlockerAsyncProcessor
     {
         private readonly long _taskId;
         private readonly Guid _sessionGuid;
         private readonly Version[] _allowedVariantGenerationVersions;
 
         /// <summary> Сервис получения вариантов </summary>
-        protected ITasksDataServiceClient TasksDataServiceClient { get; private set; }
+        private readonly ITasksDataServiceClient _tasksDataServiceClient;
 
 
         #region INotifyPropertyChanged
@@ -26,10 +26,10 @@ namespace GraphLabs.Common
 
         /// <summary> Occurs when a property value changes. </summary>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            Interlocked.CompareExchange(ref PropertyChanged, null, null)
+                ?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary> Выполняется бокирующая UI операция </summary>
@@ -43,7 +43,7 @@ namespace GraphLabs.Common
                     return;
                 }
                 _isBusy = value;
-                OnPropertyChanged(ExpressionUtility.NameForMember(() => IsBusy));
+                OnPropertyChanged(nameof(IsBusy));
             }
         }
         private bool _isBusy = false;
@@ -68,8 +68,8 @@ namespace GraphLabs.Common
             _allowedVariantGenerationVersions = allowedVariantGenerationVersions;
             
 
-            TasksDataServiceClient = client.Instance;
-            TasksDataServiceClient.GetVariantCompleted += TasksDataServiceClientOnGetVariantCompleted;
+            _tasksDataServiceClient = client.Instance;
+            _tasksDataServiceClient.GetVariantCompleted += TasksDataServiceClientOnGetVariantCompleted;
         }
 
 
@@ -85,7 +85,7 @@ namespace GraphLabs.Common
 
             _getVariantInvoked = true;
             IsBusy = true;
-            TasksDataServiceClient.GetVariantAsync(_taskId, _sessionGuid);
+            _tasksDataServiceClient.GetVariantAsync(_taskId, _sessionGuid);
         }
 
         private void TasksDataServiceClientOnGetVariantCompleted(object sender, GetVariantCompletedEventArgs getVariantCompletedEventArgs)
@@ -120,19 +120,12 @@ namespace GraphLabs.Common
         public event EventHandler<VariantDownloadedEventArgs> VariantDownloaded;
 
         /// <summary> Вариант загружен </summary>
-        protected virtual void OnVariantDownloaded(byte[] data, string number, long? version)
+        private void OnVariantDownloaded(byte[] data, string number, long? version)
         {
-            var handler = VariantDownloaded;
-            if (handler != null)
-            {
-                handler(this, new VariantDownloadedEventArgs { Data = data, Number = number, Version = version });
-            }
+            Interlocked.CompareExchange(ref VariantDownloaded, null, null)
+                ?.Invoke(this, new VariantDownloadedEventArgs { Data = data, Number = number, Version = version });
         }
 
         #endregion
-
-
-        
-
     }
 }
