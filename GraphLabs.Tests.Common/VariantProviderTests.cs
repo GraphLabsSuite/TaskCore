@@ -23,7 +23,7 @@ namespace GraphLabs.Tests.Common
             var allowedVersion = new Version(1, 0, 234, 999);
 
             var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
-            var taskVariantInfo = new TaskVariantInfo
+            var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
                 GeneratorVersion = allowedVersion.ToString(),
@@ -80,7 +80,7 @@ namespace GraphLabs.Tests.Common
             var allowedVersion = new Version(1, 0);
 
             var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
-            var taskVariantInfo = new TaskVariantInfo
+            var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
                 GeneratorVersion = allowedVersion.ToString(),
@@ -133,7 +133,7 @@ namespace GraphLabs.Tests.Common
             var allowedVersion = new Version(1, 0);
 
             var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
-            var taskVariantInfo = new TaskVariantInfo
+            var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
                 GeneratorVersion = allowedVersion.ToString(),
