@@ -6,33 +6,31 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
 using GraphLabs.Common.UserActionsRegistrator;
-using GraphLabs.Common.Utils;
-using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 using JetBrains.Annotations;
 
 namespace GraphLabs.Common
 {
     /// <summary> Менеджер по сохранению действий студентов (по совместительству - ViewModel для InformationBar) </summary>
-    public class UserActionsManager : INotifyPropertyChanged, IUiBlockerAsyncProcessor
+    public sealed class UserActionsManager : INotifyPropertyChanged, IUiBlockerAsyncProcessor
     {
         /// <summary> Сервис даты-времени </summary>
-        protected IDateTimeService DateService { get; private set; }
+        private readonly IDateTimeService _dateService;
 
         /// <summary> Сообщения </summary>
-        protected ObservableCollection<LogEventViewModel> InternalLog { get; private set; }
+        private readonly ObservableCollection<LogEventViewModel> _internalDisplayLog;
 
         /// <summary> Сервис регистрации действий студента </summary>
-        protected IUserActionsRegistratorClient UserActionsRegistratorClient { get; private set; }
+        private readonly IUserActionsRegistratorClient _userActionsRegistratorClient;
 
         /// <summary> Идентификатор задания </summary>
-        protected long TaskId { get; private set; }
+        private readonly long _taskId;
 
         /// <summary> Идентификатор сессии </summary>
-        protected Guid SessionGuid { get; private set; }
+        private readonly Guid _sessionGuid;
 
         /// <summary> Ещё не зарегистрированные действия </summary>
-        protected virtual LinkedList<ActionDescription> NonRegisteredActions { get; private set; }
+        private readonly List<ActionDescription> _notRegisteredActions;
 
         /// <summary> Начальный балл </summary>
         public const int StartingScore = 100;
@@ -57,7 +55,7 @@ namespace GraphLabs.Common
                     return;
                 }
                 _score = value;
-                OnPropertyChanged(ExpressionUtility.NameForMember(() => Score));
+                OnPropertyChanged(nameof(Score));
             }
         }
 
@@ -73,7 +71,7 @@ namespace GraphLabs.Common
                     return;
                 }
                 _isBusy = value;
-                OnPropertyChanged(ExpressionUtility.NameForMember(() => IsBusy));
+                OnPropertyChanged(nameof(IsBusy));
             }
         }
 
@@ -84,40 +82,41 @@ namespace GraphLabs.Common
         public UserActionsManager(long taskId, Guid sessionGuid, 
             DisposableWcfClientWrapper<IUserActionsRegistratorClient> registratorClient, IDateTimeService dateService)
         {
-            Contract.Requires(sessionGuid != null);
-            Contract.Requires(registratorClient != null);
-            Contract.Requires(dateService != null);
+            Contract.Requires<ArgumentNullException>(sessionGuid != null);
+            Contract.Requires<ArgumentNullException>(registratorClient != null);
+            Contract.Requires<ArgumentNullException>(dateService != null);
 
-            DateService = dateService;
-            TaskId = taskId;
-            SessionGuid = sessionGuid;
-            InternalLog = new ObservableCollection<LogEventViewModel>();
-            Log = new ReadOnlyObservableCollection<LogEventViewModel>(InternalLog);
-            NonRegisteredActions = new LinkedList<ActionDescription>();
+            _dateService = dateService;
+            _taskId = taskId;
+            _sessionGuid = sessionGuid;
+            _userActionsRegistratorClient = registratorClient.Instance;
+            _userActionsRegistratorClient.RegisterUserActionsCompleted += RegistrationComplete;
 
-            UserActionsRegistratorClient = registratorClient.Instance;
+            _internalDisplayLog = new ObservableCollection<LogEventViewModel>();
+            Log = new ReadOnlyObservableCollection<LogEventViewModel>(_internalDisplayLog);
+            _notRegisteredActions = new List<ActionDescription>();
+            _responseQueue = new List<RegisterUserActionsCompletedEventArgs>();
         }
 
         /// <summary> Задание завершено? </summary>
-        protected bool IsTaskFinished = false;
+        private bool _isTaskFinished = false;
 
         private int _score = StartingScore;
         private bool _isBusy = false;
 
         /// <summary> Проверяет, что задание ещё не завершено </summary>
-        protected void CheckTaskIsNotFinished()
+        private void CheckTaskIsNotFinished()
         {
-            Contract.Requires(!IsTaskFinished, "Уже отправлен признак завершения задания.");
+            Contract.Requires(!_isTaskFinished, "Уже отправлен признак завершения задания.");
         }
 
 
         #region Actions
 
         /// <summary> Добавить событие </summary>
-        public virtual void RegisterInfo(string text)
+        public void RegisterInfo(string text)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(text));
-
             CheckTaskIsNotFinished();
 
             AddActionInternal(text);
@@ -126,7 +125,7 @@ namespace GraphLabs.Common
         }
 
         /// <summary> Добавить ошибку </summary>
-        public virtual void RegisterMistake(string description, short penalty)
+        public void RegisterMistake(string description, short penalty)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(description));
             Contract.Requires(penalty > 0);
@@ -145,21 +144,25 @@ namespace GraphLabs.Common
         }
 
         /// <summary> Ставит задание в буфер для последующей отправки </summary>
-        protected virtual void AddActionInternal(string description, short penalty = 0)
+        private void AddActionInternal(string description, short penalty = 0)
         {
             var actionDescr = new ActionDescription
             {
                 Description = description,
                 Penalty = penalty,
-                TimeStamp = DateService.Now()
+                TimeStamp = _dateService.Now()
             };
-            NonRegisteredActions.AddLast(actionDescr);
+
+            lock (_notRegisteredActions)
+            {
+                _notRegisteredActions.Add(actionDescr);
+            }
             AddToLog(actionDescr);
         }
 
         private void AddToLog(ActionDescription actionDescr)
         {
-            InternalLog.Insert(0, new LogEventViewModel { Message = actionDescr.Description, Penalty = actionDescr.Penalty, TimeStamp = actionDescr .TimeStamp});
+            _internalDisplayLog.Insert(0, new LogEventViewModel { Message = actionDescr.Description, Penalty = actionDescr.Penalty, TimeStamp = actionDescr .TimeStamp});
         }
 
         #endregion
@@ -168,47 +171,42 @@ namespace GraphLabs.Common
         #region Отправка данных
 
         /// <summary> Принудительно отправляет действия </summary>
-        protected virtual void SendReport(bool finishTask = false)
+        private void SendReport(bool finishTask = false)
         {
             CheckTaskIsNotFinished();
 
-            if (!NonRegisteredActions.Any() && !finishTask)
+            ActionDescription[] actionsToSend;
+
+            lock (_notRegisteredActions)
             {
-                return;
+                if (!_notRegisteredActions.Any() && !finishTask)
+                {
+                    return;
+                }
+
+                actionsToSend = _notRegisteredActions.ToArray();
+                _notRegisteredActions.Clear();
             }
+
+            IsBusy = true;
 
             if (finishTask)
-                IsTaskFinished = true;
+                _isTaskFinished = true;
 
-
-            using (var flag = new AutoResetEvent(false))
-            {
-                EventHandler<RegisterUserActionsCompletedEventArgs> completedHandler = (s, e) => RegistrationComplete(flag, e);
-                UserActionsRegistratorClient.RegisterUserActionsCompleted += completedHandler;
-                UserActionsRegistratorClient.RegisterUserActionsAsync(TaskId, SessionGuid, NonRegisteredActions.ToArray(), finishTask);
-                flag.WaitOne();
-                UserActionsRegistratorClient.RegisterUserActionsCompleted -= completedHandler;
-            }
-            
-            NonRegisteredActions.Clear();
+            _userActionsRegistratorClient.RegisterUserActionsAsync(_taskId, _sessionGuid, actionsToSend, finishTask);
         }
 
-        private void RegistrationComplete(AutoResetEvent flag, RegisterUserActionsCompletedEventArgs registerUserActionsCompletedEventArgs)
-        {
-            Contract.Requires(flag != null);
-            Contract.Requires(registerUserActionsCompletedEventArgs != null);
-            Contract.Requires(!registerUserActionsCompletedEventArgs.Cancelled);
+        //todo нет гарантии порядка сообщений
+        private readonly List<RegisterUserActionsCompletedEventArgs> _responseQueue;
 
-            if (registerUserActionsCompletedEventArgs.Error != null)
+        private void RegistrationComplete(object sender, RegisterUserActionsCompletedEventArgs e)
+        {
+            if (e.Error != null)
             {
-                throw registerUserActionsCompletedEventArgs.Error;
+                throw e.Error;
             }
 
-            var score = registerUserActionsCompletedEventArgs.Result;
-
-            Score = score;
-
-            flag.Set();
+            Score = e.Result;
         }
 
         #endregion
@@ -219,11 +217,10 @@ namespace GraphLabs.Common
 
         /// <summary> Occurs when a property value changes. </summary>
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(string propertyName = null)
+        private void OnPropertyChanged(string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(propertyName));
+            Interlocked.CompareExchange(ref PropertyChanged, null, null)
+                ?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
