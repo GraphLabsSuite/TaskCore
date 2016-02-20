@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GraphLabs.Common.Utils, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphLabs.Common.Utils.1.1.0\lib\portable-net45+sl50\GraphLabs.Common.Utils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
@@ -62,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
     <None Include="Service References\DebugTaskUploader\DebugTaskUploader1.wsdl" />
     <None Include="Service References\DebugTaskUploader\DebugTaskUploader2.xsd">
       <SubType>Designer</SubType>

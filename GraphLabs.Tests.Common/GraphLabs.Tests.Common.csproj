@@ -75,8 +75,9 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.2\lib\net40-client\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="GraphLabs.Common.Utils">
-      <HintPath>..\packages\GraphLabs.Common\GraphLabs.Common.Utils\GraphLabs.Common.Utils.dll</HintPath>
+    <Reference Include="GraphLabs.Common.Utils, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphLabs.Common.Utils.1.1.0\lib\portable-net45+sl50\GraphLabs.Common.Utils.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
