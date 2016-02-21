@@ -8,6 +8,7 @@ using GraphLabs.Utils;
 
 namespace GraphLabs.Graphs.UIComponents.Visualization
 {
+    /// <summary> Контрол-стрелка (направленное ребро графа) </summary>
     public sealed class Arrow : Control
     {
         #region Координаты
@@ -123,6 +124,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         private Polygon _triangle;
 
+        /// <summary> Применение шаблона </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

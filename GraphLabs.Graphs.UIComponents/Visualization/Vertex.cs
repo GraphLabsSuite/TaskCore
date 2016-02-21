@@ -233,6 +233,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             InitBindings();
         }
 
+        /// <summary> Создать вершину по прототипу </summary>
         public Vertex(IVertex prototype) : this()
         {
             Name = prototype.Name;
@@ -255,7 +256,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Подтягивание свойств с оригинальной вершины
 
         /// <summary> Обработка изменения свойств вершины-прототипа </summary>
-        protected void OnPrototypeChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPrototypeChanged(object sender, PropertyChangedEventArgs e)
         {
             Contract.Requires<InvalidOperationException>(sender == _prototype);
 
@@ -416,6 +417,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         #endregion
 
-        protected readonly IVertex _prototype;
+        private readonly IVertex _prototype;
     }
 }

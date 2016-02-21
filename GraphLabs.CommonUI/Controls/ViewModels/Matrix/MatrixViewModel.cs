@@ -12,26 +12,34 @@ using System.Windows.Shapes;
 
 namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
 {
+    /// <summary> ViewModel матрицы </summary>
+    /// <typeparam name="T"></typeparam>
     public class MatrixViewModel<T> : DependencyObject
     {
         private CellViewModel<T>[,] _matrix;
 
+        /// <summary> Вьюмодели ячеек </summary>
         public ReadOnlyCollection<ReadOnlyCollection<CellViewModel<T>>> Matrix;
 
+        /// <summary> Заголовочная колонка </summary>
         public readonly MatrixColumnViewModel<T> HeaderColumn;
 
+        /// <summary> Заголовочная строка </summary>
         public readonly MatrixRowViewModel<T> HeaderRow;
 
+        /// <summary> Число колонок </summary>
         public uint ColsCount
         {
             get; private set; 
         }
 
+        /// <summary> Число строк </summary>
         public uint RowsCount
         {
             get; private set; 
         }
 
+        /// <summary> Фон </summary>
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background", 
             typeof (Brush), 
@@ -39,13 +47,15 @@ namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
             new PropertyMetadata(default(Brush))
         );
         
+        /// <summary> Фон </summary>
         public Brush Background
         {
             get { return (Brush) GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
-        public void reSize(uint rows, uint cols)
+        /// <summary> Изменить размерность </summary>
+        public void ReSize(uint rows, uint cols)
         {
             var newMatrix = new CellViewModel<T>[cols, rows];
 
@@ -62,11 +72,12 @@ namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
             ColsCount = cols;
             RowsCount = rows;
 
-            HeaderColumn.reSize(ColsCount);
-            HeaderRow.reSize(RowsCount);
+            HeaderColumn.ReSize(ColsCount);
+            HeaderRow.ReSize(RowsCount);
         }
 
-        public void clear()
+        /// <summary> Очистить </summary>
+        public void Сlear()
         {
             _matrix = new CellViewModel<T>[ColsCount,RowsCount];
         }

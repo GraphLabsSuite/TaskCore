@@ -12,13 +12,15 @@ using System.Windows.Shapes;
 
 namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
 {
+    /// <summary> ViewModel строки матрицы </summary>
+    /// <typeparam name="T"></typeparam>
     public class MatrixRowViewModel<T> : DependencyObject
     {
         private CellViewModel<T>[] _column;
 
-        public ReadOnlyCollection<T> Column;
+        //public ReadOnlyCollection<T> Column;
 
-
+        /// <summary> Фон строки </summary>
         public static readonly DependencyProperty BackgroundProperty = DependencyProperty.Register(
             "Background",
             typeof(Brush),
@@ -26,13 +28,15 @@ namespace GraphLabs.CommonUI.Controls.ViewModels.Matrix
             new PropertyMetadata(default(Brush))
         );
 
+        /// <summary> Фон строки </summary>
         public Brush Background
         {
             get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
-        public void reSize(uint countOfColumns)
+        /// <summary> Изменить размерность </summary>
+        public void ReSize(uint countOfColumns)
         {
             var newcolumn = new CellViewModel<T>[countOfColumns];
             for (int i = 0; i < Math.Min((_column.Length), countOfColumns); i++)

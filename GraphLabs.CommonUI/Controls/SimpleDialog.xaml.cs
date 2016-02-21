@@ -6,16 +6,14 @@ namespace GraphLabs.CommonUI.Controls
     /// <summary> Простой диалог-сообщение </summary>
     public sealed partial class SimpleDialog : ChildWindow
     {
-        /// <summary>
-        /// Простой диалог-сообщение
-        /// </summary>
+        /// <summary> Простой диалог-сообщение </summary>
         /// <param name="title">Заголовок</param>
         /// <param name="text">Сопроводительный текст</param>
-        public SimpleDialog(String name, String text)
+        public SimpleDialog(string title, string text)
         {
             InitializeComponent();
 
-            Title = name;
+            Title = title;
             Info.Text = text;
         }
     }

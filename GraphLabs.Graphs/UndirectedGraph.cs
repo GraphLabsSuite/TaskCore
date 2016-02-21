@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using GraphLabs.Graphs.Helpers;
 using GraphLabs.Utils;
@@ -21,10 +22,27 @@ namespace GraphLabs.Graphs
             return newGraph;
         }
 
+        #endregion // Полезности
+
+
         /// <summary> Проверяет эквивалентность неориентированных графов </summary>
         public override bool Equals(object o)
         {
-            var g = o as UndirectedGraph;
+            return Equals(this, o as UndirectedGraph);
+        }
+
+        /// <summary> Хеш-код </summary>
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return Vertices.GetHashCode() ^ 397 + Edges.GetHashCode() ^ 397;
+            }
+        }
+
+        /// <summary> Проверяет эквивалентность неориентированных графов </summary>
+        protected bool Equals(UndirectedGraph g)
+        {
             if (g == null) return false;
             if (this == g) return true;
             if (VerticesCount != g.VerticesCount || EdgesCount != g.EdgesCount) return false;
@@ -42,9 +60,6 @@ namespace GraphLabs.Graphs
                 );
             return eq;
         }
-
-        #endregion // Полезности
-
 
         /// <summary> Возвращает ребро между вершинамиv v1 и v2. Если ребра нет, то null. </summary>
         public override UndirectedEdge this[Vertex v1, Vertex v2]
