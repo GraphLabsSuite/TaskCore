@@ -7,11 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{187D1E43
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.UI", "GraphLabs.Tests.UI\GraphLabs.Tests.UI.csproj", "{6D3CD930-E5C7-4B76-BB53-5DE04AD8B9A9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{191BC079-2425-4605-A7B7-B5240E8AB0B2}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Graphs", "GraphLabs.Tests.Graphs\GraphLabs.Tests.Graphs.csproj", "{4A2A7051-E562-487A-AA67-14C7F277B828}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Graphs", "GraphLabs.Graphs\GraphLabs.Graphs.csproj", "{F24FC8F0-F88D-4E51-8E6C-6DE2727B1162}"
