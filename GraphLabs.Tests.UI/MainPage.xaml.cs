@@ -18,6 +18,7 @@ using GraphLabs.Graphs.UIComponents.Visualization;
 using GraphLabs.Utils.Services;
 using Moq;
 using Edge = GraphLabs.Graphs.UIComponents.Visualization.Edge;
+using EditVerticesDialog = GraphLabs.Graphs.UIComponents.EditVerticesDialog;
 
 namespace GraphLabs.Tests.UI
 {

@@ -37,6 +37,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Utils.MsBuild", "GraphLabs.Utils.MsBuild\GraphLabs.Utils.MsBuild.csproj", "{6D957E8E-2094-443D-BC39-38A54164F721}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Distributive", "Distributive", "{C5F00C08-EA43-445F-8C3A-E4AF0D056DF2}"
+	ProjectSection(SolutionItems) = preProject
+		GraphLabs.Common\GraphLabs.Common.nuspec = GraphLabs.Common\GraphLabs.Common.nuspec
+		GraphLabs.CommonUI\GraphLabs.CommonUI.nuspec = GraphLabs.CommonUI\GraphLabs.CommonUI.nuspec
+		GraphLabs.Graphs\GraphLabs.Graphs.nuspec = GraphLabs.Graphs\GraphLabs.Graphs.nuspec
+		GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.nuspec = GraphLabs.Graphs.UIComponents\GraphLabs.Graphs.UIComponents.nuspec
+		GraphLabs.Utils.MsBuild\GraphLabs.Utils.MsBuild.nuspec = GraphLabs.Utils.MsBuild\GraphLabs.Utils.MsBuild.nuspec
+		GraphLabs.Utils\GraphLabs.Utils.nuspec = GraphLabs.Utils\GraphLabs.Utils.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

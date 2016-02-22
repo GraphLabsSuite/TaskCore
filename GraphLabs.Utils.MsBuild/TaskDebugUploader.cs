@@ -75,6 +75,8 @@ namespace GraphLabs.Utils.MsBuild
             }
         }
 
+
+        /// <summary> Выполняет задание </summary>
         public override bool Execute()
         {
             var address = new EndpointAddress(UploadServiceUri);

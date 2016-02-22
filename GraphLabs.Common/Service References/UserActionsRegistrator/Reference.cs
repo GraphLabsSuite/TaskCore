@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+#pragma warning disable 1591
 namespace GraphLabs.Common.UserActionsRegistrator {
     using System.Runtime.Serialization;
     
@@ -351,3 +351,4 @@ namespace GraphLabs.Common.UserActionsRegistrator {
         }
     }
 }
+#pragma warning restore 1591

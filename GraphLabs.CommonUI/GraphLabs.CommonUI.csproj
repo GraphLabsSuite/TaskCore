@@ -179,9 +179,6 @@
     <Compile Include="Configuration\ViewBuilderConfigurator.cs" />
     <Compile Include="Configuration\WcfServicesConfigurator.cs" />
     <Compile Include="Configuration\WcfServicesConfiguratorBase.cs" />
-    <Compile Include="Controls\EditVerticesDialog.xaml.cs">
-      <DependentUpon>EditVerticesDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\InformationBar.xaml.cs">
       <DependentUpon>InformationBar.xaml</DependentUpon>
     </Compile>
@@ -238,20 +235,12 @@
       <Project>{c3138d96-6a31-434c-8fce-fb37ee624714}</Project>
       <Name>GraphLabs.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GraphLabs.Graphs\GraphLabs.Graphs.csproj">
-      <Project>{F24FC8F0-F88D-4E51-8E6C-6DE2727B1162}</Project>
-      <Name>GraphLabs.Graphs</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GraphLabs.Utils\GraphLabs.Utils.csproj">
       <Project>{186DFF1F-1D55-45A3-ADC6-423135DB8D65}</Project>
       <Name>GraphLabs.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\EditVerticesDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\InformationBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

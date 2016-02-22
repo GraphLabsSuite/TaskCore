@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using GraphLabs.Graphs;
 using GraphLabs.Utils;
 
-namespace GraphLabs.CommonUI.Controls
+namespace GraphLabs.Graphs.UIComponents
 {
     /// <summary> Окно диалога редактирования вершин </summary>
     public sealed partial class EditVerticesDialog : ChildWindow

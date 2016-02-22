@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+#pragma warning disable 1591
 namespace GraphLabs.Utils.MsBuild.DebugTaskUploader {
     using System.Runtime.Serialization;
     using System;
@@ -121,3 +121,4 @@ namespace GraphLabs.Utils.MsBuild.DebugTaskUploader {
         }
     }
 }
+#pragma warning restore 1591

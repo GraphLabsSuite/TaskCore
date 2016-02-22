@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+#pragma warning disable 1591
 namespace GraphLabs.Common.TasksDataService {
     using System.Runtime.Serialization;
     
@@ -390,3 +390,4 @@ namespace GraphLabs.Common.TasksDataService {
         }
     }
 }
+#pragma warning restore 1591
