@@ -27,7 +27,7 @@ namespace GraphLabs.Common.TasksDataService
 
     /// <summary> Информация о варианте </summary>
     [CoverageExclude]
-    public partial class TaskVariantInfo
+    public partial class TaskVariantDto
     {
     }
 }

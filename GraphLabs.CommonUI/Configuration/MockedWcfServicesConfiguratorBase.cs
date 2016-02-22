@@ -71,6 +71,6 @@ namespace GraphLabs.CommonUI.Configuration
         }
 
         /// <summary> Получить отладочный вариант </summary>
-        protected abstract TaskVariantInfo GetDebugVariant();
+        protected abstract TaskVariantDto GetDebugVariant();
     }
 }
