@@ -179,7 +179,11 @@ namespace GraphLabs.Common.TasksDataService {
         public TasksDataServiceClient(EndpointConfiguration endpointConfiguration) : 
                 base(TasksDataServiceClient.GetBindingForEndpoint(endpointConfiguration), TasksDataServiceClient.GetEndpointAddress(endpointConfiguration)) {
         }
-        
+
+        public TasksDataServiceClient(string remoteAddress) :
+                base(TasksDataServiceClient.GetDefaultBinding(), new System.ServiceModel.EndpointAddress(remoteAddress)) {
+        }
+
         public TasksDataServiceClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
                 base(TasksDataServiceClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
         }

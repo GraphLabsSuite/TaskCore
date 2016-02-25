@@ -1,4 +1,4 @@
-using GraphLabs.Common;
+using System.ServiceModel;
 using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
 
@@ -10,13 +10,23 @@ namespace GraphLabs.CommonUI.Configuration
         /// <summary> Получить клиент регистратора действий </summary>
         protected override IUserActionsRegistratorClient GetActionRegistratorClient()
         {
-            return new UserActionsRegistratorClient();
+            return UserActionsRegistratorAddress == null ?
+                new UserActionsRegistratorClient() :
+                new UserActionsRegistratorClient(UserActionsRegistratorAddress);
         }
 
         /// <summary> Получить клиент поставщика вариантов </summary>
         protected override ITasksDataServiceClient GetDataServiceClient()
         {
-            return new TasksDataServiceClient();
+            return DataServiceClientAddress == null ?
+                new TasksDataServiceClient() :
+                new TasksDataServiceClient(DataServiceClientAddress);
         }
+
+        /// <summary> Адрес для клиента регистратора действий </summary>
+        public string UserActionsRegistratorAddress { get; set; }
+
+        /// <summary> Адрес для клиента поставщика вариантов </summary>
+        public string DataServiceClientAddress { get; set; }
     }
 }

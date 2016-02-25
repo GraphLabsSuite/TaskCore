@@ -134,7 +134,11 @@ namespace GraphLabs.Common.UserActionsRegistrator {
         public UserActionsRegistratorClient(EndpointConfiguration endpointConfiguration) : 
                 base(UserActionsRegistratorClient.GetBindingForEndpoint(endpointConfiguration), UserActionsRegistratorClient.GetEndpointAddress(endpointConfiguration)) {
         }
-        
+
+        public UserActionsRegistratorClient(string remoteAddress) :
+                base(UserActionsRegistratorClient.GetDefaultBinding(), new System.ServiceModel.EndpointAddress(remoteAddress)) {
+        }
+
         public UserActionsRegistratorClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
                 base(UserActionsRegistratorClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
         }
