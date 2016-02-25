@@ -10,7 +10,7 @@ namespace GraphLabs.CommonUI.Configuration
         /// <summary> Получить клиент регистратора действий </summary>
         protected override IUserActionsRegistratorClient GetActionRegistratorClient()
         {
-            return UserActionsRegistratorAddress == null ?
+            return string.IsNullOrEmpty(UserActionsRegistratorAddress) ?
                 new UserActionsRegistratorClient() :
                 new UserActionsRegistratorClient(UserActionsRegistratorAddress);
         }
@@ -18,7 +18,7 @@ namespace GraphLabs.CommonUI.Configuration
         /// <summary> Получить клиент поставщика вариантов </summary>
         protected override ITasksDataServiceClient GetDataServiceClient()
         {
-            return DataServiceClientAddress == null ?
+            return string.IsNullOrEmpty(DataServiceClientAddress) ?
                 new TasksDataServiceClient() :
                 new TasksDataServiceClient(DataServiceClientAddress);
         }
