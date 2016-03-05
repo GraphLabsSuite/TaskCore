@@ -132,11 +132,13 @@
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
     <Compile Include="DisposableWcfClientWrapper.cs" />
+    <Compile Include="Service References\TasksDataServiceClient.cs" />
     <Compile Include="Service References\TasksDataService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\UserActionsRegistratorClient.cs" />
     <Compile Include="VariantDownloadedEventArgs.cs" />
     <Compile Include="IUiBlockerAsyncProcessor.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
