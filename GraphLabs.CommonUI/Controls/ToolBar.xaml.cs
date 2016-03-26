@@ -47,8 +47,8 @@ namespace GraphLabs.CommonUI.Controls
 
         /// <summary> Команды </summary>
         public static readonly DependencyProperty CommandsProperty = DependencyProperty.Register(
-            "Commands", 
-            typeof(ObservableCollection<ToolBarCommandBase>), 
+            "Commands",
+            typeof(ObservableCollection<ToolBarCommandBase>),
             typeof(ToolBar), 
             new PropertyMetadata(default(ObservableCollection<ToolBarCommandBase>), CommandsCollectionReplaced));
 

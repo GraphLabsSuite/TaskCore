@@ -62,7 +62,7 @@ namespace GraphLabs.Tests.UI
                 animation = new DoubleAnimation { To = (double)animateTo };
             else if (animateTo is Color)
                 animation = new ColorAnimation { To = (Color)animateTo };
-            else 
+            else
                 throw new NotSupportedException();
 
             animation.Duration = duration;
@@ -97,14 +97,14 @@ namespace GraphLabs.Tests.UI
         }
 
         #endregion CrazyAnimation
-        
+
 
         public MainPage(IContainer container)
         {
             InitializeComponent();
 
             Container = container;
-            
+
             var registratorMock = new Mock<IUserActionsRegistratorClient>(MockBehavior.Loose);
             registratorMock.Setup(reg => reg.RegisterUserActionsAsync(
                 It.IsAny<long>(),
@@ -144,18 +144,18 @@ namespace GraphLabs.Tests.UI
         private void AddEdgeClick(object sender, RoutedEventArgs e)
         {
             var newEdge = new Edge
-                              {
-                                  Vertex1 = VertexA,
-                                  Vertex2 = B,
-                                  Directed = true,
-                              };
+            {
+                Vertex1 = VertexA,
+                Vertex2 = B,
+                Directed = true,
+            };
             Layout.Children.Add(newEdge);
             IsDirectedCheckBox.Visibility = Visibility.Visible;
             newEdge.SetBinding(Edge.DirectedProperty, new Binding
-                                                          {
-                                                              Path = new PropertyPath("IsChecked"),
-                                                              Source = IsDirectedCheckBox
-                                                          });
+            {
+                Path = new PropertyPath("IsChecked"),
+                Source = IsDirectedCheckBox
+            });
             AddEdgeBtn.IsEnabled = false;
         }
 
@@ -197,7 +197,7 @@ namespace GraphLabs.Tests.UI
         private void ChangeStateClick(object sender, RoutedEventArgs e)
         {
             if (_visualizerGraphProto == null) return;
-            if (Visualizer.GetType() != typeof (GraphVisualizer)) return;
+            if (Visualizer.GetType() != typeof(GraphVisualizer)) return;
 
             var t = (bool)Visualizer.GetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty);
             Visualizer.SetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty, !t);
