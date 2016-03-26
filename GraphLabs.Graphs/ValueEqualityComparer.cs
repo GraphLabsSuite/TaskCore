@@ -1,4 +1,7 @@
-﻿namespace GraphLabs.Graphs
+﻿using System.Linq;
+using GraphLabs.Utils;
+
+namespace GraphLabs.Graphs
 {
     // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -40,6 +43,27 @@
             if (weightedX != null && weightedY != null)
                 return weightedX.Weight == weightedY.Weight;
             return false;
+        }
+
+        /// <summary> Сравнение по значению! </summary>
+        public static bool GraphEquals(IGraph g1, IGraph g2)
+        {
+            if (g1 == null || g2 == null) return false;
+            if (g1 == g2) return true;
+            if (g1.VerticesCount != g2.VerticesCount || g1.EdgesCount != g2.EdgesCount) return false;
+            if (g1.Vertices.Any(v => g2.Vertices.SingleOrDefault(v.Equals) == null)) return false;
+            var eq = true;
+            g1.Vertices.ForEach(v1 =>
+                g1.Vertices.ForEach(v2 =>
+                    eq &= (g1[v1, v2] != null && g2[
+                        g2.Vertices.SingleOrDefault(v1.Equals),
+                        g2.Vertices.SingleOrDefault(v2.Equals)] != null) ^
+                          (g1[v1, v2] == null && g2[
+                              g2.Vertices.SingleOrDefault(v1.Equals),
+                              g2.Vertices.SingleOrDefault(v2.Equals)] == null)
+                    )
+                );
+            return eq;
         }
 
         // ReSharper restore ConditionIsAlwaysTrueOrFalse
