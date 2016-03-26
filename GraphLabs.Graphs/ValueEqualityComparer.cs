@@ -33,6 +33,10 @@
 
             var weightedX = x as IWeightedEdge;
             var weightedY = y as IWeightedEdge;
+
+            if (weightedY == null && weightedY == null)
+                return true;
+
             if (weightedX != null && weightedY != null)
                 return weightedX.Weight == weightedY.Weight;
             return false;
