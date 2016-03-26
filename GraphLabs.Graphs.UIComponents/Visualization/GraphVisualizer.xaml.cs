@@ -415,8 +415,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             for (var i = 0; i < _vertices.Count; ++i)
             {
                 var vertex = _vertices[i];
-                vertex.ModelX = rnd.NextDouble() * ActualWidth + DefaultVertexRadius;
-                vertex.ModelY = rnd.NextDouble() * ActualHeight + DefaultVertexRadius;
+                vertex.ModelX = rnd.NextDouble() * (ActualWidth - 2 * DefaultVertexRadius) + DefaultVertexRadius;
+                vertex.ModelY = rnd.NextDouble() * (ActualHeight - 2 * DefaultVertexRadius) + DefaultVertexRadius;
                 vertex.ScaleFactor = 1;
 
                 var j = 0;
