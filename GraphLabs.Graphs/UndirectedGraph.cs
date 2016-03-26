@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using GraphLabs.Graphs.Helpers;
 using GraphLabs.Utils;
 
 namespace GraphLabs.Graphs
@@ -28,7 +27,7 @@ namespace GraphLabs.Graphs
         /// <summary> Проверяет эквивалентность неориентированных графов </summary>
         public override bool Equals(object o)
         {
-            return Equals(this, o as UndirectedGraph);
+            return Equals(o as UndirectedGraph);
         }
 
         /// <summary> Хеш-код </summary>
@@ -41,10 +40,10 @@ namespace GraphLabs.Graphs
         }
 
         /// <summary> Проверяет эквивалентность неориентированных графов </summary>
-        protected bool Equals(UndirectedGraph g)
+        private bool Equals(UndirectedGraph g)
         {
             if (g == null) return false;
-            if (this == g) return true;
+            if (ReferenceEquals(this, g)) return true;
             if (VerticesCount != g.VerticesCount || EdgesCount != g.EdgesCount) return false;
             if (Vertices.Any(v => g.Vertices.SingleOrDefault(v.Equals) == null)) return false;
             var eq = true;
