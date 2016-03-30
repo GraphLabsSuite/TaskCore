@@ -7,8 +7,8 @@
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-#pragma warning disable 1591
-namespace GraphLabs.Common.TasksDataService {
+
+namespace GraphLabs.Common.VariantProviderService {
     using System.Runtime.Serialization;
     
     
@@ -118,17 +118,17 @@ namespace GraphLabs.Common.TasksDataService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="TasksDataService.ITasksDataService")]
-    public interface ITasksDataService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VariantProviderService.IVariantProviderService")]
+    public interface IVariantProviderService {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ITasksDataService/GetVariant", ReplyAction="http://tempuri.org/ITasksDataService/GetVariantResponse")]
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IVariantProviderService/GetVariant", ReplyAction="http://tempuri.org/IVariantProviderService/GetVariantResponse")]
         System.IAsyncResult BeginGetVariant(long taskId, System.Guid sessionGuid, System.AsyncCallback callback, object asyncState);
         
-        GraphLabs.Common.TasksDataService.TaskVariantDto EndGetVariant(System.IAsyncResult result);
+        GraphLabs.Common.VariantProviderService.TaskVariantDto EndGetVariant(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ITasksDataServiceChannel : GraphLabs.Common.TasksDataService.ITasksDataService, System.ServiceModel.IClientChannel {
+    public interface IVariantProviderServiceChannel : GraphLabs.Common.VariantProviderService.IVariantProviderService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -142,17 +142,17 @@ namespace GraphLabs.Common.TasksDataService {
             this.results = results;
         }
         
-        public GraphLabs.Common.TasksDataService.TaskVariantDto Result {
+        public GraphLabs.Common.VariantProviderService.TaskVariantDto Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GraphLabs.Common.TasksDataService.TaskVariantDto)(this.results[0]));
+                return ((GraphLabs.Common.VariantProviderService.TaskVariantDto)(this.results[0]));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TasksDataServiceClient : System.ServiceModel.ClientBase<GraphLabs.Common.TasksDataService.ITasksDataService>, GraphLabs.Common.TasksDataService.ITasksDataService {
+    public partial class VariantProviderServiceClient : System.ServiceModel.ClientBase<GraphLabs.Common.VariantProviderService.IVariantProviderService>, GraphLabs.Common.VariantProviderService.IVariantProviderService {
         
         private BeginOperationDelegate onBeginGetVariantDelegate;
         
@@ -172,23 +172,23 @@ namespace GraphLabs.Common.TasksDataService {
         
         private System.Threading.SendOrPostCallback onCloseCompletedDelegate;
         
-        public TasksDataServiceClient() : 
-                base(TasksDataServiceClient.GetDefaultBinding(), TasksDataServiceClient.GetDefaultEndpointAddress()) {
+        public VariantProviderServiceClient() : 
+                base(VariantProviderServiceClient.GetDefaultBinding(), VariantProviderServiceClient.GetDefaultEndpointAddress()) {
         }
         
-        public TasksDataServiceClient(EndpointConfiguration endpointConfiguration) : 
-                base(TasksDataServiceClient.GetBindingForEndpoint(endpointConfiguration), TasksDataServiceClient.GetEndpointAddress(endpointConfiguration)) {
-        }
-
-        public TasksDataServiceClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
-                base(TasksDataServiceClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
+        public VariantProviderServiceClient(EndpointConfiguration endpointConfiguration) : 
+                base(VariantProviderServiceClient.GetBindingForEndpoint(endpointConfiguration), VariantProviderServiceClient.GetEndpointAddress(endpointConfiguration)) {
         }
         
-        public TasksDataServiceClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(TasksDataServiceClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress) {
+        public VariantProviderServiceClient(EndpointConfiguration endpointConfiguration, string remoteAddress) : 
+                base(VariantProviderServiceClient.GetBindingForEndpoint(endpointConfiguration), new System.ServiceModel.EndpointAddress(remoteAddress)) {
         }
         
-        public TasksDataServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public VariantProviderServiceClient(EndpointConfiguration endpointConfiguration, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(VariantProviderServiceClient.GetBindingForEndpoint(endpointConfiguration), remoteAddress) {
+        }
+        
+        public VariantProviderServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -221,23 +221,23 @@ namespace GraphLabs.Common.TasksDataService {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GraphLabs.Common.TasksDataService.ITasksDataService.BeginGetVariant(long taskId, System.Guid sessionGuid, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GraphLabs.Common.VariantProviderService.IVariantProviderService.BeginGetVariant(long taskId, System.Guid sessionGuid, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginGetVariant(taskId, sessionGuid, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GraphLabs.Common.TasksDataService.TaskVariantDto GraphLabs.Common.TasksDataService.ITasksDataService.EndGetVariant(System.IAsyncResult result) {
+        GraphLabs.Common.VariantProviderService.TaskVariantDto GraphLabs.Common.VariantProviderService.IVariantProviderService.EndGetVariant(System.IAsyncResult result) {
             return base.Channel.EndGetVariant(result);
         }
         
         private System.IAsyncResult OnBeginGetVariant(object[] inValues, System.AsyncCallback callback, object asyncState) {
             long taskId = ((long)(inValues[0]));
             System.Guid sessionGuid = ((System.Guid)(inValues[1]));
-            return ((GraphLabs.Common.TasksDataService.ITasksDataService)(this)).BeginGetVariant(taskId, sessionGuid, callback, asyncState);
+            return ((GraphLabs.Common.VariantProviderService.IVariantProviderService)(this)).BeginGetVariant(taskId, sessionGuid, callback, asyncState);
         }
         
         private object[] OnEndGetVariant(System.IAsyncResult result) {
-            GraphLabs.Common.TasksDataService.TaskVariantDto retVal = ((GraphLabs.Common.TasksDataService.ITasksDataService)(this)).EndGetVariant(result);
+            GraphLabs.Common.VariantProviderService.TaskVariantDto retVal = ((GraphLabs.Common.VariantProviderService.IVariantProviderService)(this)).EndGetVariant(result);
             return new object[] {
                     retVal};
         }
@@ -334,12 +334,12 @@ namespace GraphLabs.Common.TasksDataService {
             base.InvokeAsync(this.onBeginCloseDelegate, null, this.onEndCloseDelegate, this.onCloseCompletedDelegate, userState);
         }
         
-        protected override GraphLabs.Common.TasksDataService.ITasksDataService CreateChannel() {
-            return new TasksDataServiceClientChannel(this);
+        protected override GraphLabs.Common.VariantProviderService.IVariantProviderService CreateChannel() {
+            return new VariantProviderServiceClientChannel(this);
         }
         
         private static System.ServiceModel.Channels.Binding GetBindingForEndpoint(EndpointConfiguration endpointConfiguration) {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ITasksDataService)) {
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IVariantProviderService)) {
                 System.ServiceModel.BasicHttpBinding result = new System.ServiceModel.BasicHttpBinding();
                 result.MaxBufferSize = int.MaxValue;
                 result.MaxReceivedMessageSize = int.MaxValue;
@@ -349,23 +349,23 @@ namespace GraphLabs.Common.TasksDataService {
         }
         
         private static System.ServiceModel.EndpointAddress GetEndpointAddress(EndpointConfiguration endpointConfiguration) {
-            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_ITasksDataService)) {
-                return new System.ServiceModel.EndpointAddress("http://glservice.svtz.ru:8000/TasksDataService.svc");
+            if ((endpointConfiguration == EndpointConfiguration.BasicHttpBinding_IVariantProviderService)) {
+                return new System.ServiceModel.EndpointAddress("http://glservice.svtz.ru:8000/VariantProviderService.svc");
             }
             throw new System.InvalidOperationException(string.Format("Could not find endpoint with name \'{0}\'.", endpointConfiguration));
         }
         
         private static System.ServiceModel.Channels.Binding GetDefaultBinding() {
-            return TasksDataServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_ITasksDataService);
+            return VariantProviderServiceClient.GetBindingForEndpoint(EndpointConfiguration.BasicHttpBinding_IVariantProviderService);
         }
         
         private static System.ServiceModel.EndpointAddress GetDefaultEndpointAddress() {
-            return TasksDataServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_ITasksDataService);
+            return VariantProviderServiceClient.GetEndpointAddress(EndpointConfiguration.BasicHttpBinding_IVariantProviderService);
         }
         
-        private class TasksDataServiceClientChannel : ChannelBase<GraphLabs.Common.TasksDataService.ITasksDataService>, GraphLabs.Common.TasksDataService.ITasksDataService {
+        private class VariantProviderServiceClientChannel : ChannelBase<GraphLabs.Common.VariantProviderService.IVariantProviderService>, GraphLabs.Common.VariantProviderService.IVariantProviderService {
             
-            public TasksDataServiceClientChannel(System.ServiceModel.ClientBase<GraphLabs.Common.TasksDataService.ITasksDataService> client) : 
+            public VariantProviderServiceClientChannel(System.ServiceModel.ClientBase<GraphLabs.Common.VariantProviderService.IVariantProviderService> client) : 
                     base(client) {
             }
             
@@ -377,17 +377,16 @@ namespace GraphLabs.Common.TasksDataService {
                 return _result;
             }
             
-            public GraphLabs.Common.TasksDataService.TaskVariantDto EndGetVariant(System.IAsyncResult result) {
+            public GraphLabs.Common.VariantProviderService.TaskVariantDto EndGetVariant(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GraphLabs.Common.TasksDataService.TaskVariantDto _result = ((GraphLabs.Common.TasksDataService.TaskVariantDto)(base.EndInvoke("GetVariant", _args, result)));
+                GraphLabs.Common.VariantProviderService.TaskVariantDto _result = ((GraphLabs.Common.VariantProviderService.TaskVariantDto)(base.EndInvoke("GetVariant", _args, result)));
                 return _result;
             }
         }
         
         public enum EndpointConfiguration {
             
-            BasicHttpBinding_ITasksDataService,
+            BasicHttpBinding_IVariantProviderService,
         }
     }
 }
-#pragma warning restore 1591

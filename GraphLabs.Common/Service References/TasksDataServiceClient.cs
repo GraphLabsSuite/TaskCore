@@ -1,12 +1,9 @@
-﻿namespace GraphLabs.Common.TasksDataService
+﻿namespace GraphLabs.Common.VariantProviderService
 {
-    public partial class TasksDataServiceClient
+    public partial class VariantProviderServiceClient
     {
-        /// <summary>
-        /// .ctor
-        /// </summary>
-        /// <param name="remoteAddress">Задание</param>
-        public TasksDataServiceClient(string remoteAddress) :
+        /// <summary> Сеовис получения варианта </summary>
+        public VariantProviderServiceClient(string remoteAddress) :
                base(GetDefaultBinding(), new System.ServiceModel.EndpointAddress(remoteAddress))
         {
         }

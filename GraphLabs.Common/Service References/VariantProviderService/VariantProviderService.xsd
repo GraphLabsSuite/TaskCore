@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GraphLabs.WcfServices.Data" />
+  <xs:import schemaLocation="http://glservice.svtz.ru:8000/VariantProviderService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://glservice.svtz.ru:8000/VariantProviderService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GraphLabs.WcfServices.Data" />
   <xs:element name="GetVariant">
     <xs:complexType>
       <xs:sequence>

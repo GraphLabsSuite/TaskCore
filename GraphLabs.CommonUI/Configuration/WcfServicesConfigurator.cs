@@ -1,6 +1,6 @@
 using System.ServiceModel;
-using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Common.VariantProviderService;
 
 namespace GraphLabs.CommonUI.Configuration
 {
@@ -16,17 +16,17 @@ namespace GraphLabs.CommonUI.Configuration
         }
 
         /// <summary> Получить клиент поставщика вариантов </summary>
-        protected override ITasksDataServiceClient GetDataServiceClient()
+        protected override IVariantProviderServiceClient GetDataServiceClient()
         {
-            return string.IsNullOrEmpty(DataServiceClientAddress) ?
-                new TasksDataServiceClient() :
-                new TasksDataServiceClient(DataServiceClientAddress);
+            return string.IsNullOrEmpty(VariantProviderServiceClientAddress) ?
+                new VariantProviderServiceClient() : 
+                new VariantProviderServiceClient(VariantProviderServiceClientAddress);
         }
 
         /// <summary> Адрес для клиента регистратора действий </summary>
         public string UserActionsRegistratorAddress { get; set; }
 
         /// <summary> Адрес для клиента поставщика вариантов </summary>
-        public string DataServiceClientAddress { get; set; }
+        public string VariantProviderServiceClientAddress { get; set; }
     }
 }

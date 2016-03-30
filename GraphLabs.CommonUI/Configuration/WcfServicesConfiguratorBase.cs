@@ -1,7 +1,7 @@
 using Autofac;
 using GraphLabs.Common;
-using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Common.VariantProviderService;
 
 namespace GraphLabs.CommonUI.Configuration
 {
@@ -19,13 +19,13 @@ namespace GraphLabs.CommonUI.Configuration
             builder.RegisterInstance(actionRegistratorClient)
                 .As<DisposableWcfClientWrapper<IUserActionsRegistratorClient>>();
             builder.RegisterInstance(dateServiceClient)
-                .As<DisposableWcfClientWrapper<ITasksDataServiceClient>>();
+                .As<DisposableWcfClientWrapper<IVariantProviderServiceClient>>();
         }
 
         /// <summary> Получить клиент регистратора действий </summary>
         protected abstract IUserActionsRegistratorClient GetActionRegistratorClient();
 
         /// <summary> Получить клиент поставщика вариантов </summary>
-        protected abstract ITasksDataServiceClient GetDataServiceClient();
+        protected abstract IVariantProviderServiceClient GetDataServiceClient();
     }
 }

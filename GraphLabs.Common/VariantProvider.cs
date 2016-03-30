@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading;
-using GraphLabs.Common.TasksDataService;
+using GraphLabs.Common.VariantProviderService;
 using JetBrains.Annotations;
 
 namespace GraphLabs.Common
@@ -16,7 +16,7 @@ namespace GraphLabs.Common
         private readonly Version[] _allowedVariantGenerationVersions;
 
         /// <summary> Сервис получения вариантов </summary>
-        private readonly ITasksDataServiceClient _tasksDataServiceClient;
+        private readonly IVariantProviderServiceClient _providerServiceClient;
 
 
         #region INotifyPropertyChanged
@@ -57,7 +57,7 @@ namespace GraphLabs.Common
         /// <param name="allowedVariantGenerationVersions">Допустимые версии генераторов. АХТУНГ! Имеет смысл только мажорная часть версии!</param>
         /// <param name="client">Клиент</param>
         public VariantProvider(long taskId, Guid sessionGuid, Version[] allowedVariantGenerationVersions, 
-            DisposableWcfClientWrapper<ITasksDataServiceClient> client)
+            DisposableWcfClientWrapper<IVariantProviderServiceClient> client)
         {
             Contract.Requires(client != null);
             Contract.Requires(sessionGuid != null);
@@ -68,8 +68,8 @@ namespace GraphLabs.Common
             _allowedVariantGenerationVersions = allowedVariantGenerationVersions;
             
 
-            _tasksDataServiceClient = client.Instance;
-            _tasksDataServiceClient.GetVariantCompleted += TasksDataServiceClientOnGetVariantCompleted;
+            _providerServiceClient = client.Instance;
+            _providerServiceClient.GetVariantCompleted += ProviderServiceClientOnGetVariantCompleted;
         }
 
 
@@ -85,10 +85,10 @@ namespace GraphLabs.Common
 
             _getVariantInvoked = true;
             IsBusy = true;
-            _tasksDataServiceClient.GetVariantAsync(_taskId, _sessionGuid);
+            _providerServiceClient.GetVariantAsync(_taskId, _sessionGuid);
         }
 
-        private void TasksDataServiceClientOnGetVariantCompleted(object sender, GetVariantCompletedEventArgs getVariantCompletedEventArgs)
+        private void ProviderServiceClientOnGetVariantCompleted(object sender, GetVariantCompletedEventArgs getVariantCompletedEventArgs)
         {
             Contract.Requires(getVariantCompletedEventArgs != null);
             Contract.Requires(!getVariantCompletedEventArgs.Cancelled);

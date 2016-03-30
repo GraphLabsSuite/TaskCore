@@ -1,11 +1,11 @@
-﻿using Autofac;
-using System;
+﻿using System;
 using System.Diagnostics.Contracts;
+using Autofac;
 
-namespace GraphLabs.CommonUI
+namespace GraphLabs.CommonUI.Configuration
 {
     /// <summary> IOC-контейнер </summary>
-    public static class DependencyResolver
+    internal static class DependencyResolver
     {
         /// <summary> Экземпляр IOC-контейнера </summary>
         public static IContainer Current

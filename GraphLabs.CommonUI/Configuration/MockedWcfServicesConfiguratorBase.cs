@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GraphLabs.Common;
-using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
+using GraphLabs.Common.VariantProviderService;
 using Moq;
 
 namespace GraphLabs.CommonUI.Configuration
@@ -13,14 +13,9 @@ namespace GraphLabs.CommonUI.Configuration
     public abstract class MockedWcfServicesConfiguratorBase : WcfServicesConfiguratorBase
     {
         private int _currentScore = UserActionsManager.StartingScore;
-        private int _gettingVariantDelay = 1000;
 
         /// <summary> Задержка по-умолчанию для получения варианта </summary>
-        public int GettingVariantDelay
-        {
-            get { return _gettingVariantDelay; }
-            set { _gettingVariantDelay = value; }
-        }
+        public int GettingVariantDelay { get; set; } = 1000;
 
         /// <summary> Получить клиент регистратора действий </summary>
         protected override IUserActionsRegistratorClient GetActionRegistratorClient()
@@ -50,11 +45,11 @@ namespace GraphLabs.CommonUI.Configuration
         }
 
         /// <summary> Получить клиент поставщика вариантов </summary>
-        protected override ITasksDataServiceClient GetDataServiceClient()
+        protected override IVariantProviderServiceClient GetDataServiceClient()
         {
             var debugVariant = GetDebugVariant();
 
-            var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Loose);
+            var dataServiceMock = new Mock<IVariantProviderServiceClient>(MockBehavior.Loose);
             dataServiceMock.Setup(srv => srv.GetVariantAsync(It.IsAny<long>(), It.IsAny<Guid>()))
                 .Callback(() =>
                           {

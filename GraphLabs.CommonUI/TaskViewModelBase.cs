@@ -2,9 +2,9 @@
 using System.Windows;
 using Autofac;
 using GraphLabs.Common;
-using GraphLabs.Common.TasksDataService;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.Common.Utils;
+using GraphLabs.Common.VariantProviderService;
 using GraphLabs.Tasks.Contract;
 using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
@@ -15,36 +15,19 @@ namespace GraphLabs.CommonUI
     public abstract class TaskViewModelBase<TView> : DependencyObject
         where TView : TaskViewBase
     {
-        private DisposableWcfClientWrapper<ITasksDataServiceClient> DataServiceClient
-        {
-            get
-            {
-                return DependencyResolver.Resolve<DisposableWcfClientWrapper<ITasksDataServiceClient>>();
-            }
-        }
+        private DisposableWcfClientWrapper<IVariantProviderServiceClient> VariantProviderServiceClient 
+            => DependencyResolver.Resolve<DisposableWcfClientWrapper<IVariantProviderServiceClient>>();
 
-        private DisposableWcfClientWrapper<IUserActionsRegistratorClient> ActionsRegistratorClient
-        {
-            get
-            {
-                return DependencyResolver.Resolve<DisposableWcfClientWrapper<IUserActionsRegistratorClient>>();
-            }
-        }
+        private DisposableWcfClientWrapper<IUserActionsRegistratorClient> ActionsRegistratorClient 
+            => DependencyResolver.Resolve<DisposableWcfClientWrapper<IUserActionsRegistratorClient>>();
 
         /// <summary> Сервис системного времени </summary>
-        protected IDateTimeService DateTimeService
-        {
-            get
-            {
-                return DependencyResolver.Resolve<IDateTimeService>();
-            }
-        }
+        protected IDateTimeService DateTimeService 
+            => DependencyResolver.Resolve<IDateTimeService>();
 
         /// <summary> IOC-контейнер </summary>
-        protected IContainer DependencyResolver
-        {
-            get { return CommonUI.DependencyResolver.Current; }
-        }
+        protected IContainer DependencyResolver 
+            => Configuration.DependencyResolver.Current;
 
         /// <summary> View </summary>
         protected TView View { get; private set; }
@@ -85,7 +68,7 @@ namespace GraphLabs.CommonUI
         {
             StartupParameters = startupParameters;
 
-            VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, DataServiceClient);
+            VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, VariantProviderServiceClient);
             VariantProvider.VariantDownloaded += (s, e) => OnTaskLoadingComlete(e);
 
             UserActionsManager = new UserActionsManager(StartupParameters.TaskId, StartupParameters.SessionGuid, ActionsRegistratorClient, DateTimeService)

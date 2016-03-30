@@ -1,10 +1,10 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace GraphLabs.Common.TasksDataService
+namespace GraphLabs.Common.VariantProviderService
 {
     /// <summary> Сервис получения вариантов </summary>
-    public interface ITasksDataServiceClient : IWcfClient
+    public interface IVariantProviderServiceClient : IWcfClient
     {
         /// <summary> Получить вариант </summary>
         void GetVariantAsync(long taskId, Guid sessionGuid);
@@ -15,7 +15,7 @@ namespace GraphLabs.Common.TasksDataService
 
     /// <summary> Сервис получения вариантов </summary>=
     [CoverageExclude]
-    public partial class TasksDataServiceClient : ITasksDataServiceClient
+    public partial class VariantProviderServiceClient : IVariantProviderServiceClient
     {
     }
 

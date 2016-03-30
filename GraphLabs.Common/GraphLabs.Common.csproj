@@ -133,7 +133,7 @@
     </Compile>
     <Compile Include="DisposableWcfClientWrapper.cs" />
     <Compile Include="Service References\TasksDataServiceClient.cs" />
-    <Compile Include="Service References\TasksDataService\Reference.cs">
+    <Compile Include="Service References\VariantProviderService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -161,17 +161,17 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\TasksDataService\GraphLabs.Common.TasksDataService.TaskVariantDto1.datasource">
+    <None Include="Service References\VariantProviderService\GraphLabs.Common.VariantProviderService.TaskVariantDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\TasksDataService\TasksDataService.wsdl" />
-    <None Include="Service References\TasksDataService\TasksDataService.xsd">
+    <None Include="Service References\VariantProviderService\VariantProviderService.wsdl" />
+    <None Include="Service References\VariantProviderService\VariantProviderService.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TasksDataService\TasksDataService1.xsd">
+    <None Include="Service References\VariantProviderService\VariantProviderService1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\TasksDataService\TasksDataService2.xsd">
+    <None Include="Service References\VariantProviderService\VariantProviderService2.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UserActionsRegistrator\UserActionsRegistrator.wsdl" />
@@ -186,7 +186,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\TasksDataService\" />
+    <WCFMetadataStorage Include="Service References\VariantProviderService\" />
     <WCFMetadataStorage Include="Service References\UserActionsRegistrator\" />
   </ItemGroup>
   <ItemGroup>
@@ -211,16 +211,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\TasksDataService\TasksDataService.disco" />
+    <None Include="Service References\VariantProviderService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\TasksDataService\configuration91.svcinfo" />
+    <None Include="Service References\VariantProviderService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\TasksDataService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\TasksDataService\Reference.svcmap">
+    <None Include="Service References\VariantProviderService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -230,6 +227,9 @@
       <HintPath>..\packages\GraphLabs.Common.Utils.1.1.1\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Common.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\VariantProviderService\VariantProviderService.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>

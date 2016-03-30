@@ -18,14 +18,14 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://glservice.svtz.ru:8000/TasksDataService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://glservice.svtz.ru:8000/VariantProviderService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="TasksDataService.wsdl" MetadataType="Wsdl" ID="3459dfe4-336c-4964-955f-3fd4f1de43cc" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?wsdl" />
-    <MetadataFile FileName="TasksDataService.xsd" MetadataType="Schema" ID="52a79c93-f8f5-4c68-b552-4516e8a7f785" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd1" />
-    <MetadataFile FileName="TasksDataService.disco" MetadataType="Disco" ID="8bbc5296-7402-433d-8b5b-95daeeb58ecf" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?disco" />
-    <MetadataFile FileName="TasksDataService1.xsd" MetadataType="Schema" ID="02ee533f-d3af-43db-8cba-ce0d48dc4b26" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd2" />
-    <MetadataFile FileName="TasksDataService2.xsd" MetadataType="Schema" ID="a1db74a9-6758-470d-bdf4-034f91b3b571" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/TasksDataService.svc?xsd=xsd0" />
+    <MetadataFile FileName="VariantProviderService.xsd" MetadataType="Schema" ID="7ba1b9fb-2013-4748-a1bd-6eeaf5275e7f" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/VariantProviderService.svc?xsd=xsd0" />
+    <MetadataFile FileName="VariantProviderService.disco" MetadataType="Disco" ID="84785916-b79b-44cc-97b4-80dfa423f0b1" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/VariantProviderService.svc?disco" />
+    <MetadataFile FileName="VariantProviderService.wsdl" MetadataType="Wsdl" ID="7aaa9c6b-9519-4d5b-8083-cd402d892912" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/VariantProviderService.svc?wsdl" />
+    <MetadataFile FileName="VariantProviderService1.xsd" MetadataType="Schema" ID="f28735ae-ca98-4903-91f8-65fb1be6d470" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/VariantProviderService.svc?xsd=xsd1" />
+    <MetadataFile FileName="VariantProviderService2.xsd" MetadataType="Schema" ID="ef9d8fd8-e381-4c2b-8705-6864b95cbe9f" SourceId="1" SourceUrl="http://glservice.svtz.ru:8000/VariantProviderService.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

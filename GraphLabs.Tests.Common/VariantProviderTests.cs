@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using GraphLabs.Common;
-using GraphLabs.Common.TasksDataService;
+using GraphLabs.Common.VariantProviderService;
 using Moq;
 using NUnit.Framework;
 
@@ -22,7 +22,7 @@ namespace GraphLabs.Tests.Common
             const string variantData = "Пусть это будут данные варианта. То, что это на самом деле строка, не принципиально.";
             var allowedVersion = new Version(1, 0, 234, 999);
 
-            var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
+            var dataServiceMock = new Mock<IVariantProviderServiceClient>(MockBehavior.Strict);
             var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
@@ -79,7 +79,7 @@ namespace GraphLabs.Tests.Common
             const string variantData = "Пусть это будут данные варианта. То, что это на самом деле строка, не принципиально.";
             var allowedVersion = new Version(1, 0);
 
-            var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
+            var dataServiceMock = new Mock<IVariantProviderServiceClient>(MockBehavior.Strict);
             var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
@@ -132,7 +132,7 @@ namespace GraphLabs.Tests.Common
             const string variantData = "Пусть это будут данные варианта. То, что это на самом деле строка, не принципиально.";
             var allowedVersion = new Version(1, 0);
 
-            var dataServiceMock = new Mock<ITasksDataServiceClient>(MockBehavior.Strict);
+            var dataServiceMock = new Mock<IVariantProviderServiceClient>(MockBehavior.Strict);
             var taskVariantInfo = new TaskVariantDto
             {
                 Data = Encoding.UTF8.GetBytes(variantData),
@@ -164,7 +164,7 @@ namespace GraphLabs.Tests.Common
             });
         }
 
-        private static void SetupCloseAsync(Mock<ITasksDataServiceClient> registratorMock)
+        private static void SetupCloseAsync(Mock<IVariantProviderServiceClient> registratorMock)
         {
             registratorMock
                 .Setup(reg => reg.CloseAsync())
