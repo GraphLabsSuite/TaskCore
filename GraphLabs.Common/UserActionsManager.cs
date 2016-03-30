@@ -63,7 +63,7 @@ namespace GraphLabs.Common
         //TODO: перевести на асинхронную модель
         public bool IsBusy
         {
-            get { return false; }
+            get { return _isBusy; }
             private set
             {
                 if (_isBusy == value)
@@ -207,6 +207,7 @@ namespace GraphLabs.Common
             }
 
             Score = e.Result;
+            IsBusy = false;
         }
 
         #endregion
