@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Browser;
 using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.Common.Utils;
 using GraphLabs.Common.VariantProviderService;
 using GraphLabs.Tasks.Contract;
-using GraphLabs.Utils;
 using GraphLabs.Utils.Services;
 
 namespace GraphLabs.CommonUI
@@ -89,5 +89,11 @@ namespace GraphLabs.CommonUI
 
         /// <summary> Вариант загружен </summary>
         protected abstract void OnTaskLoadingComlete(VariantDownloadedEventArgs e);
+
+        /// <summary> Метод завершает задание и совершает переход на следующее/страницу резальтатов </summary>
+        protected void TransferToNextTask()
+        {
+            HtmlPage.Window.Navigate(StartupParameters.TaskCompleteRedirect);
+        }
     }
 }

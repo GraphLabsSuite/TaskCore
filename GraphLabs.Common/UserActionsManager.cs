@@ -48,7 +48,7 @@ namespace GraphLabs.Common
         public int Score
         {
             get { return _score; }
-            set
+            private set
             {
                 if (_score == value)
                 {

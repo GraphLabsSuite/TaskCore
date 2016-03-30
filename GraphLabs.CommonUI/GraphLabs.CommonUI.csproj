@@ -145,12 +145,12 @@
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.2\lib\sl5\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="GraphLabs.Common.Utils, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphLabs.Common.Utils.1.1.1\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Common.Utils.dll</HintPath>
+    <Reference Include="GraphLabs.Common.Utils, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphLabs.Common.Utils.1.2.0\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Common.Utils.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GraphLabs.Tasks.Contract, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphLabs.Tasks.Contract.1.1.1\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Tasks.Contract.dll</HintPath>
+    <Reference Include="GraphLabs.Tasks.Contract, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphLabs.Tasks.Contract.1.2.0\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Tasks.Contract.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Moq.Silverlight">

@@ -8,7 +8,7 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Налажена регистрация действий студента.</releaseNotes>
+    <releaseNotes>Обновлена версия контракта с сайтом для поддержки перехода к следующему заданию.</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>GraphLabs Tasks</tags>
   </metadata>
