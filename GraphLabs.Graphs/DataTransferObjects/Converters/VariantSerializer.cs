@@ -3,6 +3,7 @@ using System.Runtime.Serialization;
 
 namespace GraphLabs.Graphs.DataTransferObjects.Converters
 {
+    /// <summary> Вспомагательный класс для сериализации/десериализации варианта </summary>
     public static class VariantSerializer
     {
         /// <summary> Сериализует вариант </summary>
