@@ -6,6 +6,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -726,7 +727,9 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         private ThrottledMouseMoveEvent _moveEvent;
 
         /// <summary> Захваченная перемещаемая вершина </summary>
-        protected Vertex CapturedVertex;
+        protected Vertex CapturedVertex { get; private set; }
+        private readonly object _capturedVertexLock = new object();
+
 
         private void InitVerticesMoving()
         {
@@ -736,12 +739,18 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <summary> "Отпустить" перемещаемую вершину </summary>
         protected virtual void ReleaseVertex(object sender, MouseButtonEventArgs e)
         {
-            Contract.Assert(CapturedVertex != null);
+            lock (_capturedVertexLock)
+            {
+                if (CapturedVertex == null)
+                {
+                    return;
+                }
 
-            CapturedVertex = null;
-            _moveEvent.MouseMove -= MouseMoveVertex;
-            LayoutRoot.MouseLeftButtonUp -= ReleaseVertex;
-            LayoutRoot.ReleaseMouseCapture();
+                CapturedVertex = null;
+                _moveEvent.MouseMove -= MouseMoveVertex;
+                LayoutRoot.MouseLeftButtonUp -= ReleaseVertex;
+                LayoutRoot.ReleaseMouseCapture();
+            }
         }
 
         /// <summary> "Захватить" перемещаемую вершину </summary>
@@ -753,10 +762,18 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
             if (IsMouseVerticesMovingEnabled)
             {
-                CapturedVertex = (Vertex) sender;
-                _moveEvent.MouseMove += MouseMoveVertex;
-                LayoutRoot.MouseLeftButtonUp += ReleaseVertex;
-                LayoutRoot.CaptureMouse();
+                lock (_capturedVertexLock)
+                {
+                    if (CapturedVertex != null)
+                    {
+                        return;
+                    }
+
+                    CapturedVertex = (Vertex)sender;
+                    _moveEvent.MouseMove += MouseMoveVertex;
+                    LayoutRoot.MouseLeftButtonUp += ReleaseVertex;
+                    LayoutRoot.CaptureMouse();
+                }
             }
             else
             {
