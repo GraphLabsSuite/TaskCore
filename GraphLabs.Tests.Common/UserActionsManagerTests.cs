@@ -366,9 +366,9 @@ namespace GraphLabs.Tests.Common
                 manager.PropertyChanged += (sender, args) => 
                     flag = args.PropertyName == ExpressionUtility.NameForMember((UserActionsManager m) => m.Score);
                 manager.RegisterMistake(descr, penalty);
-            }
 
-            Assert.IsTrue(flag);
+                Assert.That(manager.Score == newScore);
+            }
         }
 
         private static void SetupCloseAsync(Mock<IUserActionsRegistratorClient> registratorMock)
