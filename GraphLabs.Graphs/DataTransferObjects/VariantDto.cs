@@ -4,7 +4,7 @@ namespace GraphLabs.Graphs.DataTransferObjects
 {
     /// <summary> Класс для пересылки варианта </summary>
     [DataContract]
-    public struct VariantDto
+    public class VariantDto
     {
         /// <summary> Набор графов </summary>
         [DataMember]

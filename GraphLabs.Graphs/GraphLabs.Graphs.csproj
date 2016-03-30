@@ -120,6 +120,9 @@
     <Compile Include="..\AssemblyInfo.General.cs">
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
+    <Compile Include="DataTransferObjects\Converters\VariantSerializer.cs" />
+    <Compile Include="DataTransferObjects\Converters\VariantToDtoConverter.cs" />
+    <Compile Include="DataTransferObjects\VariantDto.cs" />
     <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="Contracts\GraphContracts.cs" />
     <Compile Include="IGraph.cs" />
