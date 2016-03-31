@@ -148,6 +148,7 @@
     <Compile Include="ComparingTests.cs" />
     <Compile Include="DirectedGraphTests.cs" />
     <Compile Include="IsomorphismTests.cs" />
+    <Compile Include="SerializerTests.cs" />
     <Compile Include="UndirectedGraphTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

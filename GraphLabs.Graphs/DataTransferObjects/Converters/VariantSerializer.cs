@@ -7,24 +7,24 @@ namespace GraphLabs.Graphs.DataTransferObjects.Converters
     public static class VariantSerializer
     {
         /// <summary> Сериализует вариант </summary>
-        public static byte[] Serialize(object[] data)
+        public static byte[] Serialize(IGraph[] graphs)
         {
             using (var stream = new MemoryStream())
             {
                 var serializer = new DataContractSerializer(typeof(VariantDto));
-                serializer.WriteObject(stream, VariantToDtoConverter.Convert(data));
+                serializer.WriteObject(stream, VariantToDtoConverter.Convert(graphs));
 
                 return stream.ToArray();
             }
         }
 
         /// <summary> Десериализует вариант </summary>
-        public static object[] Deserialize(byte[] data)
+        public static IGraph[] Deserialize(byte[] serializedVariant)
         {
-            using (var stream = new MemoryStream(data))
+            using (var stream = new MemoryStream(serializedVariant))
             {
                 var deSerializer = new DataContractSerializer(typeof(VariantDto));
-                return VariantToDtoConverter.ConvertBack((VariantDto) deSerializer.ReadObject(stream));
+                return VariantToDtoConverter.ConvertBack((VariantDto)deSerializer.ReadObject(stream));
             }
         }
     }

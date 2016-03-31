@@ -5,10 +5,9 @@ namespace GraphLabs.Graphs.DataTransferObjects.Converters
 {
     internal static class VariantToDtoConverter
     {
-        public static VariantDto Convert(object[] objects)
+        public static VariantDto Convert(IGraph[] graphs)
         {
-            var graphDtos = objects
-                .OfType<IGraph>()
+            var graphDtos = graphs
                 .Select(GraphToDtoConverter.Convert)
                 .ToList();
             return new VariantDto
@@ -17,11 +16,11 @@ namespace GraphLabs.Graphs.DataTransferObjects.Converters
             };
         }
 
-        public static object[] ConvertBack(VariantDto data)
+        public static IGraph[] ConvertBack(VariantDto data)
         {
-            var objects = new List<object>();
-            objects.AddRange(data.Graphs.Select(GraphToDtoConverter.ConvertBack));
-            return objects.ToArray();
+            return data.Graphs
+                .Select(GraphToDtoConverter.ConvertBack)
+                .ToArray();
         }
     }
 }
