@@ -199,8 +199,8 @@ namespace GraphLabs.Tests.UI
             if (_visualizerGraphProto == null) return;
             if (Visualizer.GetType() != typeof(GraphVisualizer)) return;
 
-            var t = (bool)Visualizer.GetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty);
-            Visualizer.SetValue(GraphVisualizer.IsMouseVerticesMovingEnebledProperty, !t);
+            var t = (bool)Visualizer.GetValue(GraphVisualizer.IsMouseVerticesMovingEnabledProperty);
+            Visualizer.SetValue(GraphVisualizer.IsMouseVerticesMovingEnabledProperty, !t);
 
             t = (bool)Visualizer.GetValue(GraphVisualizer.IsEdgesAddingEnabledProperty);
             Visualizer.SetValue(GraphVisualizer.IsEdgesAddingEnabledProperty, !t);

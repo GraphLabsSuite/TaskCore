@@ -711,8 +711,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Перемещение вершин
 
         /// <summary> Разрешено ли перемещение вершин мышкой? </summary>
-        public static readonly DependencyProperty IsMouseVerticesMovingEnebledProperty = DependencyProperty.Register(
-            "IsMouseVerticesMovingEnabled", 
+        public static readonly DependencyProperty IsMouseVerticesMovingEnabledProperty = DependencyProperty.Register(
+            nameof(IsMouseVerticesMovingEnabled), 
             typeof(bool), 
             typeof(GraphVisualizer), 
             new PropertyMetadata(true));
@@ -720,8 +720,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <summary> Разрешено ли перемещение вершин мышкой? </summary>
         public bool IsMouseVerticesMovingEnabled
         {
-            get { return (bool) GetValue(IsMouseVerticesMovingEnebledProperty); }
-            set { SetValue(IsMouseVerticesMovingEnebledProperty, value); }
+            get { return (bool) GetValue(IsMouseVerticesMovingEnabledProperty); }
+            set { SetValue(IsMouseVerticesMovingEnabledProperty, value); }
         }
 
         private ThrottledMouseMoveEvent _moveEvent;
