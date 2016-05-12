@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using GraphLabs.Common;
+using GraphLabs.Common.Utils;
 
 namespace GraphLabs.CommonUI.Controls
 {
@@ -40,7 +41,8 @@ namespace GraphLabs.CommonUI.Controls
 
         /// <summary> Текущий балл </summary>
         public static readonly DependencyProperty ScoreProperty =
-            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(UserActionsManager.StartingScore));
+            //DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(UserActionsManager.StartingScore));
+            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(ExpressionUtility.NameForMember((InformationBar bar) => bar.Score)));
 
         /// <summary> Текущий балл </summary>
         public int Score

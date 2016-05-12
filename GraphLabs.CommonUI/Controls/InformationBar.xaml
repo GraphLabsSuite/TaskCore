@@ -31,7 +31,7 @@
                                         RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl},
                                         Converter={StaticResource ScoreToBrushConverter}}"
                    Content="{Binding Score, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}"/>
-        <ListBox Grid.Column="1" Margin="0,3,3,3" ItemsSource="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=ui:InformationBar}}">
+        <ListBox Grid.Column="1" Margin="0,3,3,3" ItemsSource="{Binding Log, RelativeSource={RelativeSource FindAncestor, AncestorType=ui:InformationBar}}" Background="MediumVioletRed">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
