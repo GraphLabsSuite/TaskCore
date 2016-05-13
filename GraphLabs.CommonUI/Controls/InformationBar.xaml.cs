@@ -41,8 +41,7 @@ namespace GraphLabs.CommonUI.Controls
 
         /// <summary> Текущий балл </summary>
         public static readonly DependencyProperty ScoreProperty =
-            //DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(UserActionsManager.StartingScore));
-            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(ExpressionUtility.NameForMember((InformationBar bar) => bar.Score)));
+            DependencyProperty.Register("Score", typeof(int), typeof(InformationBar), new PropertyMetadata(UserActionsManager.StartingScore));
 
         /// <summary> Текущий балл </summary>
         public int Score
