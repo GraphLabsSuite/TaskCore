@@ -96,8 +96,6 @@ namespace GraphLabs.Common
             Log = new ReadOnlyObservableCollection<LogEventViewModel>(_internalDisplayLog);
             _notRegisteredActions = new List<ActionDescription>();
             _responseQueue = new List<RegisterUserActionsCompletedEventArgs>();
-
-            SendReport();
         }
 
         /// <summary> Задание завершено? </summary>

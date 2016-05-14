@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using GraphLabs.Common;
-using GraphLabs.Common.Utils;
 
 namespace GraphLabs.CommonUI.Controls
 {
