@@ -69,7 +69,7 @@ namespace GraphLabs.CommonUI
             StartupParameters = startupParameters;
 
             VariantProvider = new VariantProvider(StartupParameters.TaskId, StartupParameters.SessionGuid, AllowedGeneratorVersions, VariantProviderServiceClient);
-            VariantProvider.VariantDownloaded += (s, e) => OnTaskLoadingComlete(e);
+            VariantProvider.VariantDownloaded += (s, e) => OnTaskLoadingComleteInternal(e);
 
             UserActionsManager = new UserActionsManager(StartupParameters.TaskId, StartupParameters.SessionGuid, ActionsRegistratorClient, DateTimeService)
             {
@@ -85,6 +85,17 @@ namespace GraphLabs.CommonUI
         /// <summary> Инициализация завершена </summary>
         protected virtual void OnInitialized()
         {
+        }
+
+        /// <summary> Вариант загружен </summary>
+        private void OnTaskLoadingComleteInternal(VariantDownloadedEventArgs e)
+        {
+            var sendReportOnEveryActionOld = UserActionsManager.SendReportOnEveryAction;
+            UserActionsManager.SendReportOnEveryAction = true;
+            UserActionsManager.RegisterInfo("Задание запущено");
+            UserActionsManager.SendReportOnEveryAction = sendReportOnEveryActionOld;
+
+            OnTaskLoadingComlete(e);
         }
 
         /// <summary> Вариант загружен </summary>
