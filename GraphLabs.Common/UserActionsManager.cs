@@ -136,7 +136,7 @@ namespace GraphLabs.Common
         }
 
         /// <summary> Отправить сообщение о том, что задание завершено </summary>
-        public void ReportThatTaskFinishedAsync()
+        public void ReportThatTaskFinished()
         {
             CheckTaskIsNotFinished();
 

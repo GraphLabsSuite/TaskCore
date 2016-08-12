@@ -75,6 +75,7 @@ namespace GraphLabs.CommonUI
             {
                 SendReportOnEveryAction = sendReportOnEveryAction
             };
+            UserActionsManager.TaskFinished += (s, e) => TransferToNextTask();
 
             view.DataContext = this;
             View = view;
@@ -102,7 +103,7 @@ namespace GraphLabs.CommonUI
         protected abstract void OnTaskLoadingComlete(VariantDownloadedEventArgs e);
 
         /// <summary> Метод завершает задание и совершает переход на следующее/страницу резальтатов </summary>
-        protected void TransferToNextTask()
+        private void TransferToNextTask()
         {
             HtmlPage.Window.Navigate(StartupParameters.TaskCompleteRedirect);
         }
