@@ -136,7 +136,7 @@ namespace GraphLabs.Common
         }
 
         /// <summary> Отправить сообщение о том, что задание завершено </summary>
-        public void ReportThatTaskFinished()
+        public void ReportThatTaskFinishedAsync()
         {
             CheckTaskIsNotFinished();
 
@@ -208,6 +208,11 @@ namespace GraphLabs.Common
 
             Score = e.Result;
             IsBusy = false;
+
+            if (_isTaskFinished)
+            {
+                OnTaskFinished();
+            }
         }
 
         #endregion
@@ -222,6 +227,15 @@ namespace GraphLabs.Common
         {
             Interlocked.CompareExchange(ref PropertyChanged, null, null)
                 ?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary> Задание завершено </summary>
+        public event EventHandler TaskFinished;
+
+        private void OnTaskFinished()
+        {
+            Interlocked.CompareExchange(ref TaskFinished, null, null)
+                ?.Invoke(this, EventArgs.Empty);
         }
     }
 }

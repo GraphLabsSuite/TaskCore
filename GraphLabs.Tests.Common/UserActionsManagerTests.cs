@@ -282,7 +282,7 @@ namespace GraphLabs.Tests.Common
 
                 // Action
                 manager.RegisterInfo(action1Descr);
-                manager.ReportThatTaskFinished();
+                manager.ReportThatTaskFinishedAsync();
 
                 // Assert
                 Assert.AreEqual(UserActionsManager.StartingScore, manager.Score);
@@ -333,7 +333,7 @@ namespace GraphLabs.Tests.Common
 
                 // Action
                 manager.RegisterMistake(action1Descr, penalty);
-                manager.ReportThatTaskFinished();
+                manager.ReportThatTaskFinishedAsync();
 
                 // Assert
                 Assert.AreEqual(newScore, manager.Score);
