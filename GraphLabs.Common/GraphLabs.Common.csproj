@@ -224,13 +224,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="GraphLabs.Common.Utils, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GraphLabs.Common.Utils.1.1.1\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Common.Utils.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <None Include="Service References\VariantProviderService\VariantProviderService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\VariantProviderService\VariantProviderService.disco" />
+    <Reference Include="GraphLabs.Common.Utils, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphLabs.Common.Utils.1.2.0\lib\portable-net45+sl50+win+wpa81+wp80\GraphLabs.Common.Utils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <PropertyGroup>
