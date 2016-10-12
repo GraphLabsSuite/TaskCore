@@ -91,12 +91,16 @@ namespace GraphLabs.CommonUI
         /// <summary> Вариант загружен </summary>
         private void OnTaskLoadingComleteInternal(VariantDownloadedEventArgs e)
         {
-            var sendReportOnEveryActionOld = UserActionsManager.SendReportOnEveryAction;
-            UserActionsManager.SendReportOnEveryAction = true;
-            UserActionsManager.RegisterInfo("Задание запущено");
-            UserActionsManager.SendReportOnEveryAction = sendReportOnEveryActionOld;
+            Dispatcher.BeginInvoke(
+                () =>
+                {
+                    var sendReportOnEveryActionOld = UserActionsManager.SendReportOnEveryAction;
+                    UserActionsManager.SendReportOnEveryAction = true;
+                    UserActionsManager.RegisterInfo("Задание запущено");
+                    UserActionsManager.SendReportOnEveryAction = sendReportOnEveryActionOld;
 
-            OnTaskLoadingComlete(e);
+                    OnTaskLoadingComlete(e);
+                });
         }
 
         /// <summary> Вариант загружен </summary>
@@ -105,7 +109,7 @@ namespace GraphLabs.CommonUI
         /// <summary> Метод завершает задание и совершает переход на следующее/страницу резальтатов </summary>
         private void TransferToNextTask()
         {
-            HtmlPage.Window.Navigate(StartupParameters.TaskCompleteRedirect);
+            Dispatcher.BeginInvoke(() => HtmlPage.Window.Navigate(StartupParameters.TaskCompleteRedirect));
         }
     }
 }
