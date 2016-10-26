@@ -1,20 +1,23 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using GraphLabs.CommonUI.Controls.ViewModels;
 
 namespace GraphLabs.CommonUI.Controls
 {
     /// <summary> Матрица-переключательница </summary>
-    public class SwitchMatrix : Matrix
+    public class SwitchMatrix<T> : Matrix
     {
-        private string[] _values;
+        private T[] _values;
 
         /// <summary> Значения в ячейках. Переключаются циклично </summary>
-        public string[] Values
+        public T[] Values
         {
             get { return _values; }
             set
@@ -32,7 +35,7 @@ namespace GraphLabs.CommonUI.Controls
         {
             MatrixGrid.IsReadOnly = true;
             MatrixGrid.MouseLeftButtonUp += OnMouseLeftButtonUp;
-            Values = new string[0];
+            Values = new T[0];
         }
 
         private void OnMouseLeftButtonUp(object sender,
@@ -58,17 +61,29 @@ namespace GraphLabs.CommonUI.Controls
                 if (textBlock == null)
                     throw new Exception("Какая-то неправильная ячейка");
 
+                var rowVm = cell.DataContext as MatrixRowViewModel<T>;
+                if (rowVm == null)
+                    throw new Exception("Не найден дата-контекст ячейки типа MatrixRowViewModel<T>");
+
+                //аццкая жесть - сильверлайт такой сильверлайт =(
+                var colIdx = int.Parse(
+                    textBlock.GetBindingExpression(TextBlock.TextProperty)
+                        .ParentBinding.Path.Path
+                        .Replace("[", "")
+                        .Replace("]", ""));
+                
                 if (Values.Length == 0)
                 {
-                    textBlock.Text = string.Empty;
+                    rowVm[colIdx] = default(T);
                 }
 
-                var currentValue = textBlock.Text;
+                var currentValue = rowVm[colIdx];
                 var newValueIndex = Array.IndexOf(Values, currentValue) + 1;
                 if (newValueIndex >= Values.Length)
                     newValueIndex = 0;
 
-                textBlock.Text = Values[newValueIndex];
+                rowVm[colIdx] = Values[newValueIndex];
+                textBlock.Text = Values[newValueIndex].ToString();
             }
         }
     }

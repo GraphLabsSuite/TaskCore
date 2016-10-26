@@ -6,6 +6,7 @@
     xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization;assembly=GraphLabs.Graphs.UIComponents"
     xmlns:controls="clr-namespace:GraphLabs.CommonUI.Controls;assembly=GraphLabs.CommonUI"
              xmlns:uiTests="clr-namespace:GraphLabs.Tests.UI"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">
 
@@ -121,7 +122,7 @@
         <sdk:TabItem Header="SwitchMatrix tests">
             <sdk:TabItem.Content>
                 <Grid>
-                    <controls:SwitchMatrix x:Name="SwitchMatrix" Margin="0,0,0,0" />
+                    <uiTests:SwitchMatrixWithStrings x:Name="SwitchMatrix" Margin="0,0,0,0" />
                     <Button Width="100" Height="30" Content="Run" Click="RunSwitchMatrixClick" 
                             HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
                 </Grid>
