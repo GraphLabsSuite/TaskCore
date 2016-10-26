@@ -1,4 +1,4 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyVersion("1.6.5.$WCMODS?0000:$WCREV$$")]
-[assembly: AssemblyInformationalVersion("1.6.5")]
+[assembly: AssemblyVersion("1.6.6.$WCMODS?0000:$WCREV$$")]
+[assembly: AssemblyInformationalVersion("1.6.6")]

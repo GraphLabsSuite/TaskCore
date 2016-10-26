@@ -237,6 +237,25 @@ namespace GraphLabs.Tests.UI
             Grid.DataSource = source;
         }
 
+        private void RunSwitchMatrixClick(object sender, RoutedEventArgs e)
+        {
+            var source = new ObservableCollection<MatrixRowViewModel<string>>();
+
+            const int UPPER = 10;
+            for (var i = 0; i < UPPER; ++i)
+            {
+                var row = new ObservableCollection<string> { i.ToString(CultureInfo.InvariantCulture) };
+                for (var j = 0; j < UPPER; ++j)
+                {
+                    row.Add("0");
+                }
+                source.Add(new MatrixRowViewModel<string>(row));
+            }
+
+            SwitchMatrix.Values = new string[] {"0", "-1", "1"};
+            SwitchMatrix.DataSource = source;
+        }
+
         #endregion // buttonsClicks
 
 

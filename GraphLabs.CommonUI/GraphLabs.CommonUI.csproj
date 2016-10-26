@@ -191,6 +191,7 @@
     <Compile Include="Controls\SimpleDialog.xaml.cs">
       <DependentUpon>SimpleDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SwitchMatrix.cs" />
     <Compile Include="Controls\ToolBar.xaml.cs">
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
