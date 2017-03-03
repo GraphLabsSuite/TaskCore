@@ -177,6 +177,9 @@
     <Compile Include="..\AssemblyInfo.General.cs">
       <Link>Properties\AssemblyInfo.General.cs</Link>
     </Compile>
+    <Compile Include="..\AssemblyVersion.cs">
+      <Link>Properties\AssemblyVersion.cs</Link>
+    </Compile>
     <Compile Include="Configuration\CommonItemsConfigurator.cs" />
     <Compile Include="Configuration\MockedWcfServicesConfiguratorBase.cs" />
     <Compile Include="Configuration\ViewBuilderConfigurator.cs" />
@@ -220,7 +223,6 @@
     <Compile Include="Configuration\IDependencyResolverConfigurator.cs" />
     <Compile Include="IViewBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyVersion.cs" />
     <Compile Include="StartupHelper.cs" />
     <Compile Include="StartupParameters.cs" />
     <Compile Include="TaskApplicationBase.cs" />
@@ -229,9 +231,6 @@
     <Compile Include="ViewBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\AssemblyVersion.cs.template">
-      <Link>Properties\AssemblyVersion.cs.template</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +283,7 @@
   </ProjectExtensions>
   <PropertyGroup>
     <PreBuildEvent>cd "$(SolutionDir)"
-SubWCRev "." "AssemblyVersion.cs.template" "$(ProjectDir)Properties\AssemblyVersion.cs"</PreBuildEvent>
+powershell -noexit "&amp; ""$(SolutionDir)\generateVersionInfo.ps1"""</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

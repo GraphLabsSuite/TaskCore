@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{187D1E43-6865-44BB-BC49-5D4D0A561EFB}"
 EndProject
@@ -20,7 +20,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{55C839F1-4F1C-4ED0-90F8-376FFCA1B38D}"
 	ProjectSection(SolutionItems) = preProject
 		AssemblyInfo.General.cs = AssemblyInfo.General.cs
-		AssemblyVersion.cs.template = AssemblyVersion.cs.template
+		AssemblyVersion.cs = AssemblyVersion.cs
+		generateVersionInfo.ps1 = generateVersionInfo.ps1
+		version.txt = version.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLabs.Tests.Common", "GraphLabs.Tests.Common\GraphLabs.Tests.Common.csproj", "{A60C9D54-410B-412C-99B7-8049FF570984}"

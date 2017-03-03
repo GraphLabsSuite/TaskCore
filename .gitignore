@@ -1,4 +1,5 @@
 /.vs
+/.vscode
 /[Pp]ackages
 
 *.user
@@ -6,7 +7,6 @@
 [Oo]bj
 [Bb]in
 
-/GraphLabs.Tasks.Template/Debug
-
-/GraphLabs.Tasks.Template/Properties/AssemblyVersion.cs
 /packages
+/AssemblyVersion.cs
+
