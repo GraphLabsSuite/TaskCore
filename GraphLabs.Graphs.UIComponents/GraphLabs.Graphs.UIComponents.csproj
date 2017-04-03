@@ -177,10 +177,13 @@
       <DependentUpon>EditVerticesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Visualization\Arrow.cs" />
+    <Compile Include="Visualization\CirclePositionsVisualizer.cs" />
     <Compile Include="Visualization\Edge.cs" />
     <Compile Include="Visualization\GraphVisualizer.xaml.cs">
       <DependentUpon>GraphVisualizer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Visualization\IVisualizationAlgorithm.cs" />
+    <Compile Include="Visualization\RandomPositionVisualizer.cs" />
     <Compile Include="Visualization\Vertex.cs" />
     <Compile Include="Visualization\VertexClickEventArgs.cs" />
     <Compile Include="Visualization\VisualizationAlgorithm.cs" />

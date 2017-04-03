@@ -11,5 +11,10 @@
 
         /// <summary> Случайные позиции </summary>
         RandomPositions,
+
+        /// <summary>
+        /// типа кастомный алгоритм
+        /// </summary>
+        User
     }
 }

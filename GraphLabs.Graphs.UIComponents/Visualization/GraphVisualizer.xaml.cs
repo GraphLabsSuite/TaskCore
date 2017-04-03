@@ -332,10 +332,36 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                     return;
                 }
                 _visualizationAlgorithm = value;
+                switch (_visualizationAlgorithm)
+                {
+                    case VisualizationAlgorithm.Circle:
+                        _ivisualizationAlgorithm = new CirclePositionsVisualizer(this); break;
+                    case VisualizationAlgorithm.RandomPositions:
+                        _ivisualizationAlgorithm = new RandomPositionVisualizer(this); break;
+                    default:
+                        throw new Exception("I cant or dont want do it");
+                }
                 Refresh();
             }
         }
         private VisualizationAlgorithm _visualizationAlgorithm;
+
+        /// <summary> Алгоритм, используемый для визу </summary>
+        public IVisualizationAlgorithm IVisualizationAlgorithm
+        {
+            get { return _ivisualizationAlgorithm; }
+            set
+            {
+                if (value == _ivisualizationAlgorithm)
+                {
+                    return;
+                }
+                _visualizationAlgorithm = VisualizationAlgorithm.User;
+                _ivisualizationAlgorithm = value;
+                Refresh();
+            }
+        }
+        private IVisualizationAlgorithm _ivisualizationAlgorithm;
 
         /// <summary> Полностью обновляет состояние визуализатора, перечитывая отображаемый граф </summary>
         public void Refresh()
@@ -359,7 +385,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             {
                 AddEdge(edge);
             }
-            CalculateVertexPositions();
+            _ivisualizationAlgorithm.Visualize();
             _suspendNotifications = false;
         }
 
@@ -405,52 +431,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             return scaleFactor;
         }
 
-        /// <summary> Устанавливает начальное рандомное положение вершин </summary>
-        private void SetRandomStartLocations()
-        {
-            if (!_vertices.Any())
-                return;
-
-            var rnd = new Random();
-
-            for (var i = 0; i < _vertices.Count; ++i)
-            {
-                var vertex = _vertices[i];
-                vertex.ModelX = rnd.NextDouble() * (ActualWidth - 2 * DefaultVertexRadius) + DefaultVertexRadius;
-                vertex.ModelY = rnd.NextDouble() * (ActualHeight - 2 * DefaultVertexRadius) + DefaultVertexRadius;
-                vertex.ScaleFactor = 1;
-
-                var j = 0;
-                for (; j < i; j++)
-                {
-                    if (AreIntersecting(vertex, (Vertex)_vertices[j]))
-                        break;
-                }
-                if (j < i)
-                    --i;
-            }
-        }
-
-        /// <summary> Устанавливает начальные положения вершин по окружности </summary>
-        private void SetCircleLocations()
-        {
-            if (!_vertices.Any())
-                return;
-
-            var r = Math.Min(ActualHeight, ActualWidth) / 2;
-            var phi = 0.0;
-            var deltaPhi = 2*Math.PI/_vertices.Count;
-            foreach (var vertex in _vertices)
-            {
-                vertex.ModelX = (r - 2 * DefaultVertexRadius) * Math.Cos(phi) + r;
-                vertex.ModelY = (r - 2 * DefaultVertexRadius) * Math.Sin(phi) + r;
-                vertex.ScaleFactor = 1;
-
-                phi += deltaPhi;
-            }
-
-        }
-
         /// <summary> Рассотяние между v1 и v2 </summary>
         private static double Distance(Vertex v1, Vertex v2)
         {
@@ -458,7 +438,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         }
 
         /// <summary> Оперделяет, пересекаются ли вершины </summary>
-        private static bool AreIntersecting(Vertex v1, Vertex v2)
+        public static bool AreIntersecting(Vertex v1, Vertex v2)
         {
             return Distance(v1, v2) <= v1.Radius + v2.Radius;
         }
@@ -572,28 +552,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             _animationTimer.Start();
         }
 
-        /// <summary> Считает позиции всех вершин, используя модель с зарядами и пружинками </summary>
-        private void CalculateVertexPositions()
-        {
-            switch (_visualizationAlgorithm)
-            {
-                case VisualizationAlgorithm.ChargesAndSprings:
-                    SetRandomStartLocations();
-                    _animationTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(ANIMATION_INTERVAL) };
-                    _animationTimer.Tick += (s, e) => MoveVertices();
-                    _animationTimer.Start();
-                    break;
-                case VisualizationAlgorithm.RandomPositions:
-                    SetRandomStartLocations();
-                    break;
-                case VisualizationAlgorithm.Circle:
-                    SetCircleLocations();
-                    break;
-                default:
-                    throw new NotSupportedException(
-                        string.Format("Указан неизвестный алгоритм визуализации {0}", _visualizationAlgorithm));
-            }
-        }
+        
 
 
         #endregion // Вычисление коориднат вершин
@@ -833,6 +792,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <summary> Конструктор </summary>
         public GraphVisualizer()
         {
+            _animationTimer = null;
             InitializeComponent();
             _vertices = new ObservableCollection<Vertex>();
             _edges = new ObservableCollection<Edge>();
