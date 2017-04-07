@@ -19,6 +19,9 @@ namespace GraphLabs.Graphs.Contracts
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
         public bool AllowMultipleEdges { get; private set; }
 
+        /// <summary> Граф взвешенный? </summary>
+        public bool Weighted { get; private set; }
+
         /// <summary> Числов рёбер </summary>
         public int EdgesCount
         {
@@ -97,7 +100,7 @@ namespace GraphLabs.Graphs.Contracts
             Contract.Requires<ArgumentNullException>(vertex != null);
             Contract.Requires<InvalidOperationException>(Vertices.Any(v => ReferenceEquals(v, vertex)));
         }
-        
+
         #endregion
 
     }

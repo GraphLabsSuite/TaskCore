@@ -1,4 +1,6 @@
-﻿namespace GraphLabs.Graphs
+﻿using GraphLabs.Graphs.Helpers;
+
+namespace GraphLabs.Graphs
 {
     // ReSharper disable ConditionIsAlwaysTrueOrFalse
 
@@ -31,14 +33,12 @@
             if (!areEquals)
                 return false;
 
-            var weightedX = x as IWeightedEdge;
-            var weightedY = y as IWeightedEdge;
 
-            if (weightedY == null && weightedY == null)
+            if (!x.IsWeighted() && !y.IsWeighted())
                 return true;
 
-            if (weightedX != null && weightedY != null)
-                return weightedX.Weight == weightedY.Weight;
+            if (x.IsWeighted() && y.IsWeighted())
+                return x.Weight == y.Weight;
             return false;
         }
 

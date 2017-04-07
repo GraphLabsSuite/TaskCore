@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using GraphLabs.Common.Utils;
 using GraphLabs.CommonUI.Helpers;
 using GraphLabs.Graphs.Helpers;
 using GraphLabs.Utils;
@@ -19,6 +19,14 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
     /// <summary> Контрол для визуализации графов </summary>
     public partial class GraphVisualizer : UserControl, IGraph<Vertex, Edge>
     {
+        private static DependencyProperty RegisterDependencyProperty<T>(
+            Expression<Func<GraphVisualizer, T>> accessor,
+            PropertyMetadata metadata = null)
+        {
+            var propertyName = ExpressionUtility.NameForMember(accessor);
+            return DependencyProperty.Register(propertyName, typeof(T), typeof(GraphVisualizer), metadata ?? new PropertyMetadata(null));
+        }
+
         #region Внешность
 
         // ReSharper disable InconsistentNaming
@@ -45,14 +53,22 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         public Brush DefaultVertexBackground
         {
             get { return (Brush)GetValue(DefaultVertexBackgroundProperty); }
-            set { SetValue(DefaultVertexBackgroundProperty, value); }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                SetValue(DefaultVertexBackgroundProperty, value);
+            }
         }
 
         /// <summary> Кисть для границы вершины по-умолчанию </summary>
         public Brush DefaultVertexBorderBrush
         {
             get { return (Brush)GetValue(DefaultVertexBorderBrushProperty); }
-            set { SetValue(DefaultVertexBorderBrushProperty, value); }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                SetValue(DefaultVertexBorderBrushProperty, value);
+            }
         }
 
         /// <summary> Толщина границы вершиныпо-умолчанию </summary>
@@ -70,7 +86,11 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         public Brush DefaultEdgeStroke
         {
             get { return (Brush)GetValue(DefaultEdgeStrokeProperty); }
-            set { SetValue(DefaultEdgeStrokeProperty, value); }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                SetValue(DefaultEdgeStrokeProperty, value);
+            }
         }
 
         /// <summary> Толщина ребра по-умолчанию </summary>
@@ -88,7 +108,11 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         public Style DefaultVertexStyle
         {
             get { return (Style)GetValue(DefaultVertexStyleProperty); }
-            set { SetValue(DefaultVertexStyleProperty, value); }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                SetValue(DefaultVertexStyleProperty, value);
+            }
         }
 
         /// <summary> Возможность наложения вершин по умолчанию </summary>
@@ -99,71 +123,44 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         }
 
         /// <summary> Радиус вершины по-умолчанию </summary>
-        public static DependencyProperty DefaultVertexRadiusProperty =
-            DependencyProperty.Register(
-                "DefaultVertexRadius",
-                typeof(double),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(DEFAULT_VERTEX_RADIUS, DefaultVertexRadiusChanged)
-                );
+        public static readonly DependencyProperty DefaultVertexRadiusProperty = RegisterDependencyProperty(
+            gv => gv.DefaultVertexRadius,
+            new PropertyMetadata(DEFAULT_VERTEX_RADIUS, DefaultVertexRadiusChanged));
 
         /// <summary> Кисть для фона вершины по-умолчанию </summary>
-        public static DependencyProperty DefaultVertexBackgroundProperty =
-            DependencyProperty.Register(
-                "DefaultVertexBackground",
-                typeof(Brush),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(new SolidColorBrush(DEFAULT_VERTEX_BACKGROUND_COLOR), DefaultVertexBackgroundChanged)
-                );
+        public static readonly DependencyProperty DefaultVertexBackgroundProperty = RegisterDependencyProperty(
+            gv => gv.DefaultVertexBackground,
+            new PropertyMetadata(new SolidColorBrush(DEFAULT_VERTEX_BACKGROUND_COLOR), DefaultVertexBackgroundChanged));
 
         /// <summary> Кисть для фона вершины по-умолчанию </summary>
-        public static DependencyProperty DefaultVertexBorderBrushProperty =
-            DependencyProperty.Register(
-                "DefaultVertexBorderBrush",
-                typeof(Brush),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(new SolidColorBrush(DEFAULT_VERTEX_BORDER_COLOR), DefaultVertexBorderBrushChanged)
-                );
+        public static readonly DependencyProperty DefaultVertexBorderBrushProperty = RegisterDependencyProperty(
+            gv => gv.DefaultVertexBorderBrush,
+            new PropertyMetadata(new SolidColorBrush(DEFAULT_VERTEX_BORDER_COLOR), DefaultVertexBorderBrushChanged));
 
         /// <summary> Радиус вершины по-умолчанию </summary>
-        public static DependencyProperty DefaultVertexBorderThicknessProperty =
-            DependencyProperty.Register(
-                "DefaultVertexBorderThickness",
-                typeof(double),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(DEFAULT_VERTEX_BORDER_THICKNESS, DefaultVertexBorderThicknessChanged)
-                );
+        public static readonly DependencyProperty DefaultVertexBorderThicknessProperty = RegisterDependencyProperty(
+            gv => gv.DefaultVertexBorderThickness,
+            new PropertyMetadata(DEFAULT_VERTEX_BORDER_THICKNESS, DefaultVertexBorderThicknessChanged));
 
         /// <summary> Кисть для ребра по-умолчанию </summary>
-        public static DependencyProperty DefaultEdgeStrokeProperty =
-            DependencyProperty.Register(
-                "DefaultEdgeStroke",
-                typeof(Brush),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(new SolidColorBrush(DEFAULT_EDGE_STROKE_COLOR), DefaultEdgeStrokeChanged)
-                );
+        public static readonly DependencyProperty DefaultEdgeStrokeProperty = RegisterDependencyProperty(
+            gv => gv.DefaultEdgeStroke,
+            new PropertyMetadata(new SolidColorBrush(DEFAULT_EDGE_STROKE_COLOR), DefaultEdgeStrokeChanged));
 
         /// <summary> Толщина ребра по-умолчанию </summary>
-        public static DependencyProperty DefaultEdgeStrokeThicknessProperty =
-            DependencyProperty.Register(
-                "DefaultEdgeStrokeThickness",
-                typeof(double),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(DEFAULT_EDGE_STROKE_THICKNESS, DefaultEdgeStrokeThicknessChanged)
-                );
+        public static readonly DependencyProperty DefaultEdgeStrokeThicknessProperty = RegisterDependencyProperty(
+            gv => gv.DefaultEdgeStrokeThickness,
+            new PropertyMetadata(DEFAULT_EDGE_STROKE_THICKNESS, DefaultEdgeStrokeThicknessChanged));
 
         /// <summary> Темплейт вершины по-умолчанию </summary>
-        public static DependencyProperty DefaultVertexStyleProperty =
-            DependencyProperty.Register(
-                "DefaultVertexStyle",
-                typeof(Style),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(null, DefaultVertexStyleChanged)
-                );
+        public static readonly DependencyProperty DefaultVertexStyleProperty = RegisterDependencyProperty(
+            gv => gv.DefaultVertexStyle,
+            new PropertyMetadata(null, DefaultVertexStyleChanged));
 
         /// <summary> Позволить наложение вершин </summary>
-        public static readonly DependencyProperty AllowVerticesOverlapProperty = DependencyProperty.Register(
-            "AllowVerticesOverlap", typeof (bool), typeof (GraphVisualizer), new PropertyMetadata(default(bool)));
+        public static readonly DependencyProperty AllowVerticesOverlapProperty = RegisterDependencyProperty(
+            gv => gv.AllowVerticesOverlap,
+            new PropertyMetadata(default(bool)));
 
         private static void DefaultVertexRadiusChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
         {
@@ -202,7 +199,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (Brush)args.NewValue;
 
-            visualizer._edges.Cast<Vertex>().ForEach(v => v.BorderBrush = newValue);
+            visualizer._vertices.ForEach(v => v.BorderBrush = newValue);
         }
 
         private static void DefaultVertexBorderThicknessChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -210,7 +207,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (double)args.NewValue;
 
-            visualizer._edges.Cast<Vertex>().ForEach(v => v.BorderThickness = new Thickness(newValue));
+            visualizer._vertices.ForEach(v => v.BorderThickness = new Thickness(newValue));
         }
 
         private static void DefaultVertexStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
@@ -218,7 +215,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var visualizer = (GraphVisualizer)d;
             var newValue = (Style)args.NewValue;
 
-            visualizer._edges.Cast<Vertex>().ForEach(v => v.Style = newValue ?? v.Resources[typeof(Vertex)] as Style);
+            visualizer._vertices.ForEach(v => v.Style = newValue ?? v.Resources[typeof(Vertex)] as Style);
         }
 
         #endregion // Внешность
@@ -227,12 +224,19 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Отображаемый граф
 
         /// <summary> Отображаемый граф </summary>
-        public static DependencyProperty GraphProperty =
-            DependencyProperty.Register(
-                "Graph",
-                typeof(IObservableGraph),
-                typeof(GraphVisualizer),
-                new PropertyMetadata(GraphChanged));
+        public static readonly DependencyProperty GraphProperty = 
+            RegisterDependencyProperty(gv => gv.Graph, new PropertyMetadata(GraphChanged));
+
+        /// <summary> Отображаемый граф </summary>
+        public IObservableGraph Graph
+        {
+            get { return (IObservableGraph)GetValue(GraphProperty); }
+            set
+            {
+                Contract.Requires<ArgumentNullException>(value != null);
+                SetValue(GraphProperty, value);
+            }
+        }
 
         /// <summary> Callback на изменение Graph </summary>
         private static void GraphChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -250,7 +254,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 var newGraph = (IObservableGraph)e.NewValue;
                 newGraph.GraphChanged += visualizer.DisplayedGraphChanged;
             }
-            ((GraphVisualizer)d).Refresh();
+
+            visualizer.Refresh();
         }
 
         private void DisplayedGraphChanged(object sender, GraphChangedEventArgs args)
@@ -260,43 +265,26 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
             var graph = Graph;
                                                                                              
-            Contract.Assert(graph != null);                                                  
+            Contract.Assert(graph != null);
                                                                                              
-            _suspendNotifications = true;                                                    
-                                                                                             
-            if (args.OldEdges != null)                                                       
-            {                                                                                
-                args.OldEdges.ForEach(e =>                                                   
-                    {                                                                        
-                        var toRemove = _edges.Single(e.Equals);                              
-                        RemoveEdge(toRemove);                                                
-                    });                                                                      
-            }                                                                                
-            if (args.OldVertices != null)                                                    
-            {                                                                                
-                args.OldVertices.ForEach(e =>                                                
-                {                                                                            
-                    var toRemove = _vertices.Single(e.Equals);                               
-                    RemoveVertex(toRemove);
-                });
-            }
-            if (args.NewVertices != null)
-            {
-                args.NewVertices.ForEach(AddVertex);
-            }
-            if (args.NewEdges != null)
-            {
-                args.NewEdges.ForEach(AddEdge);
-            }
+            _suspendNotifications = true;
+
+            args.OldEdges?.ForEach(e =>                                                   
+            {                                                                        
+                var toRemove = _edges.Single(e.Equals);                              
+                RemoveEdge(toRemove);                                                
+            });
+
+            args.OldVertices?.ForEach(e =>                                                
+            {                                                                            
+                var toRemove = _vertices.Single(e.Equals);
+                RemoveVertex(toRemove);
+            });
+
+            args.NewVertices?.ForEach(AddVertex);
+            args.NewEdges?.ForEach(AddEdge);
 
             _suspendNotifications = false;
-        }
-
-        /// <summary> Отображаемый граф </summary>
-        public IObservableGraph Graph
-        {
-            get { return (IObservableGraph)GetValue(GraphProperty); }
-            set { SetValue(GraphProperty, value); }
         }
 
         #endregion // Отображаемый граф
@@ -305,11 +293,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Методы и свойства визуализатора
 
         /// <summary> Анимация приостановлена? </summary>
-        public static readonly DependencyProperty IsAnimationSuspendedProperty = DependencyProperty.Register(
-            "IsAnimationSuspended",
-            typeof(bool),
-            typeof(GraphVisualizer),
-            new PropertyMetadata(false));
+        public static readonly DependencyProperty IsAnimationSuspendedProperty = RegisterDependencyProperty(
+            gv => gv.IsAnimationSuspended, new PropertyMetadata(false));
 
         /// <summary> Анимация приостановлена? </summary>
         public bool IsAnimationSuspended
@@ -318,36 +303,10 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             set { SetValue(IsAnimationSuspendedProperty, value); }
         }
         
-        //TODO: переделать на нормальные методы типа SuspendNotifications() и ResumeNotifications()
         private bool _suspendNotifications = false;
 
         /// <summary> Алгоритм, используемый для визуализации </summary>
-        public VisualizationAlgorithm VisualizationAlgorithm
-        {
-            get { return _visualizationAlgorithm; }
-            set
-            {
-                if (value == _visualizationAlgorithm)
-                {
-                    return;
-                }
-                _visualizationAlgorithm = value;
-                switch (_visualizationAlgorithm)
-                {
-                    case VisualizationAlgorithm.Circle:
-                        _ivisualizationAlgorithm = new CirclePositionsVisualizer(this); break;
-                    case VisualizationAlgorithm.RandomPositions:
-                        _ivisualizationAlgorithm = new RandomPositionVisualizer(this); break;
-                    default:
-                        throw new Exception("I cant or dont want do it");
-                }
-                Refresh();
-            }
-        }
-        private VisualizationAlgorithm _visualizationAlgorithm;
-
-        /// <summary> Алгоритм, используемый для визу </summary>
-        public IVisualizationAlgorithm IVisualizationAlgorithm
+        public IVisualizationAlgorithm VisualizationAlgorithm
         {
             get { return _ivisualizationAlgorithm; }
             set
@@ -356,7 +315,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 {
                     return;
                 }
-                _visualizationAlgorithm = VisualizationAlgorithm.User;
+
+                value.Visualizer = this;
                 _ivisualizationAlgorithm = value;
                 Refresh();
             }
@@ -370,11 +330,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             _edges.Clear();
             LayoutRoot.Children.Clear();
             _suspendNotifications = true;
-            
 
             if (Graph == null) return;
-            AllowMultipleEdges = Graph.AllowMultipleEdges;
-            Directed = Graph.Directed;
 
             var newGraph = Graph;
             foreach (var vertex in newGraph.Vertices)
@@ -394,10 +351,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         private void OnVertexClick(Vertex vertex)
         {
-            if (VertexClick != null)
-            {
-                VertexClick(this, new VertexClickEventArgs(vertex));
-            }
+            VertexClick?.Invoke(this, new VertexClickEventArgs(vertex));
         }
 
         /// <summary> Клик по ребру </summary>
@@ -405,10 +359,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         private void OnEdgeClick(Edge edge)
         {
-            if (EdgeClick != null)
-            {
-                EdgeClick(this, new EdgeClickEventArgs(edge));
-            }
+            EdgeClick?.Invoke(this, new EdgeClickEventArgs(edge));
         }
 
         #endregion // Методы и свойства визуализатора
@@ -451,11 +402,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         private void MoveVertices()
         {
-            if (_visualizationAlgorithm != VisualizationAlgorithm.ChargesAndSprings)
-            {
-                return;
-            }
-
             _animationTimer.Stop();
 
             if (!IsAnimationSuspended)
@@ -538,11 +484,11 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                     var targetPositionI = newPositions[i];
 
                     var xiAnimation = SilverlightHelper
-                        .GetStoryboard(vi, "ModelX", targetPositionI.X, ANIMATION_INTERVAL, null);
+                        .GetStoryboard(vi, nameof(Vertex.ModelX), targetPositionI.X, ANIMATION_INTERVAL, null);
                     var yiAnimation = SilverlightHelper
-                        .GetStoryboard(vi, "ModelY", targetPositionI.Y, ANIMATION_INTERVAL, null);
+                        .GetStoryboard(vi, nameof(Vertex.ModelY), targetPositionI.Y, ANIMATION_INTERVAL, null);
                     var scaleAnimation = SilverlightHelper
-                        .GetStoryboard(vi, "ScaleFactor", scaleFactor, ANIMATION_INTERVAL, null);
+                        .GetStoryboard(vi, nameof(Vertex.ScaleFactor), scaleFactor, ANIMATION_INTERVAL, null);
 
                     xiAnimation.Begin();
                     yiAnimation.Begin();
@@ -561,12 +507,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Добавление рёбер
 
         /// <summary> Добавление рёбер </summary>
-        public static readonly DependencyProperty IsEdgesAddingEnabledProperty = DependencyProperty.Register(
-            "IsEdgesAddingEnabled",
-            typeof(bool),
-            typeof(GraphVisualizer),
-            new PropertyMetadata(false)
-            );
+        public static readonly DependencyProperty IsEdgesAddingEnabledProperty =
+            RegisterDependencyProperty(gv => gv.IsEdgesAddingEnabled, new PropertyMetadata(false));
 
         /// <summary> Включить добавление рёбер </summary>
         public bool IsEdgesAddingEnabled
@@ -586,21 +528,24 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             Contract.Assert(sender is Vertex);
 
             if (!IsEdgesAddingEnabled) return;
-                _source = (Vertex)sender;
-                _arrow = new Arrow
-                {
-                    X1 = _source.X,
-                    Y1 = _source.Y,
-                    X2 = _source.X,
-                    Y2 = _source.Y,
-                    Stroke = DefaultEdgeStroke,
-                    StrokeThickness = DefaultEdgeStrokeThickness
-                };
-                LayoutRoot.Children.Add(_arrow);
-                LayoutRoot.MouseMove += DirectEdge;
-                foreach (var v in LayoutRoot.Children) v.MouseLeftButtonUp += ReleaseEdge;
-                MouseLeftButtonUp += ReleaseEdge;
+            _source = (Vertex)sender;
+            _arrow = new Arrow
+            {
+                X1 = _source.X,
+                Y1 = _source.Y,
+                X2 = _source.X,
+                Y2 = _source.Y,
+                Stroke = DefaultEdgeStroke,
+                StrokeThickness = DefaultEdgeStrokeThickness
+            };
+            LayoutRoot.Children.Add(_arrow);
+            LayoutRoot.MouseMove += DirectEdge;
+            foreach (var v in LayoutRoot.Children)
+            {
+                v.MouseLeftButtonUp += ReleaseEdge;
             }
+            MouseLeftButtonUp += ReleaseEdge;
+        }
 
         private void DirectEdge(object sender, MouseEventArgs args)
         {
@@ -620,41 +565,46 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             var vertex = sender as Vertex;
             if (vertex != null)
             {
-                String sourceName = (String)_source.GetValue(NameProperty),
-                       sinkName = (String)vertex.GetValue(NameProperty);
-                
-                if (GetValue(GraphProperty) is DirectedWeightedGraph)
+                var sourceName = _source.Name;
+                var sinkName = vertex.Name;
+
+                Graphs.Vertex source;
+                Graphs.Vertex sink;
+                IEdge newEdge;
+                if (Graph is DirectedWeightedGraph)
                 {
-                    var g = (DirectedWeightedGraph) GetValue(GraphProperty);
-                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
-                                  sink = g.Vertices.Single(v => v.Name == sinkName);
-                    var e = new DirectedWeightedEdge(source, sink, 0); // нужно сделать вызов диалога задания веса
-                    var ed = g[source, sink];
-                    if (ed == null) g.AddEdge(e);
-                    else g.RemoveEdge(ed);
+                    var g = (DirectedWeightedGraph)Graph;
+                    source = g.Vertices.Single(v => v.Name == sourceName);
+                    sink = g.Vertices.Single(v => v.Name == sinkName);
+
+                    newEdge = new DirectedWeightedEdge(source, sink, 0); //todo нужно сделать вызов диалога задания веса
+                }
+                else if (Graph is DirectedGraph)
+                {
+                    var g = (DirectedGraph)Graph;
+                    source = g.Vertices.Single(v => v.Name == sourceName);
+                    sink = g.Vertices.Single(v => v.Name == sinkName);
+
+                    newEdge = new DirectedEdge(source, sink);
+                }
+                else if (GetValue(GraphProperty) is UndirectedGraph)
+                {
+                    var g = (UndirectedGraph)Graph;
+                    source = g.Vertices.Single(v => v.Name == sourceName);
+                    sink = g.Vertices.Single(v => v.Name == sinkName);
+
+                    newEdge = new UndirectedEdge(source, sink);
+                }
+                else
+                {
+                    throw new NotSupportedException("Неподдерживаемый тип графа");
                 }
 
-                if (GetValue(GraphProperty) is DirectedGraph)
-                {
-                    var g = (DirectedGraph)GetValue(GraphProperty);
-                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
-                                  sink = g.Vertices.Single(v => v.Name == sinkName);
-                    var e = new DirectedEdge(source, sink);
-                    var ed = g[source, sink];
-                    if (ed == null) g.AddEdge(e);
-                    else g.RemoveEdge(ed);
-                }
-
-                if (GetValue(GraphProperty) is UndirectedGraph)
-                {
-                    var g = (UndirectedGraph)GetValue(GraphProperty);
-                    Graphs.Vertex source = g.Vertices.Single(v => v.Name == sourceName),
-                                  sink = g.Vertices.Single(v => v.Name == sinkName);
-                    var e = new UndirectedEdge(source, sink);
-                    var ed = g[source, sink];
-                    if (ed == null) g.AddEdge(e);
-                    else g.RemoveEdge(ed);
-                }
+                var ed = Graph[source, sink];
+                if (ed == null)
+                    Graph.AddEdge(newEdge);
+                else
+                    Graph.RemoveEdge(ed);
             }
 
             LayoutRoot.Children.Remove(_arrow);
@@ -876,28 +826,22 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         #region Implementation of IGraph
 
         /// <summary> Граф ориентированный? </summary>
-        public bool Directed { get; private set; }
+        public bool Directed => Graph.Directed;
 
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
-        public bool AllowMultipleEdges { get; private set; }
+        public bool AllowMultipleEdges => Graph.AllowMultipleEdges;
+
+        /// <summary> Граф взвешенный? </summary>
+        public bool Weighted => Graph.Weighted;
 
         /// <summary> Числов рёбер </summary>
-        public int EdgesCount
-        {
-            get { return _edges.Count; }
-        }
+        public int EdgesCount => _edges.Count;
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdge> IGraph.Edges
-        {
-            get { return new ReadOnlyCollection<IEdge>(_edges.Cast<IEdge>().ToArray()); }
-        }
+        ReadOnlyCollection<IEdge> IGraph.Edges => new ReadOnlyCollection<IEdge>(_edges.Cast<IEdge>().ToArray());
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        public ReadOnlyCollection<Edge> Edges
-        {
-            get { return new ReadOnlyCollection<Edge>(_edges); }
-        }
+        public ReadOnlyCollection<Edge> Edges => new ReadOnlyCollection<Edge>(_edges);
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
         public void AddEdge(IEdge edge)
@@ -909,11 +853,11 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 Directed = edge.Directed,
                 Stroke = DefaultEdgeStroke,
                 StrokeThickness = DefaultEdgeStrokeThickness,
-                IsWeighted = edge is IWeightedEdge,
+                IsWeighted = edge.IsWeighted()
             };
-            if (newEdge.IsWeighted)
+            if (edge.Weight.HasValue)
             {
-                newEdge.Weight = ((IWeightedEdge)edge).Weight;
+                newEdge.Weight = edge.Weight.Value;
             }
             _edges.Add(newEdge);
             LayoutRoot.Children.Add(newEdge);
@@ -927,10 +871,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         }
 
         /// <summary> Возвращает ребро между вершинами v1 и v2 (если есть) или null (если ребра нет) </summary>
-        IEdge IGraph.this[IVertex v1, IVertex v2]
-        {
-            get { return this[(Vertex)v1, (Vertex)v2]; }
-        }
+        IEdge IGraph.this[IVertex v1, IVertex v2] => this[(Vertex)v1, (Vertex)v2];
 
         /// <summary> Добавляет ребро newEdge к графу </summary>
         public void AddEdge(Edge edge)
@@ -957,25 +898,13 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         }
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        public ReadOnlyCollection<Vertex> Vertices
-        {
-            get
-            {
-                return new ReadOnlyCollection<Vertex>(_vertices);
-            }
-        }
+        public ReadOnlyCollection<Vertex> Vertices => new ReadOnlyCollection<Vertex>(_vertices);
 
         /// <summary> Числов вершин </summary>
-        public int VerticesCount
-        {
-            get { return _vertices.Count; }
-        }
+        public int VerticesCount => _vertices.Count;
 
         /// <summary> Доступная только для чтения коллекция вершин </summary>
-        ReadOnlyCollection<IVertex> IGraph.Vertices
-        {
-            get { return new ReadOnlyCollection<IVertex>(_vertices.Cast<IVertex>().ToList()); }
-        }
+        ReadOnlyCollection<IVertex> IGraph.Vertices => new ReadOnlyCollection<IVertex>(_vertices.Cast<IVertex>().ToList());
 
         /// <summary> Добавляет вершину vertex в граф </summary>
         /// <remarks> Для добавления вершины на конкретную позицию используйте AddVertex(Vertex) </remarks>

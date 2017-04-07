@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Linq;
-using GraphLabs.Graphs.Helpers;
 using GraphLabs.Utils;
 
 namespace GraphLabs.Graphs
@@ -28,16 +27,13 @@ namespace GraphLabs.Graphs
         }
 
         /// <summary> Граф ориентированный? </summary>
-        public override bool Directed
-        {
-            get { return true; } 
-        }
+        public override bool Directed => true;
 
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
-        public override bool AllowMultipleEdges
-        {
-            get { return false; }
-        }
+        public override bool AllowMultipleEdges => false;
+
+        /// <summary> Взвешенный? </summary>
+        public override bool Weighted => false;
 
         /// <summary> Создаёт глубокую копию данного объекта </summary>
         public override object Clone()

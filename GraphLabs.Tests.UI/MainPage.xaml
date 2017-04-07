@@ -10,6 +10,9 @@
              mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="600">
 
+    <UserControl.Resources>
+        <visualization:CirclePositionsVisualizer x:Key="CircleVisualizer" />
+    </UserControl.Resources>
     <sdk:TabControl>
         <sdk:TabItem Header="Vertex and Edge tests">
             <sdk:TabItem.Content>
@@ -93,7 +96,7 @@
                         <ColumnDefinition Width="100"/>
                     </Grid.ColumnDefinitions>
                     <visualization:GraphVisualizer Grid.Column="0"
-                                                   Name="Visualizer" Margin="5" VisualizationAlgorithm="Circle"
+                                                   Name="Visualizer" Margin="5" VisualizationAlgorithm="{StaticResource CircleVisualizer}"
                                                    DefaultEdgeStrokeThickness="2.5"
                                                    DefaultVertexRadius="15"
                                                    DefaultVertexBackground="LightGray"/>

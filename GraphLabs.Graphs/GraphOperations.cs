@@ -82,26 +82,27 @@ namespace GraphLabs.Graphs
         #region Операции над графами
 
         /// <summary> Объединение графов </summary>
+        [Obsolete("Нужно переписать")]
         public static Graph<TVertex, TEdge> Union<TVertex, TEdge>(params Graph<TVertex, TEdge>[] graphs)
             where TVertex : IVertex
             where TEdge : IEdge<TVertex>
         {
             Contract.Requires(graphs != null && graphs.Any());
+            throw new NotImplementedException();
+            //var copies = graphs.Select(g => (Graph<TVertex, TEdge>)g.Clone()).ToArray();
+            //for (var i = 1; i <= copies.Length; ++i)
+            //{
+            //    copies[i - 1].Vertices.ForEach(v => v.Rename(string.Format("{0}-{1}", i.ToString(CultureInfo.InvariantCulture), v.Name)));
+            //}
 
-            var copies = graphs.Select(g => (Graph<TVertex, TEdge>)g.Clone()).ToArray();
-            for (var i = 1; i <= copies.Length; ++i)
-            {
-                copies[i - 1].Vertices.ForEach(v => v.Rename(string.Format("{0}-{1}", i.ToString(CultureInfo.InvariantCulture), v.Name)));
-            }
+            //var result = copies.First();
+            //for (var i = 1; i < copies.Length; ++i)
+            //{
+            //    copies[i].Vertices.ForEach(result.AddVertex);
+            //    copies[i].Edges.ForEach(result.AddEdge);
+            //}
 
-            var result = copies.First();
-            for (var i = 1; i < copies.Length; ++i)
-            {
-                copies[i].Vertices.ForEach(result.AddVertex);
-                copies[i].Edges.ForEach(result.AddEdge);
-            }
-
-            return result;
+            //return result;
         }
 
         /// <summary> Пересечение двух графов. </summary>

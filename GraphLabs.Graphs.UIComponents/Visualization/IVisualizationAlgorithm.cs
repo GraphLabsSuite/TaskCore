@@ -15,5 +15,8 @@
         /// то как мы выпоняем визуализацию
         /// </summary>
         void Visualize();
+
+        /// <summary> временно </summary>
+        GraphVisualizer Visualizer { get; set; }
     }
 }

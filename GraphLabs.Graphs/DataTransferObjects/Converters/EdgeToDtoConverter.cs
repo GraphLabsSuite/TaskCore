@@ -18,7 +18,7 @@ namespace GraphLabs.Graphs.DataTransferObjects.Converters
                     Vertex1 = VertexToDtoConverter.Convert(value.Vertex1),
                     Vertex2 = VertexToDtoConverter.Convert(value.Vertex2),
                     Directed = value.Directed,
-                    Weight = (value is IWeightedEdge) ? ((IWeightedEdge)value).Weight : (int?)null
+                    Weight = value.Weight
                 };
         }
 

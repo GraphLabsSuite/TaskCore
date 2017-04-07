@@ -367,19 +367,6 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         #endregion
 
-        /// <summary> Переименовать </summary>
-        public Vertex Rename(string newName)
-        {
-            return (Vertex)((IVertex)this).Rename(newName);
-        }
-
-        /// <summary> Переименовать вершину </summary>
-        IVertex IVertex.Rename(string newName)
-        {
-            Name = newName;
-            return this;
-        }
-
         /// <summary> GetHashCode </summary>
         public override int GetHashCode()
         {

@@ -9,25 +9,22 @@ namespace GraphLabs.Graphs
         #region Реализация IEdge
 
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>
-        public Vertex Vertex1 { get; private set; }
+        public Vertex Vertex1 { get; }
 
         /// <summary> Индекс вершины 2 (вершины-стока) </summary>
-        public Vertex Vertex2 { get; private set; }
+        public Vertex Vertex2 { get; }
 
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>
-        IVertex IEdge.Vertex1
-        {
-            get { return Vertex1; }
-        }
+        IVertex IEdge.Vertex1 => Vertex1;
 
         /// <summary> Индекс вершины 2 (вершины-стока) </summary>
-        IVertex IEdge.Vertex2
-        {
-            get { return Vertex2; }
-        }
+        IVertex IEdge.Vertex2 => Vertex2;
 
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
         public abstract bool Directed { get; }
+
+        /// <summary> Вес </summary>
+        public int? Weight { get; }
 
         #endregion // Реализация IEdge
 
@@ -40,6 +37,17 @@ namespace GraphLabs.Graphs
 
             Vertex1 = vertex1;
             Vertex2 = vertex2;
+        }
+
+        /// <summary> Создаёт новое ребро по указанным параметрам </summary>
+        /// <param name="vertex1">Вершина 1</param>
+        /// <param name="vertex2">Вершина 2</param>
+        /// <param name="weight">Вес</param>
+        protected Edge(Vertex vertex1, Vertex vertex2, int? weight) : this(vertex1, vertex2)
+        {
+            Contract.Requires<ArgumentNullException>(weight.HasValue);
+
+            Weight = weight;
         }
 
         /// <summary> Returns a string that represents the current object. </summary>

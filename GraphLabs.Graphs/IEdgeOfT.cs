@@ -1,7 +1,7 @@
 ﻿namespace GraphLabs.Graphs
 {
     /// <summary> Ребро или дуга графа </summary>
-    public interface IEdge<TVertex> : IEdge
+    public interface IEdge<out TVertex> : IEdge
         where TVertex : IVertex
     {
         /// <summary> Индекс вершины 1 (вершины-истока) </summary>

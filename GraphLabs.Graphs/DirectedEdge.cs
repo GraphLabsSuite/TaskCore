@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 
 namespace GraphLabs.Graphs
 {
@@ -14,16 +12,13 @@ namespace GraphLabs.Graphs
         }
 
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
-        public override bool Directed
-        {
-            get { return true; }
-        }
+        public override bool Directed => true;
 
         /// <summary> Returns a string that represents the current object. </summary>
         /// <returns> A string that represents the current object. </returns>
         public override string ToString()
         {
-            return string.Format("{0}->{1}", Vertex1, Vertex2);
+            return $"{Vertex1}->{Vertex2}";
         }
 
         /// <summary> Создаёт глубокую копию данного объекта </summary>

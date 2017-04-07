@@ -8,15 +8,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
     /// </summary>
     public class RandomPositionVisualizer : IVisualizationAlgorithm
     {
-        private GraphVisualizer _g;
-        /// <summary>
-        /// constructor
-        /// </summary>
-        /// <param name="g"></param>
-        public RandomPositionVisualizer(GraphVisualizer g)
-        {
-            _g = g;
-        }
+        /// <inheritdoc />
+        public GraphVisualizer Visualizer { get; set; }
 
         /// <inheritdoc />
         public string Name()
@@ -27,7 +20,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         /// <inheritdoc />
         public void Visualize()
         {
-            var vertices = _g.Vertices;
+            var vertices = Visualizer.Vertices;
             if (!vertices.Any())
                 return;
 
@@ -36,8 +29,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             for (var i = 0; i < vertices.Count; ++i)
             {
                 var vertex = vertices[i];
-                vertex.ModelX = rnd.NextDouble() * (_g.ActualWidth - 2 * _g.DefaultVertexRadius) + _g.DefaultVertexRadius;
-                vertex.ModelY = rnd.NextDouble() * (_g.ActualHeight - 2 * _g.DefaultVertexRadius) + _g.DefaultVertexRadius;
+                vertex.ModelX = rnd.NextDouble() * (Visualizer.ActualWidth - 2 * Visualizer.DefaultVertexRadius) + Visualizer.DefaultVertexRadius;
+                vertex.ModelY = rnd.NextDouble() * (Visualizer.ActualHeight - 2 * Visualizer.DefaultVertexRadius) + Visualizer.DefaultVertexRadius;
                 vertex.ScaleFactor = 1;
 
                 var j = 0;

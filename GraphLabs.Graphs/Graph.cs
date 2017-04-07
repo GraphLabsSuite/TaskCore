@@ -27,17 +27,16 @@ namespace GraphLabs.Graphs
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
         public abstract bool AllowMultipleEdges { get; }
 
+        /// <summary> Взвешенный? </summary>
+        public abstract bool Weighted { get; }
+
         /// <summary> Числов рёбер </summary>
-        public int EdgesCount
-        {
-            get { return EdgesList.Count; }
-        }
+        public int EdgesCount => EdgesList.Count;
 
         /// <summary> Доступная только для чтения коллекция рёбер </summary>
-        ReadOnlyCollection<IEdge> IGraph.Edges
-        {
-            get { return _readOnlyIEdges ?? (_readOnlyIEdges = new ReadOnlyCollection<IEdge>(new ListAdapter<TEdge, IEdge>(EdgesList))); }
-        }
+        ReadOnlyCollection<IEdge> IGraph.Edges => 
+            _readOnlyIEdges ?? (_readOnlyIEdges = new ReadOnlyCollection<IEdge>(new ListAdapter<TEdge, IEdge>(EdgesList)));
+
         private ReadOnlyCollection<IEdge> _readOnlyIEdges;
 
         /// <summary> Добавляет ребро newEdge к графу </summary>

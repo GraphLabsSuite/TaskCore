@@ -125,7 +125,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
             DependencyProperty.Register("Weight", typeof(int), typeof(Edge), new PropertyMetadata(default(int)));
 
         /// <summary> Вес </summary>
-        public int Weight
+        public int? Weight
         {
             get { return (int)GetValue(WeightProperty); }
             set { SetValue(WeightProperty, value); }

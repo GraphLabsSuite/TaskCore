@@ -43,21 +43,7 @@ namespace GraphLabs.Graphs
             Name = name;
             Label = "";
         }
-
-        /// <summary> Переименовать </summary>
-        public Vertex Rename(string newName)
-        {
-            return (Vertex)((IVertex)this).Rename(newName);
-        }
-
-        /// <summary> Переименовать вершину </summary>
-        IVertex IVertex.Rename(string newName)
-        {
-            Name = newName;
-            OnPropertyChanged("Name");
-            return this;
-        }
-
+        
         /// <summary> Returns a string that represents the current object. </summary>
         /// <returns> A string that represents the current object. </returns>
         public override string ToString()
@@ -115,9 +101,7 @@ namespace GraphLabs.Graphs
         /// <summary> Уведомляет об изменении свойства </summary>
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var h = PropertyChanged;
-            if (h != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

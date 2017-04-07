@@ -16,6 +16,9 @@ namespace GraphLabs.Graphs.Contracts
         /// <summary> Граф ориентированный? </summary>
         public abstract bool Directed { get; }
 
+        /// <summary> Граф взвешенный? </summary>
+        public abstract bool Weighted { get; }
+
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
         public abstract bool AllowMultipleEdges { get; }
 

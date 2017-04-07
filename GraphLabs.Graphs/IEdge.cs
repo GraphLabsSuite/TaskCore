@@ -13,5 +13,8 @@ namespace GraphLabs.Graphs
 
         /// <summary> Ребро ориентированное? (является дугой?) </summary>
         bool Directed { get; }
+
+        /// <summary> Ребро взвешенное? </summary>
+        int? Weight { get; }
     }
 }

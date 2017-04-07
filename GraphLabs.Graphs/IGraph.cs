@@ -11,6 +11,9 @@ namespace GraphLabs.Graphs
         /// <summary> Граф ориентированный? </summary>
         bool Directed { get; }
 
+        /// <summary> Граф взвешенный? </summary>
+        bool Weighted { get; }
+
         /// <summary> Допускать два и более ребра между двумя вершинами? </summary>
         bool AllowMultipleEdges { get; }
         
