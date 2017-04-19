@@ -10,11 +10,8 @@ namespace GraphLabs.Graphs
     public class GraphPrinter
     {
         /// <summary> Представляет весь граф в виде строки </summary>
-        public string GraphToString (IGraph graph)
-        {
-            return $"({VerticesToString(graph)},{EdgesToString(graph)})";
-        }
-
+        public string GraphToString (IGraph graph) => $"({VerticesToString(graph)},{EdgesToString(graph)})";
+   
         /// <summary> Представляет вершины графа в виде строки </summary>
         public string VerticesToString (IGraph graph)
         {
