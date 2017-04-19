@@ -6,26 +6,27 @@ using System.Text;
 
 namespace GraphLabs.Graphs
 {
-    /// <summary> Строка, представляющая граф </summary>
-    public class PrintGraph
+    /// <summary> Представляет граф в виде строки </summary>
+    public class GraphPrinter
     {
-        /// <summary> Представляет граф в виде строки </summary>
+        /// <summary> Представляет весь граф в виде строки </summary>
         public string GraphToString (IGraph graph)
         {
-            var stringToReturn = "({";
-            graph.Vertices.ForEach(v =>
-            {
-                stringToReturn += v.ToString() + "; ";
-            }
-            );
-            stringToReturn = stringToReturn.Remove(stringToReturn.Length - 2) + "}, {";
-            graph.Edges.ForEach(e =>
-            {
-                stringToReturn += "(" + e.Vertex1.ToString() + ", " + e.Vertex2.ToString() + "), ";
-            }
-            );
-            stringToReturn = stringToReturn.Remove(stringToReturn.Length - 2) + "})";
-            return stringToReturn;
+            return $"({VerticesToString(graph)},{EdgesToString(graph)})";
+        }
+
+        /// <summary> Представляет вершины графа в виде строки </summary>
+        public string VerticesToString (IGraph graph)
+        {
+            var verticesListStr = string.Join("; ", graph.Vertices);
+            return $"{{verticesListStr}}";
+        }
+
+        /// <summary> Представляет ребра графа в виде строки </summary>
+        public string EdgesToString(IGraph graph)
+        {
+            var edgesListStr = string.Join("; ", graph.Edges.Select(e => $"({e.Vertex1.Name}, {e.Vertex2.Name})"));
+            return $"{{edgesListStr}}";
         }
     }
 }
