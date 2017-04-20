@@ -10,20 +10,20 @@ namespace GraphLabs.Graphs
     public static class GraphPrinter
     {
         /// <summary> Представляет весь граф в виде строки </summary>
-        public static string GraphToString (IGraph graph) => $"({VerticesToString(graph)},{EdgesToString(graph)})";
+        public static string GraphToString (IGraph graph) => $"({VerticesToString(graph)}, {EdgesToString(graph)})";
    
         /// <summary> Представляет вершины графа в виде строки </summary>
         public static string VerticesToString (IGraph graph)
         {
             var verticesListStr = string.Join("; ", graph.Vertices);
-            return $"{{verticesListStr}}";
+            return $"{{{verticesListStr}}}";
         }
 
         /// <summary> Представляет ребра графа в виде строки </summary>
         public static string EdgesToString(IGraph graph)
         {
             var edgesListStr = string.Join("; ", graph.Edges.Select(e => $"({e.Vertex1.Name}, {e.Vertex2.Name})"));
-            return $"{{edgesListStr}}";
+            return $"{{{edgesListStr}}}";
         }
     }
 }

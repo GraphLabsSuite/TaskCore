@@ -16,7 +16,6 @@ namespace GraphLabs.Tests.Graphs
             var vertexB = new Vertex("B");
             var vertexC = new Vertex("C");
             var vertexD = new Vertex("D");
-
             var graph2 = new UndirectedGraph();
             var vertex1 = new Vertex("1");
             var vertex2 = new Vertex("2");

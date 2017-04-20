@@ -2,6 +2,8 @@
 using System.Linq;
 using GraphLabs.Graphs;
 using NUnit.Framework;
+using System.Diagnostics;
+using NUnit.Framework.Constraints;
 
 namespace GraphLabs.Tests.Graphs
 {
@@ -32,9 +34,9 @@ namespace GraphLabs.Tests.Graphs
             graph1.AddVertex(vertexC);
             graph1.AddVertex(vertexD);
             graph1.AddVertex(vertexE);
-            Assert.AreEqual(GraphPrinter.GraphToString(graph1), "({A; B; C; D; E}, {(A, B); (A, C); (B, C); (B, D); (C, E); (D, E)})");
-            Assert.AreEqual(GraphPrinter.EdgesToString(graph1), "{(A, B); (A, C); (B, C); (B, D); (C, E); (D, E)}");
-            Assert.AreEqual(GraphPrinter.VerticesToString(graph1), "{A; B; C; D; E}");
+            Assert.AreEqual("({A; B; C; D; E}, {(A, B); (A, C); (B, C); (B, D); (C, E); (D, E)})", GraphPrinter.GraphToString(graph1), "Ошибка: граф №1, GraphToString");
+            Assert.AreEqual("{(A, B); (A, C); (B, C); (B, D); (C, E); (D, E)}", GraphPrinter.EdgesToString(graph1), "Ошибка: граф №1, EdgesToString");
+            Assert.AreEqual("{A; B; C; D; E}", GraphPrinter.VerticesToString(graph1), "Ошибка: граф №1, VerticesToString");
 
             // Граф без ребер
             var graph2 = new UndirectedGraph();
@@ -51,15 +53,15 @@ namespace GraphLabs.Tests.Graphs
             graph2.AddVertex(vertex4);
             graph2.AddVertex(vertex5);
 
-            Assert.AreEqual(GraphPrinter.GraphToString(graph1), "({1; 2; 3; 4; 5}, {})");
-            Assert.AreEqual(GraphPrinter.EdgesToString(graph1), "{}");
-            Assert.AreEqual(GraphPrinter.VerticesToString(graph1), "{1; 2; 3; 4; 5}");
+            Assert.AreEqual("({1; 2; 3; 4; 5}, {})", GraphPrinter.GraphToString(graph2), "Ошибка: граф №2, GraphToString");
+            Assert.AreEqual("{}", GraphPrinter.EdgesToString(graph2), "Ошибка: граф №2, EdgesToString");
+            Assert.AreEqual("{1; 2; 3; 4; 5}", GraphPrinter.VerticesToString(graph2), "Ошибка: граф №1, VerticesToString");
 
             // Пустой граф
             var graph3 = new UndirectedGraph();
-            Assert.AreEqual(GraphPrinter.GraphToString(graph1), "({}, {})");
-            Assert.AreEqual(GraphPrinter.EdgesToString(graph1), "{}");
-            Assert.AreEqual(GraphPrinter.VerticesToString(graph1), "{}");
+            Assert.AreEqual("({}, {})", GraphPrinter.GraphToString(graph3), "Ошибка: граф №3, GraphToString");
+            Assert.AreEqual("{}", GraphPrinter.EdgesToString(graph3), "Ошибка: граф №3, EdgesToString");
+            Assert.AreEqual("{}", GraphPrinter.VerticesToString(graph3), "Ошибка: граф №3, VerticesToString");
         }
     }
 }
