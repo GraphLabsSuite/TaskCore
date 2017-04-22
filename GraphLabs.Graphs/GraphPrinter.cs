@@ -1,29 +1,38 @@
 ﻿using GraphLabs.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 
 namespace GraphLabs.Graphs
 {
     /// <summary> Представляет граф в виде строки </summary>
-    public static class GraphPrinter
+    public class GraphPrinter
     {
         /// <summary> Представляет весь граф в виде строки </summary>
-        public static string GraphToString (IGraph graph) => $"({VerticesToString(graph)}, {EdgesToString(graph)})";
+        public string GraphToString (IGraph graph) => $"({VerticesToString(graph)}, {EdgesToString(graph)})";
    
         /// <summary> Представляет вершины графа в виде строки </summary>
-        public static string VerticesToString (IGraph graph)
+        public string VerticesToString (IGraph graph)
         {
+            Contract.Requires<ArgumentNullException>(graph != null);
             var verticesListStr = string.Join("; ", graph.Vertices);
-            return $"{{{verticesListStr}}}";
+            if (verticesListStr.Length != 0)
+                return $"{{{verticesListStr}}}";
+            else
+                return $"{{{'\x00D8'}}}";
         }
 
         /// <summary> Представляет ребра графа в виде строки </summary>
-        public static string EdgesToString(IGraph graph)
+        public string EdgesToString(IGraph graph)
         {
+            Contract.Requires<ArgumentNullException>(graph != null);
             var edgesListStr = string.Join("; ", graph.Edges.Select(e => $"({e.Vertex1.Name}, {e.Vertex2.Name})"));
-            return $"{{{edgesListStr}}}";
+            if (edgesListStr.Length != 0) 
+                return $"{{{edgesListStr}}}";
+            else
+                return $"{{{'\x00D8'}}}";
         }
     }
 }
