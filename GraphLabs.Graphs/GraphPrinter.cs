@@ -18,10 +18,8 @@ namespace GraphLabs.Graphs
         {
             Contract.Requires<ArgumentNullException>(graph != null);
             var verticesListStr = string.Join("; ", graph.Vertices);
-            if (verticesListStr.Length != 0)
-                return $"{{{verticesListStr}}}";
-            else
-                return $"{{{'\x00D8'}}}";
+            if (string.IsNullOrEmpty(verticesListStr)) verticesListStr = "\x00D8";
+            return $"{{{verticesListStr}}}";
         }
 
         /// <summary> Представляет ребра графа в виде строки </summary>
@@ -29,10 +27,8 @@ namespace GraphLabs.Graphs
         {
             Contract.Requires<ArgumentNullException>(graph != null);
             var edgesListStr = string.Join("; ", graph.Edges.Select(e => $"({e.Vertex1.Name}, {e.Vertex2.Name})"));
-            if (edgesListStr.Length != 0) 
-                return $"{{{edgesListStr}}}";
-            else
-                return $"{{{'\x00D8'}}}";
+            if (string.IsNullOrEmpty(edgesListStr)) edgesListStr = "\x00D8";
+            return $"{{{edgesListStr}}}";
         }
     }
 }
