@@ -149,6 +149,7 @@
     <Compile Include="..\AssemblyVersion.cs">
       <Link>Properties\AssemblyVersion.cs</Link>
     </Compile>
+    <Compile Include="PrinterTests.cs" />
     <Compile Include="ComparingTests.cs" />
     <Compile Include="DirectedGraphTests.cs" />
     <Compile Include="IsomorphismTests.cs" />
