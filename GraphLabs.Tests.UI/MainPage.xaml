@@ -1,14 +1,14 @@
 ﻿<UserControl xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  x:Class="GraphLabs.Tests.UI.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization;assembly=GraphLabs.Graphs.UIComponents"
-    xmlns:controls="clr-namespace:GraphLabs.CommonUI.Controls;assembly=GraphLabs.CommonUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:visualization="clr-namespace:GraphLabs.Graphs.UIComponents.Visualization;assembly=GraphLabs.Graphs.UIComponents"
+             xmlns:controls="clr-namespace:GraphLabs.CommonUI.Controls;assembly=GraphLabs.CommonUI"
              xmlns:uiTests="clr-namespace:GraphLabs.Tests.UI"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="600">
 
     <sdk:TabControl>
         <sdk:TabItem Header="Vertex and Edge tests">
@@ -34,24 +34,24 @@
                             Background="White">
 
                         <visualization:Vertex Background="LightCyan" 
-                                  Radius="100" 
-                                  Name="VertexA"
-                                  BorderBrush="Black"
-                                  BorderThickness="2"/>
+                                              Radius="100" 
+                                              Name="VertexA"
+                                              BorderBrush="Black"
+                                              BorderThickness="2"/>
                         <visualization:Vertex Background="Green" 
-                                      Radius="50" 
-                                      Name="B"
-                                      BorderBrush="Black"
-                                      BorderThickness="2" 
-                                      X="200"
-                                      Y="200"/>
+                                              Radius="50" 
+                                              Name="B"
+                                              BorderBrush="Black"
+                                              BorderThickness="2" 
+                                              X="200"
+                                              Y="200"/>
                         <visualization:Vertex Background="YellowGreen" 
-                                      Radius="20" 
-                                      Name="LargeVertexNameHere"
-                                      BorderBrush="Black"
-                                      BorderThickness="2" 
-                                      X="400"
-                                      Y="150"/>
+                                              Radius="20" 
+                                              Name="LargeVertexNameHere"
+                                              BorderBrush="Black"
+                                              BorderThickness="2" 
+                                              X="400"
+                                              Y="150"/>
                     </Canvas>
 
                     <Button Content="Resize &amp; Move" 
@@ -76,12 +76,12 @@
                             Name="FitAutosize" 
                             Click="FitAutosizeClick"/>
                     <CheckBox Name="IsDirectedCheckBox" 
-                      Content="IsDirected" 
-                      VerticalAlignment="Center"
-                      Grid.Column="1"
-                      Grid.Row="2"
-                      Margin="5"
-                      Visibility="Collapsed"/>
+                              Content="IsDirected" 
+                              VerticalAlignment="Center"
+                              Grid.Column="1"
+                              Grid.Row="2"
+                              Margin="5"
+                              Visibility="Collapsed"/>
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
@@ -99,13 +99,13 @@
                                                    DefaultVertexBackground="LightGray"/>
                     <StackPanel Orientation="Vertical" Grid.Column="1">
                         <Button Width="100" Height="30" Content="Run" Click="RunClick" 
-                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Button Width="100" Height="30" Content="ChangeLabels" Click="ChangeLabelsClick" 
-                            HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Button Width="100" Height="30" Content="ChangeState" Click="ChangeStateClick" 
-                        	HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         <Button Width="100" Height="30" Content="EditVertices" Click="EditVerticesClick" 
-                        	HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                HorizontalAlignment="Left" VerticalAlignment="Top"/>
                     </StackPanel>
                 </Grid>
             </sdk:TabItem.Content>
@@ -114,8 +114,11 @@
             <sdk:TabItem.Content>
                 <Grid>
                     <uiTests:DerivedMatrix x:Name="Grid" Margin="0,0,0,0" />
-                    <Button Width="100" Height="30" Content="Run" Click="RunMatrixClick" 
-                            HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                    <Button Margin="140,0,0,10" Width="100" Height="30" Content="Run" Click="RunMatrixClick" 
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.033"/>
+                    <Button Margin="350,0,0,10" Width="100" Height="30" Content="Print" Click="RunMatrixPrinter" 
+                            HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.033"/>
+
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>
@@ -137,9 +140,9 @@
                     </Grid.RowDefinitions>
                     <Button Content="Add Message" Click="AddMessageClick"></Button>
                     <controls:InformationBar Grid.Row="1"
-                        ScoreColumnWidth="90"
-                        Name="InformationBar"
-                        DataContext="{Binding UserActionsManager, RelativeSource={RelativeSource FindAncestor, AncestorType=uiTests:MainPage}}"/>
+                                             ScoreColumnWidth="90"
+                                             Name="InformationBar"
+                                             DataContext="{Binding UserActionsManager, RelativeSource={RelativeSource FindAncestor, AncestorType=uiTests:MainPage}}"/>
                 </Grid>
             </sdk:TabItem.Content>
         </sdk:TabItem>

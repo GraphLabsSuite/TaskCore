@@ -76,7 +76,7 @@ namespace GraphLabs.Common
         }
 
         #endregion
-
+         
 
         /// <summary> ViewModel для панели информации </summary>
         public UserActionsManager(long taskId, Guid sessionGuid, 
