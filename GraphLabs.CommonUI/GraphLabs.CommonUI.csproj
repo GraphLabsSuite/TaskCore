@@ -199,7 +199,7 @@
       <DependentUpon>ToolBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ViewModels\CellViewModel.cs" />
-    <Compile Include="Controls\ViewModels\Matrix\MatrixPrinter.cs" />
+    <Compile Include="Controls\ViewModels\MatrixPrinter.cs" />
     <Compile Include="Controls\ViewModels\Matrix\MatrixColumnViewModel.cs" />
     <Compile Include="Controls\ViewModels\MatrixRowViewModel.cs" />
     <Compile Include="Controls\ViewModels\Matrix\MatrixRowViewModelNew.cs" />

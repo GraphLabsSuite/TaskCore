@@ -12,7 +12,7 @@ using Autofac;
 using GraphLabs.Common;
 using GraphLabs.Common.UserActionsRegistrator;
 using GraphLabs.CommonUI.Controls;
-using GraphLabs.CommonUI.Controls.ViewModels.Matrix;
+using GraphLabs.CommonUI.Controls.ViewModels;
 using GraphLabs.Graphs;
 using GraphLabs.Graphs.UIComponents.Visualization;
 using GraphLabs.Utils.Services;
@@ -220,7 +220,7 @@ namespace GraphLabs.Tests.UI
         
         private void RunMatrixClick(object sender, RoutedEventArgs e)
         {
-            var source = new ObservableCollection<CommonUI.Controls.ViewModels.MatrixRowViewModel<string>>();
+            var source = new ObservableCollection<MatrixRowViewModel<string>>();
 
             const int UPPER = 10;
             var rnd = new Random(UPPER);
@@ -231,7 +231,7 @@ namespace GraphLabs.Tests.UI
                 {
                     row.Add(rnd.Next(UPPER).ToString(CultureInfo.InvariantCulture));
                 }
-                source.Add(new CommonUI.Controls.ViewModels.MatrixRowViewModel<string>(row));
+                source.Add(new MatrixRowViewModel<string>(row));
             }
 
             Grid.DataSource = source;
@@ -246,7 +246,7 @@ namespace GraphLabs.Tests.UI
 
         private void RunSwitchMatrixClick(object sender, RoutedEventArgs e)
         {
-            var source = new ObservableCollection<CommonUI.Controls.ViewModels.MatrixRowViewModel<string>>();
+            var source = new ObservableCollection<MatrixRowViewModel<string>>();
 
             const int UPPER = 10;
             for (var i = 0; i < UPPER; ++i)
@@ -256,7 +256,7 @@ namespace GraphLabs.Tests.UI
                 {
                     row.Add("0");
                 }
-                source.Add(new CommonUI.Controls.ViewModels.MatrixRowViewModel<string>(row));
+                source.Add(new MatrixRowViewModel<string>(row));
             }
 
             SwitchMatrix.Values = new string[] {"0", "-1", "1"};
