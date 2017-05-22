@@ -217,7 +217,7 @@ namespace GraphLabs.Tests.UI
         {
             LargeVertexNameHere.Radius = LargeVertexNameHere.GetDesiredRadius();
         }
-
+        
         private void RunMatrixClick(object sender, RoutedEventArgs e)
         {
             var source = new ObservableCollection<MatrixRowViewModel<string>>();
@@ -235,6 +235,13 @@ namespace GraphLabs.Tests.UI
             }
 
             Grid.DataSource = source;
+        }
+
+        private void RunMatrixPrinter(object sender, RoutedEventArgs e)
+        {
+            var source = Grid.DataSource;
+            var mp = new MatrixPrinter();
+            MessageBox.Show(mp.MatrixToStrings(source));
         }
 
         private void RunSwitchMatrixClick(object sender, RoutedEventArgs e)
