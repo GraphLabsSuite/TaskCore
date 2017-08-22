@@ -21,7 +21,7 @@
                                                    RelativeSource={RelativeSource FindAncestor, AncestorType=visualization:Vertex}}">
                    
                         <sdk:Label Name="PART_LABEL"
-                                   Content="{TemplateBinding DispName}" 
+                                   Content="{TemplateBinding Name}" 
                                    VerticalAlignment="Center" 
                                    HorizontalAlignment="Center"/>
 
