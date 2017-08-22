@@ -7,6 +7,9 @@ namespace GraphLabs.Graphs
     {
         /// <summary> Название вершины </summary>
         string Name { get; }
+        
+        /// <summary> Текст вершины </summary>
+        string DispName { get; }
     }
 
     /// <summary> Вершина с меткой </summary>
