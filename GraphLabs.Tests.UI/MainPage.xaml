@@ -34,10 +34,11 @@
                             Background="White">
 
                         <visualization:Vertex Background="LightCyan" 
-                                              Radius="100" 
-                                              Name="VertexA"
-                                              BorderBrush="Black"
-                                              BorderThickness="2"/>
+                                  Radius="100" 
+                                  Name="VertexA"
+                                  DispName="HelloWorld"
+                                  BorderBrush="Black"
+                                  BorderThickness="2"/>
                         <visualization:Vertex Background="Green" 
                                               Radius="50" 
                                               Name="B"
