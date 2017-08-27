@@ -111,10 +111,10 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
 
         /// <summary> имя вершины </summary>
         public static readonly DependencyProperty DipsNameProperty =
-           DependencyProperty.Register("DispName", typeof(string), typeof(Vertex), null);
+           DependencyProperty.Register("DisplayName", typeof(string), typeof(Vertex), null);
 
         /// <summary> имя вершины </summary>
-        public string DispName
+        public string DisplayName
         {
             get { return (string)GetValue(DipsNameProperty); }
             set { SetValue(DipsNameProperty, value); }
@@ -250,7 +250,7 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
         public Vertex(IVertex prototype) : this()
         {
             Name = prototype.Name;
-            DispName = prototype.DispName;
+            DisplayName = prototype.DisplayName;
 
             var labeledVertex = prototype as ILabeledVertex;
             if (labeledVertex != null)
@@ -278,8 +278,8 @@ namespace GraphLabs.Graphs.UIComponents.Visualization
                 this.Label = ((ILabeledVertex)_prototype).Label;
             else if (e.PropertyName == "Name")
                 this.Name = _prototype.Name;
-            else if (e.PropertyName == "DispName")
-                this.DispName = _prototype.DispName;
+            else if (e.PropertyName == "DisplayName")
+                this.DisplayName = _prototype.DisplayName;
             else throw new NotImplementedException("Поддержка изменения свойства " + e.PropertyName + " не реализована.");
         }
 

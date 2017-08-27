@@ -12,7 +12,7 @@ namespace GraphLabs.Graphs
         IVertex Rename(string newName);
         
         /// <summary> Текст вершины </summary>
-        string DispName { get; }
+        string DisplayName { get; }
     }
 
     /// <summary> Вершина с меткой </summary>

@@ -35,13 +35,13 @@ namespace GraphLabs.Graphs
         }
 
         /// <summary> Метка </summary>
-        public string DispName
+        public string DisplayName
         {
             get { return _text; }
             set
             {
                 _text = value;
-                OnPropertyChanged("DispName");
+                OnPropertyChanged("DisplayName");
             }
         }
 
@@ -54,7 +54,7 @@ namespace GraphLabs.Graphs
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name));
             Name = name;
             Label = "";
-            DispName = name;
+            DisplayName = name;
         }
 
         /// <summary> Переименовать </summary>

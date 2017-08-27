@@ -166,7 +166,7 @@ namespace GraphLabs.Tests.UI
             var graph = DirectedWeightedGraph.CreateEmpty(3);
             graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[0], graph.Vertices[1], 2));
             graph.AddEdge(new DirectedWeightedEdge(graph.Vertices[0], graph.Vertices[2], 6));
-            graph.Vertices[0].DispName = "hi";
+            graph.Vertices[0].DisplayName = "hi";
             Visualizer.Graph = graph;
             //((Vertex)Visualizer.Vertices[3]).Background = new SolidColorBrush(Colors.Magenta);
             //((Vertex)Visualizer.Vertices[1]).Radius = 30;
@@ -183,7 +183,7 @@ namespace GraphLabs.Tests.UI
             foreach (var v in _visualizerGraphProto.Vertices)
             {
                 v.Label = rnd.Next(0, 10).ToString();
-                v.DispName = "hi";
+                v.DisplayName = "hi";
             }
         }
 
