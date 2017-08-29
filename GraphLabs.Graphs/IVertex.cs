@@ -10,6 +10,9 @@ namespace GraphLabs.Graphs
 
         /// <summary> Переименовать вершину </summary>
         IVertex Rename(string newName);
+        
+        /// <summary> Текст вершины </summary>
+        string DisplayName { get; }
     }
 
     /// <summary> Вершина с меткой </summary>

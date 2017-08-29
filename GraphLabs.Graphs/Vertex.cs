@@ -7,13 +7,14 @@ namespace GraphLabs.Graphs
     /// <summary> Вершина графа. </summary>
     public class Vertex : IVertex, ILabeledVertex, IEquatable<Vertex>, INotifyPropertyChanged
     {
+        private string _text;
         private int _color;
 
         /// <summary> Цвет </summary>
-        public int Color 
+        public int Color
         {
-            get { return _color; } 
-            set 
+            get { return _color; }
+            set
             {
                 _color = value;
                 OnPropertyChanged("Color");
@@ -32,7 +33,18 @@ namespace GraphLabs.Graphs
                 OnPropertyChanged("Label");
             }
         }
-        
+
+        /// <summary> Метка </summary>
+        public string DisplayName
+        {
+            get { return _text; }
+            set
+            {
+                _text = value;
+                OnPropertyChanged("DisplayName");
+            }
+        }
+
         /// <summary> Возвращает имя вершины. </summary>
         public string Name { get; private set; }
 
@@ -42,6 +54,7 @@ namespace GraphLabs.Graphs
             Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(name));
             Name = name;
             Label = "";
+            DisplayName = name;
         }
 
         /// <summary> Переименовать </summary>
@@ -82,7 +95,7 @@ namespace GraphLabs.Graphs
         /// <summary> Сравнение вершин </summary>
         public virtual bool Equals(ILabeledVertex other)
         {
-            return Equals((IVertex)other);
+            return Equals((IVertex) other);
         }
 
         /// <summary> Сравнение вершин </summary>
@@ -94,7 +107,7 @@ namespace GraphLabs.Graphs
         /// <summary> Сравнение вершин </summary>
         public bool Equals(Vertex other)
         {
-            return Equals((IVertex)other);
+            return Equals((IVertex) other);
         }
 
         /// <summary> Сравниваем </summary>
@@ -105,7 +118,6 @@ namespace GraphLabs.Graphs
         }
 
         #endregion
-
 
         #region
 
